@@ -1,36 +1,15 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2025 a las 04:49:27
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+DROP DATABASE IF EXISTS `db_bruz_deporte_full`;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE DATABASE `db_bruz_deporte_full` 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `proceso`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `carrito`
---
+USE `db_bruz_deporte_full`;
 
 CREATE TABLE `carrito` (
   `IdCarrito` int(11) NOT NULL,
   `IdPedido` int(11) NOT NULL,
-  `Estado` varchar(100) NOT NULL
+  `Estado` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -41,7 +20,7 @@ CREATE TABLE `carrito` (
 
 CREATE TABLE `categoria` (
   `IdCategoria` int(11) NOT NULL,
-  `Nombre` varchar(80) NOT NULL
+  `Nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -105,8 +84,8 @@ CREATE TABLE `pedido` (
 
 CREATE TABLE `prodpersonalizacion` (
   `IdPersonalizacion` int(11) NOT NULL,
-  `Descripcion` text DEFAULT NULL,
-  `Imagen` varchar(255) DEFAULT NULL,
+  `Descripcion` varchar(255) DEFAULT NULL,
+  `Imagen` varchar(200) DEFAULT NULL,
   `IdCategoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -120,11 +99,11 @@ CREATE TABLE `producto` (
   `IdProducto` int(11) NOT NULL,
   `Nombre` varchar(80) NOT NULL,
   `Descripcion` text DEFAULT NULL,
-  `Talla` varchar(50) DEFAULT NULL,
+  `Talla` varchar(5) DEFAULT NULL,
   `Imagen` varchar(255) DEFAULT NULL,
-  `Detalle` text DEFAULT NULL,
+  `Detal` decimal(10,2) DEFAULT NULL,
   `Mayor` decimal(10,2) DEFAULT NULL,
-  `Stock` int(11) NOT NULL,
+  `Stock` int(11) DEFAULT 0 NOT NULL,
   `IdCategoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -137,7 +116,7 @@ CREATE TABLE `producto` (
 CREATE TABLE `transferencia` (
   `RefTransferencia` varchar(255) NOT NULL,
   `ImgComprobante` varchar(255) DEFAULT NULL,
-  `Banco` varchar(255) DEFAULT NULL,
+  `Banco` varchar(200) DEFAULT NULL,
   `Monto` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -322,8 +301,3 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `venta`
   ADD CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`IdPago`) REFERENCES `pago` (`IdPago`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

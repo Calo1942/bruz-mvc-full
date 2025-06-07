@@ -1,0 +1,79 @@
+/* Asegura que html y body ocupen toda la altura disponible */
+html, body {
+    height: 100%;
+    margin: 0; /* Asegurar que no haya margen por defecto */
+    padding: 0; /* Asegurar que no haya padding por defecto */
+    overflow-x: hidden; /* Evitar scroll horizontal no deseado */
+}
+
+/* Estilo para el contenedor principal que abarca sidebar y contenido */
+/* .container-fluid, .row.h-100 {
+    min-height: 100vh; /* Usa min-height: 100vh para asegurar altura mínima */
+/* } */ /* Eliminamos estas reglas ya que no usamos el grid principal */
+
+/* Estilo para la barra lateral */
+.sidebar {
+    position: fixed; /* Fija la posición de la barra lateral */
+    top: 0; /* Alinea la barra lateral a la parte superior */
+    bottom: 0; /* Estira la barra lateral hasta la parte inferior */
+    left: 0; /* Alinea la barra lateral a la izquierda */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    overflow-y: auto; /* Añade scroll si el contenido excede la altura */
+    /* El width se sigue controlando con el estilo inline en sidebar.php (280px) */
+}
+
+.sidebar .nav-link {
+    font-family: 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif; /* Fuente sans-serif moderna */
+    /* Puedes añadir otras propiedades como font-weight, letter-spacing si deseas más ajustes */
+}
+
+.sidebar .nav-link.active {
+    background-color: #a52828; /* Un tono de rojo */
+    color: #fff; /* Asegurar que el texto sea blanco para contraste */
+}
+
+/* Efecto hover para enlaces de navegación inactivos en el sidebar */
+.sidebar .nav-link:not(.active):hover {
+    background-color: rgba(165, 64, 69, 0.6); /* Tono transparente de rojo, aún más opaco */
+}
+
+/* EFECTO HOVER PARA ENLACES ACTIVOS - ESTA REGLA SERÁ ELIMINADA */
+
+.brand-title { /* Mantener estilos del título si se usa */
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #a52828, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    letter-spacing: 1px;
+}
+
+/* Estilo para el navbar del contenido principal */
+.navbar {
+    position: fixed; /* Fija el navbar en la parte superior */
+    top: 0; /* Alinea el navbar a la parte superior */
+    left: 280px; /* Inicia el navbar justo después del sidebar */
+    right: 0; /* Estira el navbar hasta el borde derecho */
+    z-index: 999; /* Asegura que esté por encima del contenido principal, justo debajo del sidebar */
+    /* La altura la controlará el padding (p-3) y el contenido */
+}
+
+
+/* Estilo para el contenido principal para estar debajo del navbar y al lado del sidebar */
+main {
+    position: absolute; /* Posiciona el contenido principal absolutamente */
+    top: 60px; /* Inicia el main justo debajo del navbar (ajustar 60px si es necesario) */
+    bottom: 0; /* Estira el main hasta la parte inferior */
+    left: 280px; /* Inicia el main justo después del sidebar */
+    right: 0; /* Estira el main hasta el borde derecho */
+    overflow-y: auto; /* Añade scroll si el contenido excede la altura */
+    box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho/alto */
+    padding-top: 0; /* Quitar padding superior si el navbar ya lo proporciona o si hay contenido pegado */
+}
+
+/* Media query para ajustar el margen del main en pantallas más pequeñas si el sidebar no es fijo */
+/* Si quieres que el sidebar se comporte diferente en móvil, necesitaríamos más reglas aquí */
+/* Por ahora, este estilo asume un sidebar fijo en todos los tamaños */
+
+/* Puedes añadir otros estilos personalizados aquí */ 

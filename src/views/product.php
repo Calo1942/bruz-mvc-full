@@ -54,7 +54,7 @@
                         <?php foreach ($productos as $producto): ?>
                             <tr class="border-bottom">
                                 <td class="col-2">
-                                    <img src="<?= BASE_URL . 'src/storage/images/products/' . ($producto['Imagen'] ?? 'Imagen.jpg') ?>" alt="<?= htmlspecialchars($producto['Nombre']) ?>" class="img-fluid border">
+                                    <img src=" 'src/storage/images/products/' . ($producto['Imagen'] ?? 'Imagen.jpg') ?>" alt="<?= htmlspecialchars($producto['Nombre']) ?>" class="img-fluid border">
                                 </td>
                                 <td>
                                     <h6 class="mb-1"><?= htmlspecialchars($producto['Nombre']); ?></h6>
@@ -91,7 +91,7 @@
                                                 </button>
                                             </li>
                                             <li>
-                                                <form action="<?= BASE_URL ?>?url=product/eliminar/<?= $producto['id'] ?>" method="POST" style="display:inline;">
+                                                <form action="?url=product/eliminar/<?= $producto['id'] ?>" method="POST" style="display:inline;">
                                                     <button type="submit" class="dropdown-item text-danger" onclick="return confirm('¿Seguro?')">
                                                         Eliminar
                                                     </button>
@@ -119,7 +119,7 @@
     <div class="modal fade" id="modalAgregarProducto" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="<?= BASE_URL ?>?url=product/agregar" method="POST" enctype="multipart/form-data">
+                <form action="?url=product/agregar" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalLabel">Agregar Producto</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -266,7 +266,7 @@
             button.addEventListener('click', async function() {
                 const id = this.getAttribute('data-id');
                 try {
-                    const response = await fetch('<?= BASE_URL ?>?url=product/obtener/' + id);
+                    const response = await fetch('?url=product/obtener/' + id);
                     const producto = await response.json();
                     if (!producto || !producto.id) {
                         alert('Producto no encontrado');
@@ -279,7 +279,7 @@
                     document.getElementById('modalProductoDescripcion').textContent = producto.descripcion;
                     document.getElementById('modalProductoPrecio').textContent = `$${producto.precio}`;
                     // Corregir la ruta de la imagen
-                    const baseUrl = '<?= BASE_URL ?>';
+                    const baseUrl = '';
                     const img = producto.imgProduct1 ? producto.imgProduct1 : 'default.jpg';
                     document.getElementById('modalProductoImagen').src = baseUrl + 'src/storage/images/products/' + img;
                 } catch (e) {
@@ -292,7 +292,7 @@
         document.querySelectorAll('.btnEditarProducto').forEach(function(btn) {
             btn.addEventListener('click', async function() {
                 const id = this.getAttribute('data-id');
-                const response = await fetch('<?= BASE_URL ?>?url=product/obtener/' + id);
+                const response = await fetch('?url=product/obtener/' + id);
                 const producto = await response.json();
                 document.getElementById('editarProductoId').value = id;
                 document.getElementById('editarNombreProducto').value = producto.nombre;
@@ -303,7 +303,7 @@
                 document.getElementById('editarPrecioMayorProducto').value = producto.Mayor;
                 document.getElementById('editarDescripcionProducto').value = producto.descripcion;
                 // Mostrar imagen actual
-                const baseUrl = '<?= BASE_URL ?>';
+                const baseUrl = '';
                 const img = producto.imgProduct1 ? producto.imgProduct1 : 'default.jpg';
                 document.getElementById('editarImagenActual').src = baseUrl + 'src/storage/images/products/' + img;
             });
