@@ -9,5 +9,6 @@
         $app = new FrontController();
         $app->run();
     } catch (Exception $e) {
-        die("Error en la aplicación: " . $e->getMessage());     // Manejo básico de errores
+        // Manejo básico de errores
+        die("Error en la aplicación: " . $e->getMessage());
     }

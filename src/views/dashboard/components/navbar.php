@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light bg-light py-1 px-1">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="/Front-BruzDeporte/img/login.jpeg" alt="Logo BruzTextil" style="height: 40px;">
+            <img src="../img/logo.jpeg" alt="Logo BruzTextil" style="height: 40px;">
         </a>
         <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

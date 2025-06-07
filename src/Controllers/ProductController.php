@@ -53,3 +53,5 @@ $productos = $model->findAll();
 
 // Mostrar la vista de lista de productos
 include __DIR__ . '/../views/product.php';
+die();
+// Aquí termina el controlador de productos
