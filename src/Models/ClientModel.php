@@ -3,17 +3,13 @@
     namespace BruzDeporte\Models;
 
     use BruzDeporte\Config\Connect\DBConnect;
+    use BruzDeporte\Config\Interfaces\Crud;
     use PDO;
 
-    class ClientModel extends DBConnect {
-
-        public function __construct() {
-            parent::__construct();
-            $this->connectDB();
-        }
+    class ClientModel extends DBConnect implements Crud {
 
         // CREATE
-        public function create($data) {
+        public function store($data) {
             $sql = "INSERT INTO cliente (
                 Cedula, Nombre, Apellido, Correo, Telefono
             ) VALUES (

@@ -1,5 +1,5 @@
 <?php
-    
+
     namespace BruzDeporte\Config\Connect;
     use PDO;
     use PDOException;
@@ -17,6 +17,7 @@
             $this->nameDB = 'db_bruz_deporte_full';
             $this->user = 'root';
             $this->pass = '';
+            $this->connectDB();
         }
 
         protected function connectDB() {
