@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
+    <title>Productos</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/style.css">
@@ -27,7 +27,8 @@
         <!-- Contenido principal -->
         <main class="flex-grow-1 p-4 bg-light">
             <?php
-                       
+                // para cargar la tabla de productos
+                require_once 'components/productDataTable.php';
             ?>
         </main>
 
@@ -36,6 +37,9 @@
         <!-- para javascript <script src="../../assets/js/script.js"> </script>
 
         <!-- Modales -->
+        <?php require_once 'components/productCreateModal.php'; ?>
+        <?php require_once 'components/productEditModal.php'; ?>
+        <?php require_once 'components/productViewModal.php'; ?>
 
 </body>
 
