@@ -26,7 +26,7 @@ switch ($action) {
             'Correo' => $_POST['Correo'] ?? null,
             'Telefono' => $_POST['Telefono'] ?? null
         ];
-        $model->create($data);
+        $model->store($data);
         break;
     case 'modificar':
         $cedula = $_POST['Cedula'] ?? null;

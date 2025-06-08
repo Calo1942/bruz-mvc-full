@@ -17,7 +17,7 @@ if (isset($_POST['crear'])) {
         'Stock' => $_POST['Stock'] ?? 0,
         'IdCategoria' => $_POST['IdCategoria'] ?? 0
     ];
-    $model->create($data);
+    $model->store($data);
 }
 
 if (isset($_POST['modificar'])) {
