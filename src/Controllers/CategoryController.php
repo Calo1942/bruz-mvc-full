@@ -2,9 +2,9 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\ClientModel;
+use BruzDeporte\Models\CategoryModel;
 
-$model = new ClientModel();
+$model = new CategoryModel();
 
 $action = null;
 if (isset($_POST['store'])) {
@@ -20,43 +20,35 @@ if (isset($_POST['store'])) {
 switch ($action) {
     case 'store':
         $data = [
-            'Cedula' => $_POST['Cedula'] ?? '',
-            'Nombre' => $_POST['Nombre'] ?? '',
-            'Apellido' => $_POST['Apellido'] ?? '',
-            'Correo' => $_POST['Correo'] ?? null,
-            'Telefono' => $_POST['Telefono'] ?? null
+            'Nombre' => $_POST['Nombre'] ?? ''
         ];
         $model->store($data);
         break;
     case 'update':
-        $cedula = $_POST['Cedula'] ?? null;
-        if ($cedula) {
+        $idCategoria = $_POST['IdCategoria'] ?? null;
+        if ($idCategoria) {
             $data = [
-                'Nombre' => $_POST['Nombre'] ?? '',
-                'Apellido' => $_POST['Apellido'] ?? '',
-                'Correo' => $_POST['Correo'] ?? null,
-                'Telefono' => $_POST['Telefono'] ?? null
+                'Nombre' => $_POST['Nombre'] ?? ''
             ];
-            $model->update($cedula, $data);
+            $model->update($idCategoria, $data);
         }
         break;
     case 'delete':
-        $cedula = $_POST['delete'] ?? null;
-        if ($cedula) {
-            $model->delete($cedula);
+        $idCategoria = $_POST['delete'] ?? null;
+        if ($idCategoria) {
+            $model->delete($idCategoria);
         }
         break;
     case 'show':
-        $cedula = $_POST['show'];
-        $cliente = $model->find($cedula);
+        $idCategoria = $_POST['show'];
+        $category = $model->find($idCategoria);
         break;
     default:
-        // No action
         break;
 }
 
-$clientes = $model->findAll();
+$categories = $model->findAll();
 
-// Mostrar la vista de lista de clientes
+// Mostrar la vista de lista de categorías
 include __DIR__ . '/../views/category/category.php';
 die();

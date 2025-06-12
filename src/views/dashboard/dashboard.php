@@ -27,7 +27,8 @@
         <!-- Contenido principal -->
         <main class="flex-grow-1 p-4 bg-light">
             <?php
-                       
+               // Aquí puedes agregar contenido dinámico para el dashboard
+               // Por ejemplo, estadísticas, gráficos, etc.
             ?>
         </main>
 
