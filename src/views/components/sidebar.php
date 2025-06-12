@@ -1,6 +1,6 @@
 <?php
-$currentFile = basename($_SERVER['PHP_SELF']);
-$isInventory = ($currentFile == 'product.php' || $currentFile == 'category.php');
+$currentUrl = isset($_GET['url']) ? $_GET['url'] : 'dashboard';
+$isInventory = ($currentUrl == 'product' || $currentUrl == 'category');
 ?>
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -10,19 +10,19 @@ $isInventory = ($currentFile == 'product.php' || $currentFile == 'category.php')
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="?url=dashboard" class="nav-link text-white <?php if($currentFile == 'dashboard.php') echo 'active'; ?>" aria-current="page">
+            <a href="?url=dashboard" class="nav-link text-white <?php if($currentUrl == 'dashboard') echo 'active'; ?>" aria-current="page">
                 <i class="bi bi-house me-2"></i> <!-- Icono para Dashboard -->
                 Dashboard
             </a>
         </li>
         <li>
-            <a href="?url=sale" class="nav-link text-white <?php if($currentFile == 'sale.php') echo 'active'; ?>">
+            <a href="?url=sale" class="nav-link text-white <?php if($currentUrl == 'sale') echo 'active'; ?>">
                 <i class="bi bi-bag-check me-2"></i> <!-- Icono para Ventas (bolsa de compra) -->
                 Ventas
             </a>
         </li>
         <li>
-            <a href="?url=client" class="nav-link text-white <?php if($currentFile == 'client.php') echo 'active'; ?>">
+            <a href="?url=client" class="nav-link text-white <?php if($currentUrl == 'client') echo 'active'; ?>">
                 <i class="bi bi-person-lines-fill me-2"></i> <!-- Icono para Clientes -->
                 Clientes
             </a>
@@ -38,13 +38,13 @@ $isInventory = ($currentFile == 'product.php' || $currentFile == 'category.php')
             </a>
             <ul class="collapse nav flex-column ms-3 <?php if($isInventory) echo 'show'; ?>" id="inventario-submenu">
                 <li class="nav-item">
-                    <a href="?url=product" class="nav-link text-white <?php if($currentFile == 'product.php') echo 'active'; ?>">
+                    <a href="?url=product" class="nav-link text-white <?php if($currentUrl == 'product') echo 'active'; ?>">
                         <i class="bi bi-box me-2"></i>
                         Productos
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="?url=category" class="nav-link text-white <?php if($currentFile == 'category.php') echo 'active'; ?>">
+                    <a href="?url=category" class="nav-link text-white <?php if($currentUrl == 'category') echo 'active'; ?>">
                         <i class="bi bi-tags me-2"></i>
                         Categoria
                     </a>
@@ -52,7 +52,7 @@ $isInventory = ($currentFile == 'product.php' || $currentFile == 'category.php')
             </ul>
         </li>
         <li>
-            <a href="?url=custom" class="nav-link text-white <?php if($currentFile == 'custom.php') echo 'active'; ?>">
+            <a href="?url=custom" class="nav-link text-white <?php if($currentUrl == 'custom') echo 'active'; ?>">
                 <i class="bi bi-journal-richtext me-2"></i> <!-- Icono para Catálogo -->
                 Personalizados
             </a>
