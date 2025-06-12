@@ -1,3 +1,4 @@
+<!-- Encabezado de la tabla con título y botón de agregar -->
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="mb-4">Tabla de Categorías</h2>
     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarCategoriaModal">
@@ -5,6 +6,7 @@
     </button>
 </div>
 
+<!-- Contenedor de la tabla -->
 <div class="container mt-4">
     <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -22,6 +24,7 @@
                             <td><?php echo htmlspecialchars($category['IdCategoria']); ?></td>
                             <td><?php echo htmlspecialchars($category['Nombre']); ?></td>
                             <td>
+                                <!-- Botones de accione para los modales -->
                                 <button type="button" class="btn btn-sm btn-primary me-1 view-category-btn"
                                         data-bs-toggle="modal" data-bs-target="#verCategoriaModal"
                                         data-id="<?php echo htmlspecialchars($category['IdCategoria']); ?>"
@@ -55,31 +58,50 @@
 </div>
 
 <script>
+    // Esperamos a que el documento HTML esté completamente cargado antes de ejecutar el código
     document.addEventListener('DOMContentLoaded', function() {
-        // Handle View Modal
+        // ===== MODAL DE VER CATEGORÍA =====
+        // Obtenemos una referencia al modal de ver categoría usando su ID
         var viewCategoryModal = document.getElementById('verCategoriaModal');
+        
+        // Agregamos un evento que se dispara cuando el modal está a punto de abrirse
         viewCategoryModal.addEventListener('show.bs.modal', function (event) {
+            // Obtenemos el botón que activó el modal (el que tiene los datos de la categoría)
             var button = event.relatedTarget;
+            
+            // Extraemos los datos de la categoría del botón
+            // Estos datos vienen de los atributos data-id y data-name del botón
             var id = button.getAttribute('data-id');
             var name = button.getAttribute('data-name');
 
+            // Buscamos los elementos dentro del modal donde mostraremos la información
             var modalIdSpan = viewCategoryModal.querySelector('#verCategoriaId');
             var modalNameSpan = viewCategoryModal.querySelector('#verNombreCategoria');
 
+            // Actualizamos el contenido del modal con los datos de la categoría
             modalIdSpan.textContent = id;
             modalNameSpan.textContent = name;
         });
 
-        // Handle Edit Modal
+        // ===== MODAL DE EDITAR CATEGORÍA =====
+        // Obtenemos una referencia al modal de editar categoría
         var editCategoryModal = document.getElementById('editarCategoriaModal');
+        
+        // Agregamos un evento que se dispara cuando el modal está a punto de abrirse
         editCategoryModal.addEventListener('show.bs.modal', function (event) {
+            // Obtenemos el botón que activó el modal
             var button = event.relatedTarget;
+            
+            // Extraemos los datos de la categoría del botón
             var id = button.getAttribute('data-id');
             var name = button.getAttribute('data-name');
 
+            // Buscamos los campos de entrada dentro del modal
             var modalIdInput = editCategoryModal.querySelector('#editarCategoriaId');
             var modalNameInput = editCategoryModal.querySelector('#editarNombreCategoria');
 
+            // Prellenamos los campos del formulario con los datos actuales de la categoría
+            // Usamos .value en lugar de .textContent porque son campos de entrada (input)
             modalIdInput.value = id;
             modalNameInput.value = name;
         });
