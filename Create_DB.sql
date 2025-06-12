@@ -1,41 +1,18 @@
-CREATE DATABASE `BruzProducto` 
-CHARACTER SET utf8mb4 
-COLLATE utf8mb4_unicode_ci;
-
-USE `BruzProducto`;
-
-CREATE TABLE `productos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(50) NOT NULL,
-  `descripcion` VARCHAR(250) NOT NULL,
-  `cantidad` INT,
-  `talla` VARCHAR(250) NOT NULL,
-  `categoria` VARCHAR(250) NOT NULL,
-  `precio` DECIMAL NOT NULL,
-  `imgProduct1` VARCHAR(250) NOT NULL,
-  `imgProduct2` VARCHAR(250),
-  `imgProduct3` VARCHAR(250),
-  `imgProduct4` VARCHAR(250),
-  `fecha_registro` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
------ Elimina la base de datos si existe y crea una nueva -----
+/* ----- Elimina la base de datos si existe y crea una nueva ----- */
 DROP DATABASE IF EXISTS `db_bruz_deporte_full`;
 CREATE DATABASE `db_bruz_deporte_full` 
 CHARACTER SET utf8mb4 
 COLLATE utf8mb4_general_ci;
 USE `db_bruz_deporte_full`;
 
------ Crear Tabla: categoria -----
+/* ----- Crear Tabla: categoria ----- */
 CREATE TABLE `categoria` (
   `IdCategoria` INT(11) NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`IdCategoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: cliente -----
+/* ----- Crear Tabla: cliente ----- */
 CREATE TABLE `cliente` (
   `Cedula` VARCHAR(11) NOT NULL,
   `Nombre` VARCHAR(80) NOT NULL,
@@ -45,7 +22,7 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`Cedula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: producto -----
+/* ----- Crear Tabla: producto ----- */
 CREATE TABLE `producto` (
   `IdProducto` INT(11) NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(80) NOT NULL,
@@ -59,16 +36,16 @@ CREATE TABLE `producto` (
   PRIMARY KEY (`IdProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: pedido -----
+/* ----- Crear Tabla: pedido ----- */
 CREATE TABLE `pedido` (
   `IdPedido` INT(11) NOT NULL AUTO_INCREMENT,
   `IdProducto` INT(11) NOT NULL,
   `Cedula` VARCHAR(20) NOT NULL,
-  `Cantidad` INT(5) NOT NULL,
+  `Cantidad` INT(11) NOT NULL,
   PRIMARY KEY (`IdPedido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: detallePedido -----
+/* ----- Crear Tabla: detallePedido ----- */
 CREATE TABLE `detallePedido` (
   `IdDetallePedido` INT(11) NOT NULL AUTO_INCREMENT,
   `IdPedido` INT(11) NOT NULL,
@@ -76,7 +53,7 @@ CREATE TABLE `detallePedido` (
   PRIMARY KEY (`IdDetallePedido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: pagoefectivo -----
+/* ----- Crear Tabla: pagoefectivo ----- */
 CREATE TABLE `pagoefectivo` (
   `IdEfectivo` INT(11) NOT NULL AUTO_INCREMENT,
   `Tipo` VARCHAR(80) NOT NULL,
@@ -84,7 +61,7 @@ CREATE TABLE `pagoefectivo` (
   PRIMARY KEY (`IdEfectivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: transferencia -----
+/* ----- Crear Tabla: transferencia ----- */
 CREATE TABLE `transferencia` (
   `RefTransferencia` VARCHAR(255) NOT NULL,
   `ImgComprobante` VARCHAR(255) DEFAULT NULL,
@@ -93,7 +70,7 @@ CREATE TABLE `transferencia` (
   PRIMARY KEY (`RefTransferencia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: pago -----
+/* ----- Crear Tabla: pago ----- */
 CREATE TABLE `pago` (
   `IdPago` INT(11) NOT NULL AUTO_INCREMENT,
   `IdDetallePedido` INT(11) NOT NULL,
@@ -103,7 +80,7 @@ CREATE TABLE `pago` (
   PRIMARY KEY (`IdPago`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: prodpersonalizacion -----
+/* ----- Crear Tabla: prodpersonalizacion ----- */
 CREATE TABLE `prodpersonalizacion` (
   `IdPersonalizacion` INT(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` VARCHAR(255) DEFAULT NULL,
@@ -112,7 +89,7 @@ CREATE TABLE `prodpersonalizacion` (
   PRIMARY KEY (`IdPersonalizacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Crear Tabla: venta -----
+/* ----- Crear Tabla: venta ----- */
 CREATE TABLE `venta` (
   `IdVenta` INT(11) NOT NULL AUTO_INCREMENT,
   `IdPago` INT(11) NOT NULL,
@@ -122,7 +99,7 @@ CREATE TABLE `venta` (
   PRIMARY KEY (`IdVenta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------ Índices y claves foráneas -----
+/* ----- Índices y claves foráneas ----- */
 ALTER TABLE `detallePedido`
   ADD KEY `IdPedido` (`IdPedido`);
 
@@ -144,7 +121,7 @@ ALTER TABLE `producto`
 ALTER TABLE `venta`
   ADD KEY `IdPago` (`IdPago`);
 
------ Restricciones de INTegridad referencial -----
+/* ----- Restricciones de INTegridad referencial ----- */
 ALTER TABLE `detallePedido`
   ADD CONSTRAINT `detallePedido_ibfk_1` FOREIGN KEY (`IdPedido`) REFERENCES `pedido` (`IdPedido`);
 
