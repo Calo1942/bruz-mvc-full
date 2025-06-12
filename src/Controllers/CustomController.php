@@ -58,5 +58,5 @@ switch ($action) {
 $clientes = $model->findAll();
 
 // Mostrar la vista de lista de clientes
-include __DIR__ . '/../views/client/client.php';
+include __DIR__ . '/../views/custom/custom.php';
 die();

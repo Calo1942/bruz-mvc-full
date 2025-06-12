@@ -20,7 +20,7 @@
                 ':Nombre' => $data['Nombre'],
                 ':Descripcion' => $data['Descripcion'],
                 ':Talla' => $data['Talla'],
-                ':Imagen' => $data['Imagen'] ?? 'Imagen.jpg',
+                ':Imagen' => $data['Imagen'] ?? 'imagen.jpg',
                 ':Detal' => $data['Detal'],
                 ':Mayor' => $data['Mayor'] ?? null,
                 ':Stock' => $data['Stock'] ?? 0,

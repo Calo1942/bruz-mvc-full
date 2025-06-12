@@ -12,14 +12,14 @@ class FrontController {
     private $params;    // Estos atributos no se usan ¿Eliminar?
 
     public function __construct() {
-        $this->url = $_GET['url'] ?? 'product';
+        $this->url = $_GET['url'] ?? 'dashboard';
         $this->parseUrl();
     }
 
     private function parseUrl() {
         $url = explode('/', filter_var(rtrim($this->url, '/'), FILTER_SANITIZE_URL));
-        $this->controller = $url[0] ?? 'product';
-        $this->method = $url[1] ?? 'index';
+        $this->controller = $url[0] ?? 'dashboard';
+        $this->method = $url[1] ?? '';
         $this->params = array_slice($url, 2);
     }
 

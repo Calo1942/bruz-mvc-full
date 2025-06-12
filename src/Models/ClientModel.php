@@ -4,7 +4,6 @@
 
     use BruzDeporte\Config\Connect\DBConnect;
     use BruzDeporte\Config\Interfaces\Crud;
-    use PDO;
 
     class ClientModel extends DBConnect implements Crud {
 
@@ -28,13 +27,13 @@
         // READ
         public function findAll() {
             $stmt = $this->con->query("SELECT * FROM cliente");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll();
         }
 
         public function find($cedula) {
             $stmt = $this->con->prepare("SELECT * FROM cliente WHERE Cedula = ?");
             $stmt->execute([$cedula]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
         }
 
         // UPDATE

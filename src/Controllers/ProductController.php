@@ -6,7 +6,7 @@ use BruzDeporte\Models\ProductModel;
 
 $model = new ProductModel();
 
-if (isset($_POST['crear'])) {
+if (isset($_POST['store'])) {
     $data = [
         'Nombre' => $_POST['Nombre'] ?? '',
         'Descripcion' => $_POST['Descripcion'] ?? '',
@@ -20,7 +20,7 @@ if (isset($_POST['crear'])) {
     $model->store($data);
 }
 
-if (isset($_POST['modificar'])) {
+if (isset($_POST['update'])) {
     $id = $_POST['IdProducto'] ?? null;
     if ($id) {
         $data = [
@@ -37,21 +37,25 @@ if (isset($_POST['modificar'])) {
     }
 }
 
-if (isset($_POST['eliminar'])) {
-    $id = filter_input(INPUT_POST, 'eliminar', FILTER_VALIDATE_INT);
+if (isset($_POST['delete'])) {
+    $id = filter_input(INPUT_POST, 'delete', FILTER_VALIDATE_INT);
     if ($id !== false) {
         $model->delete($id);
     }
 }
 
-if (isset($_POST['seleccion'])) {
-    $id = $_POST['seleccion'];
+if (isset($_POST['show'])) {
+    // Mostrar un producto específico
+    $id = $_POST['show'];
     $producto = $model->find($id);
 }
 
 $productos = $model->findAll();
 
+// Pasar los productos a la vista
+$data = ['productos' => $productos]; // Añadimos esta línea
+
 // Mostrar la vista de lista de productos
-include __DIR__ . '/../views/product.php';
+include __DIR__ . '/../views/product/product.php';
 die();
 // Aquí termina el controlador de productos

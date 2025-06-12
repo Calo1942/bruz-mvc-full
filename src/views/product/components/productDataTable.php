@@ -16,48 +16,28 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Aquí se cargarán las filas de productos dinámicamente si es necesario -->
-            <!-- Por ahora, podemos poner algunas filas de ejemplo estáticas si lo deseas, o dejarlo vacío -->
+            <?php foreach ($productos as $producto): ?>
             <tr>
+                <td><img src="<?= htmlspecialchars($producto['Imagen']) ?>" alt="Imagen del producto" class="img-fluid rounded border" width="50"></td>
                 <td>
-                    <!-- Imagen de ejemplo -->
-                    <img src="https://via.placeholder.com/50" alt="Imagen de Producto" class="img-fluid rounded border">
-                </td>
-                <td>
-                    <h6 class="mb-1">Nombre del Producto Ejemplo</h6>
-                    <p class="text-muted mb-0">Categoría: Ejemplo</p>
-                    <p class="text-muted mb-0">Talla: L</p>
-                    <p class="text-muted mb-0">Stock: 10</p>
+                    <h6 class="mb-1"><?= htmlspecialchars($producto['Nombre']) ?></h6>
+                    <p class="text-muted mb-0">Categoría: <?= htmlspecialchars($producto['IdCategoria']) ?></p>
+                    <p class="text-muted mb-0">Talla: <?= htmlspecialchars($producto['Talla']) ?></p>
+                    <p class="text-muted mb-0">Stock: <?= htmlspecialchars($producto['Stock']) ?></p>
                 </td>
                 <td class="text-end fw-bold">
-                    $19.99
-                </td>
-                <td class="text-end">
-                    <!-- Botones de acción de ejemplo -->
-                    <button type="button" class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#verProductoModal"><i class="bi bi-eye"></i></button>
-                    <button type="button" class="btn btn-sm btn-secondary me-1" data-bs-toggle="modal" data-bs-target="#editarProductoModal"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <img src="https://via.placeholder.com/50" alt="Imagen de Producto" class="img-fluid rounded border">
+                    <?= htmlspecialchars($producto['Detal']) ?>
                 </td>
                 <td>
-                    <h6 class="mb-1">Otro Producto Ejemplo</h6>
-                    <p class="text-muted mb-0">Categoría: Otro Ejemplo</p>
-                    <p class="text-muted mb-0">Talla: M</p>
-                    <p class="text-muted mb-0">Stock: 5</p>
-                </td>
-                <td class="text-end fw-bold">
-                    $25.50
-                </td>
-                <td class="text-end">
-                    <button type="button" class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#verProductoModal"><i class="bi bi-eye"></i></button>
-                    <button type="button" class="btn btn-sm btn-secondary me-1" data-bs-toggle="modal" data-bs-target="#editarProductoModal"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-info view-btn" data-bs-toggle="modal" data-bs-target="#viewModal" data-id="<?= $producto['IdProducto'] ?>"><i class="bi bi-eye"></i></button>
+                    <button class="btn btn-sm btn-warning edit-btn" data-bs-toggle="modal" data-bs-target="#editModal" data-id="<?= $producto['IdProducto'] ?>"><i class="bi bi-pencil"></i></button>
+                    <form method="POST" action="ProductController.php" style="display:inline;">
+                        <input type="hidden" name="delete" value="<?= $producto['IdProducto'] ?>">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de eliminar este producto?');"><i class="bi bi-trash"></i></button>
+                    </form>
                 </td>
             </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
