@@ -8,7 +8,7 @@ USE `db_bruz_deporte_full`;
 /* ----- Crear Tabla: categoria ----- */
 CREATE TABLE `categoria` (
   `IdCategoria` INT(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` VARCHAR(100) NOT NULL,
+  `Nombre` VARCHAR(100) NOT NULL UNIQUE,
   PRIMARY KEY (`IdCategoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

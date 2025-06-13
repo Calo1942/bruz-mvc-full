@@ -10,7 +10,7 @@
      *
      * Esta clase maneja las operaciones CRUD para la tabla 'producto' en la base de datos.
      * Extiende de DBConnect para la conexión a la base de datos e implementa la interfaz Crud
-     * para asegurar la implementación de los métodos básicos de manipulación de datos.
+     * para asegurar la implementación de los métodos básicos de manipulación de datos.cksss
      */
     class ProductModel extends DBConnect implements Crud {
 

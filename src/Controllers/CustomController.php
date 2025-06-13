@@ -26,37 +26,61 @@ if (isset($_POST['store'])) { // Si se envió el formulario para guardar
 // Estructura switch para manejar las diferentes acciones.
 switch ($action) {
     case 'store': // Caso para almacenar un nuevo registro
+        $imageFileName = 'Imagen.jpg'; // Imagen por defecto si no hay subida
+        // Verificar si se subió una imagen
+        if (isset($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
+            // Entonces, desde el controlador, necesitas ir hacia atrás una vez y luego a la carpeta storage.
+            $uploadDir = __DIR__ . '/../storage/img/custom/'; // Directorio de subida ajustado
+            $fileExtension = pathinfo($_FILES['Imagen']['name'], PATHINFO_EXTENSION);
+            $uniqueFileName = uniqid() . '.' . $fileExtension;
+            $uploadFilePath = $uploadDir . $uniqueFileName;
+            // Asegurarse de que el directorio de subida exista
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            if (move_uploaded_file($_FILES['Imagen']['tmp_name'], $uploadFilePath)) {
+                $imageFileName = $uniqueFileName; // Almacenar el nombre de archivo único
+            } else {
+                // Manejar error de subida (ej., registrar, establecer una imagen por defecto, mostrar error al usuario)
+                error_log("Fallo al mover el archivo subido: " . $_FILES['Imagen']['name']);
+            }
+        }
         $data = [
             'Descripcion' => $_POST['Descripcion'] ?? '', // Se obtiene la descripción del POST, o cadena vacía si no existe.
-            'Imagen' => $_POST['Imagen'] ?? null,         // Se obtiene la imagen del POST, o null si no existe.
+            'Imagen' => $imageFileName,                     // Se obtiene la imagen procesada, o la por defecto si no se subió ninguna.
             'IdCategoria' => $_POST['IdCategoria'] ?? null // Se obtiene el IdCategoria del POST, o null si no existe (asumiendo que es requerido).
         ];
         $model->store($data); // Se llama al método store del modelo para guardar los datos.
         break;
+
     case 'update': // Caso para actualizar un registro existente
         $idPersonalizacion = $_POST['IdPersonalizacion'] ?? null; // Se obtiene el IdPersonalizacion del POST.
         if ($idPersonalizacion) { // Si el IdPersonalizacion existe
             $data = [
                 'Descripcion' => $_POST['Descripcion'] ?? '', // Se obtienen los nuevos datos de descripción.
-                'Imagen' => $_POST['Imagen'] ?? null,         // Se obtienen los nuevos datos de imagen.
+                'Imagen' => $imageFileName,                     // Se obtiene la imagen procesada, o la por defecto si no se subió ninguna.
                 'IdCategoria' => $_POST['IdCategoria'] ?? null // Se obtienen los nuevos datos de IdCategoria.
             ];
             $model->update($idPersonalizacion, $data); // Se llama al método update del modelo para actualizar el registro.
         }
         break;
+
     case 'delete': // Caso para eliminar un registro
         $idPersonalizacion = $_POST['delete'] ?? null; // Se obtiene el IdPersonalizacion a eliminar.
         if ($idPersonalizacion) { // Si el IdPersonalizacion existe
             $model->delete($idPersonalizacion); // Se llama al método delete del modelo para eliminar el registro.
         }
         break;
+
     case 'show': // Caso para mostrar un registro específico
         $idPersonalizacion = $_POST['show']; // Se obtiene el IdPersonalizacion del registro a mostrar.
         $customItem = $model->find($idPersonalizacion); // Se llama al método find del modelo para buscar el registro.
         break;
+
     case 'create': // Caso para la acción de creación (ej. obtener categorías)
         $categories = $model->create(); // Se llama al método create del modelo para obtener las categorías.
         break;
+
     default: // Acción por defecto si no se especifica ninguna
         // No hay acción específica.
         break;
