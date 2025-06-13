@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
     <!-- Barra lateral -->
     <div class="p-0 bg-dark sidebar">
         <?php require_once __DIR__ . '/../components/sidebar.php'; ?>
