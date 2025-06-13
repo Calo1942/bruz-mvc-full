@@ -1,92 +1,98 @@
-<!-- Modal para Agregar Producto -->
 <div class="modal fade" id="agregarProductoModal" tabindex="-1" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form action="?url=product/create" method="POST" enctype="multipart/form-data">
-                <!-- Encabezado del modal -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="agregarProductoModalLabel">Agregar Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
 
-                <!-- Cuerpo del modal -->
                 <div class="modal-body">
                     <div class="row g-3">
-                        <!-- Nombre -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <input type="text" class="form-control rounded-1" id="nombreProducto" name="nombre" placeholder="Nombre" required>
+                                <input type="text" class="form-control rounded-1" id="nombreProducto" name="Nombre" placeholder="Nombre" required>
                                 <label for="nombreProducto">Nombre</label>
                             </div>
                         </div>
 
-                        <!-- Categoría -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <select class="form-select rounded-1" id="categoriaProducto" name="categoria" required>
+                                <select class="form-select rounded-1" id="categoriaProducto" name="IdCategoria" required>
                                     <option value="">Seleccione una categoría</option>
-                                    <option value="Camiseta">Camiseta</option>
-                                    <option value="Pantalón">Pantalón</option>
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= htmlspecialchars($category['IdCategoria']) ?>">
+                                            <?= htmlspecialchars($category['Nombre']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                                 <label for="categoriaProducto">Categoría</label>
                             </div>
                         </div>
 
-                        <!-- Talla -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <select class="form-select rounded-1" id="tallaProducto" name="talla" required>
+                                <select class="form-select rounded-1" id="tallaProducto" name="Talla" required>
                                     <option value="">Seleccione una talla</option>
                                     <option value="S">S</option>
                                     <option value="M">M</option>
                                     <option value="L">L</option>
+                                    <option value="XL">XL</option>
                                 </select>
                                 <label for="tallaProducto">Talla</label>
                             </div>
                         </div>
 
-                        <!-- Descripción -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control rounded-1" id="descripcionProducto" name="descripcion" style="height: 100px" required></textarea>
+                                <textarea class="form-control rounded-1" id="descripcionProducto" name="Descripcion" style="height: 100px" required></textarea>
                                 <label for="descripcionProducto">Descripción</label>
                             </div>
                         </div>
 
-                        <!-- Precio -->
+                       <!-- Precio Detal -->
                         <div class="col-12">
-                            <div class="input-group border-dark rounded-1">
+                            <div class="input-group border-dark rounded-1 w-75 mx-auto">
                                 <span class="input-group-text bg-transparent rounded-start">$</span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="number" class="form-control rounded-0" id="precioProducto" name="precio" step="0.01" min="0" placeholder="Precio" required>
-                                    <label for="precioProducto">Precio</label>
+                                    <input type="number" class="form-control rounded-0" id="editarDetalProducto" name="Detal" step="0.01" min="0" placeholder="Precio Detal" required>
+                                    <label for="editarDetalProducto">Precio Detal</label>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Stock -->
+                        <!-- Precio Mayor -->
+                        <div class="col-12">
+                            <div class="input-group border-dark rounded-1 w-75 mx-auto">
+                                <span class="input-group-text bg-transparent rounded-start">$</span>
+                                <div class="form-floating flex-grow-1">
+                                    <input type="number" class="form-control rounded-0" id="editarMayorProducto" name="Mayor" step="0.01" min="0" placeholder="Precio Mayor" required>
+                                    <label for="editarMayorProducto">Precio al por mayor</label>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="col-12">
                             <div class="form-floating">
-                                <input type="number" class="form-control rounded-1" id="stockProducto" name="cantidad" placeholder="Stock disponible" min="0" required>
+                                <input type="number" class="form-control rounded-1" id="stockProducto" name="Stock" placeholder="Stock disponible" min="0" required>
                                 <label for="stockProducto">Stock disponible</label>
                             </div>
                         </div>
 
-                        <!-- Imagen -->
                         <div class="col-12">
                             <label for="imagenProducto" class="form-label">Imagen del producto</label>
-                            <input type="file" class="form-control rounded-1" id="imagenProducto" name="imgProduct1" accept="image/*" required>
+                            <input type="file" class="form-control rounded-1" id="imagenProducto" name="Imagen" accept="image/*" required>
                             <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pie del modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" name="store" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
-</div> 
+</div>

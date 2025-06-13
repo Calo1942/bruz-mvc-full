@@ -48,7 +48,16 @@
          */
         public function findAll() {
             $stmt = $this->con->query("SELECT * FROM producto");
-            return $stmt->fetchAll();
+            $productos = $stmt->fetchAll();
+            $uploadDir = __DIR__ . '/../storage/img/products/'; // Ruta absoluta para el servidor
+
+            foreach ($productos as &$producto) {
+                if (!empty($producto['Imagen'])) {
+                    $producto['Imagen'] = APP_BASE_URL . '/src/storage/img/products/' . $producto['Imagen'];
+                }
+            }
+
+            return $productos;
         }
 
         /**
@@ -61,7 +70,13 @@
         public function find($idProducto) {
             $stmt = $this->con->prepare("SELECT * FROM producto WHERE IdProducto = ?");
             $stmt->execute([$idProducto]);
-            return $stmt->fetch();
+            $producto = $stmt->fetch();
+
+            if ($producto && !empty($producto['Imagen'])) {
+                $producto['Imagen'] = APP_BASE_URL . '/src/storage/img/products/' . $producto['Imagen'];
+            }
+
+            return $producto;
         }
 
         /**
@@ -108,16 +123,5 @@
         public function delete($idProducto) {
             $stmt = $this->con->prepare("DELETE FROM producto WHERE IdProducto = ?");
             return $stmt->execute([$idProducto]);
-        }
-
-        /**
-         * Recupera todas las categorías de la base de datos.
-         * Este método se utiliza para obtener datos relacionados para la creación de productos.
-         *
-         * @return array Un array de arrays asociativos, donde cada array representa una fila de categoría.
-         */
-        public function create() {
-            $stmt = $this->con->query("SELECT * FROM categoria");
-            return $stmt->fetchAll();
         }
     }
