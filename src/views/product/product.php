@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="src/assets/css/style.css">
@@ -12,7 +11,6 @@
 </head>
 
 <body>
-
     <!-- Barra lateral -->
     <div class="p-0 bg-dark sidebar">
         <?php require_once __DIR__ . '/../components/sidebar.php'; ?>
@@ -27,8 +25,8 @@
         <!-- Contenido principal -->
         <main class="flex-grow-1 p-4 bg-light">
             <?php
-               // Aquí puedes agregar contenido dinámico para el dashboard
-               // Por ejemplo, estadísticas, gráficos, etc.
+                // para cargar la tabla de productos
+                require_once 'components/productDataTable.php';
             ?>
         </main>
 
@@ -37,6 +35,9 @@
         <!-- para javascript <script src="../../assets/js/script.js"> </script> -->
 
         <!-- Modales -->
+        <?php require_once 'components/productCreateModal.php'; ?>
+        <?php require_once 'components/productEditModal.php'; ?>
+        <?php require_once 'components/productViewModal.php'; ?>
 
 </body>
 

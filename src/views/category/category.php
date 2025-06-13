@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
+    <title>Categorías</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="src/assets/css/style.css">
@@ -27,8 +27,8 @@
         <!-- Contenido principal -->
         <main class="flex-grow-1 p-4 bg-light">
             <?php
-               // Aquí puedes agregar contenido dinámico para el dashboard
-               // Por ejemplo, estadísticas, gráficos, etc.
+            // para cargar la tabla de categorías
+            require_once 'components/categoryDataTable.php';
             ?>
         </main>
 
@@ -37,6 +37,9 @@
         <!-- para javascript <script src="../../assets/js/script.js"> </script> -->
 
         <!-- Modales -->
+        <?php require_once 'components/categoryCreateModal.php'; ?>
+        <?php require_once 'components/categoryEditModal.php'; ?>
+        <?php require_once 'components/categoryViewModal.php'; ?>
 
 </body>
 

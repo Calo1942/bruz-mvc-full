@@ -8,35 +8,29 @@ class FrontController {
     private $method;
     private $params;
 
+    // Constructor de la clase: obtiene la URL desde GET y procesa la URL
     public function __construct() {
-        $this->url = $_REQUEST['url'] ?? 'product';
-        $this->parseUrl();
+        $this->url = $_GET['url'] ?? 'dashboard'; // Obtiene la URL o asigna 'dashboard' por defecto
+        $this->parseUrl(); // Llama a la función que divide y procesa la URL
     }
 
+    // Método privado que analiza la URL para separar controlador, método y parámetros
     private function parseUrl() {
-        $url = isset($_GET['url']) ? $_GET['url'] : 'product';
-        $url = explode('/', filter_var(rtrim($url, '/'), FILTER_SANITIZE_URL));
-        $this->controller = isset($url[0]) ? $url[0] : 'product';
-        $this->method = isset($url[1]) ? $url[1] : 'index';
-        $this->params = array_slice($url, 2);
+        $url = explode('/', filter_var(rtrim($this->url, '/'), FILTER_SANITIZE_URL)); // Limpia y divide la URL
+        $this->controller = $url[0] ?? 'dashboard'; // Asigna controlador (primer segmento)
+        $this->method = $url[1] ?? ''; // Asigna método (segundo segmento)
+        $this->params = array_slice($url, 2); // Asigna parámetros (resto de segmentos)
     }
 
+    // Método que ejecuta la lógica principal: incluye el archivo del controlador y lo carga
     public function run() {
-        $controllerClass = 'BruzDeporte\\Controllers\\' . ucfirst($this->controller) . 'Controller';
-        $controllerFile = __DIR__ . '/' . ucfirst($this->controller) . 'Controller.php';
-        if (class_exists($controllerClass)) {
-            $controllerInstance = new $controllerClass();
-            $method = $this->method;
-            if (method_exists($controllerInstance, $method)) {
-                call_user_func_array([$controllerInstance, $method], $this->params);
-            } else {
-                throw new \Exception("Método {$method} no encontrado en {$controllerClass}");
-            }
-        } elseif (file_exists($controllerFile)) {
-            // Fallback: incluir como script procedural
-            require $controllerFile;
+        $controllerFile = __DIR__ . '/' . ucfirst($this->controller) . 'Controller.php'; // Ruta del controlador
+
+        if (file_exists($controllerFile)) {
+            require $controllerFile; // Incluye el controlador si existe
+            // Aquí normalmente se instancia el controlador y se llama al método con los parámetros
         } else {
-            throw new \Exception("Controlador {$controllerClass} o archivo {$controllerFile} no encontrado");
+            throw new \Exception("Controlador {$this->controller} no encontrado"); // Error si no existe el controlador
         }
     }
 }
