@@ -28,7 +28,7 @@
         <main class="flex-grow-1 p-4 bg-light">
             <?php
             // para cargar la tabla de ventas
-            require_once 'components/saleDataTable.php';
+            //require_once 'components/saleDataTable.php';
             ?>
         </main>
 

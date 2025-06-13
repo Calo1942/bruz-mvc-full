@@ -8,69 +8,73 @@ use BruzDeporte\Models\CategoryModel; // Importa el modelo CategoryModel para in
 // Instancia el modelo ProductModel.
 $model = new ProductModel();
 
-// Inicializa la variable $action a null.
+// Inicializa la variable $action para determinar la acción a ejecutar.
 $action = null;
 
-// Determina la acción a realizar basándose en las solicitudes POST recibidas.
-if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar un nuevo producto.
+// Detecta la acción solicitada a través de los datos enviados por POST.
+if (isset($_POST['store'])) { // Si se envió un formulario para crear un producto.
     $action = 'store';
-} elseif (isset($_POST['update'])) { // Si se ha enviado el formulario para actualizar un producto existente.
+} elseif (isset($_POST['update'])) { // Si se envió un formulario para actualizar un producto.
     $action = 'update';
-} elseif (isset($_POST['delete'])) { // Si se ha enviado la solicitud para eliminar un producto.
+} elseif (isset($_POST['delete'])) { // Si se solicitó eliminar un producto.
     $action = 'delete';
-} elseif (isset($_POST['show'])) { // Si se ha solicitado mostrar los detalles de un producto específico.
+} elseif (isset($_POST['show'])) { // Si se solicitó mostrar un producto específico.
     $action = 'show';
 }
 
-// Estructura switch para manejar las diferentes acciones.
+// Ejecuta la acción correspondiente.
 switch ($action) {
-    case 'store': // Caso para almacenar un nuevo producto.
-        $imageFileName = 'Imagen.jpg'; // Imagen por defecto si no hay subida
-        // Verificar si se subió una imagen
+    case 'store': // Guardar un nuevo producto
+        $imageFileName = 'Imagen.jpg'; // Imagen por defecto si no se sube ninguna imagen
+        
+        // Verifica si se ha subido una imagen correctamente.
         if (isset($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
-            // La ruta de tu controlador es: src\Controllers\ProductController.php
-            // La ruta de destino es: src\storage\img\products
-            // Entonces, desde el controlador, necesitas ir hacia atrás una vez y luego a la carpeta storage.
-            $uploadDir = __DIR__ . '/../storage/img/products/'; // Directorio de subida ajustado
+            // Define la ruta del directorio de subida de imágenes.
+            $uploadDir = __DIR__ . '/../storage/img/products/';
             $fileExtension = pathinfo($_FILES['Imagen']['name'], PATHINFO_EXTENSION);
             $uniqueFileName = uniqid() . '.' . $fileExtension;
             $uploadFilePath = $uploadDir . $uniqueFileName;
 
-            // Asegurarse de que el directorio de subida exista
+            // Crea el directorio si no existe.
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
 
+            // Mueve el archivo subido al directorio destino.
             if (move_uploaded_file($_FILES['Imagen']['tmp_name'], $uploadFilePath)) {
-                $imageFileName = $uniqueFileName; // Almacenar el nombre de archivo único
+                $imageFileName = $uniqueFileName; // Guarda el nombre único del archivo.
             } else {
-                // Manejar error de subida (ej., registrar, establecer una imagen por defecto, mostrar error al usuario)
+                // Registra un error en caso de fallo en la subida.
                 error_log("Fallo al mover el archivo subido: " . $_FILES['Imagen']['name']);
             }
         }
+        
+        // Prepara los datos recibidos para almacenar el producto.
         $data = [
-            'Nombre' => $_POST['Nombre'] ?? '', // Obtiene el nombre del producto del POST, o una cadena vacía.
-            'Descripcion' => $_POST['Descripcion'] ?? '', // Obtiene la descripción del POST, o una cadena vacía.
-            'Talla' => $_POST['Talla'] ?? '',             // Obtiene la talla del POST, o una cadena vacía.
-            'Imagen' => $imageFileName,                   // Usa el nombre de archivo de imagen procesado.
-            'Detal' => $_POST['Detal'] ?? 0,             // Obtiene el precio al detal del POST, o 0 por defecto.
-            'Mayor' => $_POST['Mayor'] ?? null,           // Obtiene el precio al mayor del POST, o null.
-            'Stock' => $_POST['Stock'] ?? 0,             // Obtiene el stock del POST, o 0 por defecto.
-            'IdCategoria' => $_POST['IdCategoria'] ?? 0  // Obtiene el ID de la categoría del POST, o 0 por defecto.
+            'Nombre' => $_POST['Nombre'] ?? '',
+            'Descripcion' => $_POST['Descripcion'] ?? '',
+            'Talla' => $_POST['Talla'] ?? '',
+            'Imagen' => $imageFileName,
+            'Detal' => $_POST['Detal'] ?? 0,
+            'Mayor' => $_POST['Mayor'] ?? null,
+            'Stock' => $_POST['Stock'] ?? 0,
+            'IdCategoria' => $_POST['IdCategoria'] ?? 0
         ];
-        $model->store($data); // Llama al método store del modelo para guardar el producto.
+
+        // Guarda el producto en la base de datos.
+        $model->store($data);
         break;
 
-    case 'update': // Caso para actualizar un producto existente.
-        $id = $_POST['IdProducto'] ?? null; // Obtiene el IdProducto del POST.
-        if ($id) { // Si el IdProducto existe.
-            $existingProduct = $model->find($id); // Fetch existing product to get current image name
+    case 'update': // Actualizar un producto existente
+        $id = $_POST['IdProducto'] ?? null;
+        if ($id) {
+            // Obtiene el producto actual para conocer la imagen existente.
+            $existingProduct = $model->find($id);
 
-            // Initialize $imageFileName with the existing image from the database
-            // If no existing image, use 'Imagen.jpg' as a default
+            // Inicializa el nombre de la imagen con la existente o una imagen por defecto.
             $imageFileName = $existingProduct['Imagen'] ?? 'Imagen.jpg';
 
-            // Check if a new image was uploaded
+            // Verifica si se subió una nueva imagen.
             if (isset($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
                 $uploadDir = __DIR__ . '/../storage/img/products/';
                 $fileExtension = pathinfo($_FILES['Imagen']['name'], PATHINFO_EXTENSION);
@@ -82,89 +86,92 @@ switch ($action) {
                 }
 
                 if (move_uploaded_file($_FILES['Imagen']['tmp_name'], $uploadFilePath)) {
-                    // Delete old image if it's not the default and exists
-                    // Make sure to remove the APP_BASE_URL prefix before checking file_exists and unlinking
+                    // Elimina la imagen antigua si no es la por defecto y existe en el servidor.
                     $oldImageRelativePath = str_replace(APP_BASE_URL . '/src/storage/img/products/', '', $existingProduct['Imagen']);
                     if ($oldImageRelativePath && $oldImageRelativePath !== 'Imagen.jpg' && file_exists($uploadDir . $oldImageRelativePath)) {
                         unlink($uploadDir . $oldImageRelativePath);
                     }
-                    $imageFileName = $uniqueFileName; // Update to new image filename
+                    // Actualiza el nombre de la imagen con el nuevo archivo.
+                    $imageFileName = $uniqueFileName;
                 } else {
+                    // Registra error si no se pudo mover la imagen subida.
                     error_log("Fallo al mover el archivo subido para actualización: " . $_FILES['Imagen']['name']);
-                    // If new upload fails, we keep the old image filename, which is already in $imageFileName
+                    // Se mantiene la imagen anterior.
                 }
             } else {
-                // If no new image is uploaded, ensure the $imageFileName remains the existing one.
+                // Si no hay nueva imagen, se conserva la imagen existente.
                 if (isset($existingProduct['Imagen'])) {
-                    // Extract just the filename if it includes the full URL
                     $imageFileName = basename($existingProduct['Imagen']);
                 } else {
-                    $imageFileName = 'Imagen.jpg'; // Fallback if no existing image
+                    $imageFileName = 'Imagen.jpg'; // Imagen por defecto.
                 }
             }
 
+            // Prepara los datos actualizados para guardar.
             $data = [
                 'Nombre' => $_POST['Nombre'] ?? '',
                 'Descripcion' => $_POST['Descripcion'] ?? '',
                 'Talla' => $_POST['Talla'] ?? '',
-                'Imagen' => $imageFileName, // Use the determined image filename
+                'Imagen' => $imageFileName,
                 'Detal' => $_POST['Detal'] ?? 0,
                 'Mayor' => $_POST['Mayor'] ?? null,
                 'Stock' => $_POST['Stock'] ?? 0,
                 'IdCategoria' => $_POST['IdCategoria'] ?? 0
             ];
+
+            // Ejecuta la actualización en la base de datos.
             $model->update($id, $data);
         }
         break;
 
-    case 'delete': // Caso para eliminar un producto.
-        $id = filter_input(INPUT_POST, 'delete', FILTER_VALIDATE_INT); // Valida y obtiene el ID del producto a eliminar.
-        if ($id !== false) { // Si el ID es un entero válido.
-            // 1. Obtener la información del producto antes de eliminarlo de la DB
+    case 'delete': // Eliminar un producto
+        $id = filter_input(INPUT_POST, 'delete', FILTER_VALIDATE_INT);
+        if ($id !== false) {
+            // Obtiene la información del producto antes de eliminarlo.
             $productToDelete = $model->find($id);
 
-            // 2. Intentar eliminar el registro de la base de datos
+            // Elimina el producto de la base de datos.
             $db_delete_success = $model->delete($id);
 
-            // 3. Si la eliminación de la DB fue exitosa y hay una imagen asociada (y no es la imagen por defecto)
+            // Si la eliminación fue exitosa y hay imagen asociada, elimina el archivo físico.
             if ($db_delete_success && $productToDelete && !empty($productToDelete['Imagen'])) {
                 $uploadDir = __DIR__ . '/../storage/img/products/';
-                // Extraer solo el nombre del archivo de la ruta completa (si el modelo lo devuelve con APP_BASE_URL)
                 $imageFileName = basename($productToDelete['Imagen']);
                 $imagePath = $uploadDir . $imageFileName;
 
-                // Asegurarse de que no estamos intentando eliminar la imagen por defecto si existe
+                // No eliminar la imagen por defecto.
                 if ($imageFileName !== 'Imagen.jpg' && file_exists($imagePath)) {
-                    unlink($imagePath); // Elimina el archivo físico
+                    unlink($imagePath);
                 }
             }
         }
         break;
 
-    case 'show': // Caso para mostrar un producto específico.
-        $id = $_POST['show']; // Obtiene el ID del producto a mostrar.
-        $producto = $model->find($id); // Llama al método find del modelo para buscar el producto.
+    case 'show': // Mostrar detalles de un producto específico
+        $id = $_POST['show'];
+        $producto = $model->find($id);
         break;
 
-    default: // Acción por defecto si no se especifica ninguna.
-        // No hay acción específica, el controlador simplemente recuperará todos los productos.
+    default:
+        // No se especificó acción, simplemente se listan los productos.
         break;
 }
 
-// Recupera todos los productos de la base de datos para mostrarlos en la vista.
+// Obtiene todos los productos para mostrarlos en la vista.
 $products = $model->findAll();
 
-// Ejemplo de uso en un controlador
+// Instancia el modelo de categorías para obtenerlas.
 $categoryModel = new CategoryModel();
 $categories = $categoryModel->findAll();
 
-// Prepara los datos para pasar a la vista.
-$data = ['products' => $products,
-        'categories' => $categories]; // Incluye las categorías para la vista.
+// Prepara los datos para enviar a la vista.
+$data = [
+    'products' => $products,
+    'categories' => $categories
+];
 
-// Incluye la vista de la lista de productos.
-// Se asume que la vista se encuentra en '../views/product/product.php'.
+// Incluye la vista principal de productos.
 include __DIR__ . '/../views/product/product.php';
-die(); // Termina la ejecución del script para asegurar que no se procese más código.
 
-// Aquí termina el controlador de productos.
+// Termina la ejecución para evitar procesar código adicional.
+die();

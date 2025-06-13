@@ -1,4 +1,3 @@
-<!-- Modal para Agregar Catálogo -->
 <div class="modal fade" id="agregarCatalogoModal" tabindex="-1" aria-labelledby="agregarCatalogoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -7,21 +6,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formAgregarCatalogo">
-                    <div class="mb-3">
-                        <label for="nombreCatalogo" class="form-label">Nombre del Elemento</label>
-                        <input type="text" class="form-control" id="nombreCatalogo" required>
-                    </div>
-                    <div class="mb-3">
+                <form id="formAgregarCatalogo" action="" method="POST" enctype="multipart/form-data"> <div class="mb-3">
                         <label for="descripcionCatalogo" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="descripcionCatalogo" rows="3"></textarea>
+                        <textarea class="form-control" id="descripcionCatalogo" name="Descripcion" rows="3" required></textarea> </div>
+                    <div class="mb-3">
+                        <label for="imagenCatalogo" class="form-label">Imagen</label>
+                        <input type="file" class="form-control" id="imagenCatalogo" name="Imagen" accept="image/*"> </div>
+                    <div class="mb-3">
+                        <label for="categoriaCatalogo" class="form-label">Categoría</label>
+                        <select class="form-select" id="categoriaCatalogo" name="IdCategoria" required>
+                            <option value="">Seleccione una categoría</option>
+                            <?php foreach ($data['categories'] as $category): ?>
+                                <option value="<?php echo $category['IdCategoria']; ?>"><?php echo $category['Nombre']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" name="store">Guardar Elemento</button> </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar Elemento</button>
             </div>
         </div>
     </div>
-</div> 
+</div>

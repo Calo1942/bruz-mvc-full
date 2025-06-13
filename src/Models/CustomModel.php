@@ -41,7 +41,14 @@
          */
         public function findAll() {
             $stmt = $this->con->query("SELECT * FROM prodpersonalizacion");
-            return $stmt->fetchAll();
+            $customItems = $stmt->fetchAll();
+            // This part is crucial for displaying images correctly in the view
+            foreach ($customItems as &$item) {
+                if (!empty($item['Imagen'])) {
+                    $item['Imagen'] = APP_BASE_URL . '/src/storage/img/customs/' . $item['Imagen'];
+                }
+            }
+            return $customItems;
         }
 
         /**
@@ -53,7 +60,12 @@
         public function find($idPersonalizacion) {
             $stmt = $this->con->prepare("SELECT * FROM prodpersonalizacion WHERE IdPersonalizacion = ?");
             $stmt->execute([$idPersonalizacion]);
-            return $stmt->fetch();
+            $customItem = $stmt->fetch();
+
+            if ($customItem && !empty($customItem['Imagen'])) {
+                $customItem['Imagen'] = APP_BASE_URL . '/src/storage/img/customs/' . $customItem['Imagen'];
+            }
+            return $customItem;
         }
 
         /**
