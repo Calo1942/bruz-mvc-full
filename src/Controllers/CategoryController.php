@@ -1,62 +1,63 @@
 <?php
 
-namespace BruzDeporte\Controllers; // Define el espacio de nombres para la clase.
+namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel; // Importa el modelo CategoryModel para interactuar con la base de datos.
+use BruzDeporte\Models\CategoryModel; 
 
-// Instancia el modelo CategoryModel.
-$model = new CategoryModel(); 
+// Controlador para gestionar categorías
+$model = new CategoryModel();
+$action = null;
 
-// Inicializa la variable $action a null.
-$action = null; 
-
-// Determina la acción a realizar basándose en las solicitudes POST recibidas.
-if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar una nueva categoría.
-    $action = 'store'; 
-} elseif (isset($_POST['update'])) { // Si se ha enviado el formulario para actualizar una categoría existente.
-    $action = 'update'; 
-} elseif (isset($_POST['delete'])) { // Si se ha enviado la solicitud para eliminar una categoría.
-    $action = 'delete'; 
-} elseif (isset($_POST['show'])) { // Si se ha solicitado mostrar los detalles de una categoría específica.
-    $action = 'show'; 
+// Detecta la acción solicitada por POST
+if (isset($_POST['store'])) {
+    $action = 'store';
+} elseif (isset($_POST['update'])) {
+    $action = 'update';
+} elseif (isset($_POST['delete'])) {
+    $action = 'delete';
+} elseif (isset($_POST['show'])) {
+    $action = 'show';
 }
 
 // Estructura switch para manejar las diferentes acciones.
 switch ($action) {
-    case 'store': // Caso para almacenar una nueva categoría.
+    // Almacena una nueva categoría
+    case 'store':
         $data = [
-            'Nombre' => $_POST['Nombre'] ?? '' // Obtiene el nombre de la categoría del POST, o una cadena vacía.
+            'Nombre' => $_POST['Nombre'] ?? '' 
         ];
-        $model->store($data); // Llama al método store del modelo para guardar la categoría.
+        $model->store($data); 
         break;
-    case 'update': // Caso para actualizar una categoría existente.
-        $idCategoria = $_POST['IdCategoria'] ?? null; // Obtiene el IdCategoria de la categoría a actualizar del POST.
-        if ($idCategoria) { // Si el IdCategoria existe.
+    // Actualiza una categoría existente
+    case 'update':
+        $idCategoria = $_POST['IdCategoria'] ?? null; 
+        if ($idCategoria) {
             $data = [
-                'Nombre' => $_POST['Nombre'] ?? '' // Obtiene el nombre actualizado.
+                'Nombre' => $_POST['Nombre'] ?? '' 
             ];
-            $model->update($idCategoria, $data); // Llama al método update del modelo para actualizar la categoría.
+            $model->update($idCategoria, $data); 
         }
         break;
-    case 'delete': // Caso para eliminar una categoría.
-        $idCategoria = $_POST['delete'] ?? null; // Obtiene el IdCategoria de la categoría a eliminar del POST.
-        if ($idCategoria) { // Si el IdCategoria existe.
-            $model->delete($idCategoria); // Llama al método delete del modelo para eliminar la categoría.
+    // Elimina una categoría
+    case 'delete':
+        $idCategoria = $_POST['delete'] ?? null;
+        if ($idCategoria) {
+            $model->delete($idCategoria); 
         }
         break;
-    case 'show': // Caso para mostrar una categoría específica.
-        $idCategoria = $_POST['show']; // Obtiene el IdCategoria de la categoría a mostrar.
-        $category = $model->find($idCategoria); // Llama al método find del modelo para buscar la categoría.
+    // Muestra detalles de una categoría específica
+    case 'show':
+        $idCategoria = $_POST['show']; 
+        $category = $model->find($idCategoria); 
         break;
-    default: // Acción por defecto si no se especifica ninguna.
-        // No hay acción específica, el controlador simplemente recuperará todas las categorías.
+    // Lista categorías si no hay acción
+    default:
         break;
 }
 
-// Recupera todas las categorías de la base de datos para mostrarlas en la vista.
+// Obtiene todas las categorías para la vista
 $categories = $model->findAll(); 
 
 // Incluye la vista de la lista de categorías.
-// Se asume que la vista se encuentra en '../views/category/category.php'.
 include __DIR__ . '/../views/category/category.php'; 
-die(); // Termina la ejecución del script para asegurar que no se procese más código.
+die(); 
