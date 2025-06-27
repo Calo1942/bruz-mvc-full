@@ -109,7 +109,7 @@ CREATE TABLE Imagen (
 CREATE TABLE Pago (
     IdPago INT(11) PRIMARY KEY AUTO_INCREMENT,
     IdDetallePedido INT(11) NOT NULL,
-    IdMetodoPago INT(11) NOT NULL,  -- COLUMNA FALTANTE AÑADIDA
+    IdMetodoPago INT(11) NOT NULL,
     Fecha DATETIME NOT NULL,
     FOREIGN KEY (IdDetallePedido) REFERENCES DetallePedido(IdDetallePedido),
     FOREIGN KEY (IdMetodoPago) REFERENCES MetodoPago(IdMetodoPago)
