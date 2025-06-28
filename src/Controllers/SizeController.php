@@ -56,7 +56,7 @@ switch ($action) {
 }
 
 // Obtiene todas las tallas para la vista
-$categories = $model->findAll(); 
+$tallas = $model->findAll(); 
 
 // Incluye la vista de la lista de tallas.
 include __DIR__ . '/../views/size/size.php'; 

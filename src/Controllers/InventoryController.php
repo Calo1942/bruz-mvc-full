@@ -2,9 +2,13 @@
 
 namespace BruzDeporte\Controllers;
 use BruzDeporte\Models\InventoryModel; 
+use BruzDeporte\Models\ProductModel;
+use BruzDeporte\Models\SizeModel;
 
 // Controlador para gestionar inventario
 $model = new InventoryModel();
+$productModel = new ProductModel();
+$tallaModel = new SizeModel();
 $action = null;
 
 // Detecta la acción solicitada por POST
@@ -45,8 +49,8 @@ switch ($action) {
         break;
     // Elimina un registro de inventario
     case 'delete':
-        $id = filter_input(INPUT_POST, 'delete', FILTER_VALIDATE_INT);
-        if ($id !== false) {
+        $id = $_POST['delete'] ?? null;
+        if ($id) {
             $model->delete($id);
         }
         break;
@@ -60,10 +64,17 @@ switch ($action) {
         break;
 }
 
-// Obtiene todas las registros de inventario para la vista
+// Obtiene todos los registros de inventario para la vista
 $inventario = $model->findAll();
+
+// Obtiene productos y tallas para los selectores
+$productos = $productModel->findAll();
+$tallas = $tallaModel->findAll();
+
 $data = [
-    'inventario' => $inventario
+    'inventario' => $inventario,
+    'productos' => $productos,
+    'tallas' => $tallas
 ];
 
 // Incluye la vista de la lista de inventario.

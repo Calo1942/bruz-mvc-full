@@ -1,29 +1,45 @@
-<div class="modal fade" id="agregarCatalogoModal" tabindex="-1" aria-labelledby="agregarCatalogoModalLabel" aria-hidden="true">
+<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="agregarCatalogoModalLabel">Agregar Nuevo Elemento al Catálogo</h5>
+                <h5 class="modal-title" id="agregarClienteModalLabel">Agregar Nuevo Cliente</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formAgregarCatalogo" action="" method="POST" enctype="multipart/form-data"> <div class="mb-3">
-                        <label for="descripcionCatalogo" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="descripcionCatalogo" name="Descripcion" rows="3" required></textarea> </div>
+                <form id="formAgregarCliente" action="" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="imagenCatalogo" class="form-label">Imagen</label>
-                        <input type="file" class="form-control" id="imagenCatalogo" name="Imagen" accept="image/*"> </div>
+                        <label for="cedulaCliente" class="form-label">Cédula *</label>
+                        <input type="text" class="form-control" id="cedulaCliente" name="Cedula" 
+                               required minlength="7" maxlength="15" 
+                               pattern="[0-9]+" 
+                               title="La cédula debe contener solo números y tener entre 7 y 15 dígitos">
+                    </div>
                     <div class="mb-3">
-                        <label for="categoriaCatalogo" class="form-label">Categoría</label>
-                        <select class="form-select" id="categoriaCatalogo" name="IdCategoria" required>
-                            <option value="">Seleccione una categoría</option>
-                            <?php foreach ($data['categories'] as $category): ?>
-                                <option value="<?php echo $category['IdCategoria']; ?>"><?php echo $category['Nombre']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <label for="nombreCliente" class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" id="nombreCliente" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellidoCliente" class="form-label">Apellido *</label>
+                        <input type="text" class="form-control" id="apellidoCliente" name="Apellido" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailCliente" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="emailCliente" name="Correo" 
+                               required maxlength="50"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                               title="Ingrese un email válido">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefonoCliente" class="form-label">Teléfono *</label>
+                        <input type="tel" class="form-control" id="telefonoCliente" name="Telefono" 
+                               required minlength="10" maxlength="25"
+                               pattern="[0-9+\-\s()]+"
+                               title="Ingrese un número de teléfono válido">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" name="store">Guardar Elemento</button> </div>
+                        <button type="submit" class="btn btn-primary" name="store">Guardar Cliente</button>
+                    </div>
                 </form>
             </div>
         </div>
