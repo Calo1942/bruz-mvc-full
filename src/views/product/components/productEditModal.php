@@ -1,10 +1,9 @@
-
 <!-- Modal para editar producto -->
 <div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- Formulario para editar un producto existente -->
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editarProductoModalLabel">Editar Producto</h5>
                     <!-- Botón para cerrar el modal -->
@@ -42,7 +41,7 @@
                         <!-- Campo para descripción del producto -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control rounded-1" id="editarDescripcionProducto" name="Descripcion" style="height: 100px" required></textarea>
+                                <textarea class="form-control rounded-1" id="editarDescripcionProducto" name="Descripcion" style="height: 100px"></textarea>
                                 <label for="editarDescripcionProducto">Descripción</label>
                             </div>
                         </div>
@@ -52,7 +51,7 @@
                             <div class="input-group border-dark rounded-1 w-75 mx-auto">
                                 <span class="input-group-text bg-transparent rounded-start">$</span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="number" class="form-control rounded-0" id="editarDetalProducto" name="Detal" step="0.01" min="0" placeholder="Precio Detal" required>
+                                    <input type="number" class="form-control rounded-0" id="editarDetalProducto" name="PrecioDetal" step="0.01" min="0" placeholder="Precio Detal" required>
                                     <label for="editarDetalProducto">Precio al Detal</label>
                                 </div>
                             </div>
@@ -63,17 +62,10 @@
                             <div class="input-group border-dark rounded-1 w-75 mx-auto">
                                 <span class="input-group-text bg-transparent rounded-start">$</span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="number" class="form-control rounded-0" id="editarMayorProducto" name="Mayor" step="0.01" min="0" placeholder="Precio Mayor" required>
-                                    <label for="editarMayorProducto">Precio al por mayor</label>
+                                    <input type="number" class="form-control rounded-0" id="editarMayorProducto" name="PrecioMayor" step="0.01" min="0" placeholder="Precio Mayor">
+                                    <label for="editarMayorProducto">Precio al por mayor (opcional)</label>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Campo para subir imagen del producto -->
-                        <div class="col-12">
-                            <label for="editarImagenProducto" class="form-label">Imagen del producto</label>
-                            <input type="file" class="form-control rounded-1" id="editarImagenProducto" name="Imagen" accept="image/*">
-                            <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB. Deja vacío para mantener la imagen actual.</small>
                         </div>
                     </div>
                 </div>
@@ -84,7 +76,7 @@
                     <!-- Botón para enviar formulario y actualizar producto -->
                     <button type="submit" name="update" class="btn btn-primary">Actualizar</button>
                 </div>
-                                </form>
+            </form>
         </div>
     </div>
 </div>
