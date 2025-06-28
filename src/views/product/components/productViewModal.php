@@ -27,14 +27,8 @@
                                 <p class="mb-1 text-muted fw-bold">Categoría:</p>
                                 <p class="mb-3" id="verCategoriaProducto"></p>
 
-                                <p class="mb-1 text-muted fw-bold">Talla:</p>
-                                <p class="mb-3" id="verTallaProducto"></p>
-
                                 <p class="mb-1 text-muted fw-bold">Descripción:</p>
                                 <p class="mb-3" id="verDescripcionProducto"></p>
-
-                                <p class="mb-1 text-muted fw-bold">Stock disponible:</p>
-                                <p class="mb-3" id="verStockProducto"></p>
 
                                 <p class="mb-1 text-muted fw-bold">Precio Detal:</p>
                                 <h4 class="fw-bold text-dark" id="verPrecioDetalProducto"></h4>

@@ -10,15 +10,14 @@
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
+                    
                     <!-- Encabezados de la tabla -->
                     <th>ID</th>
                     <th>Imagen</th>
                     <th>Nombre</th>
                     <th>Categoría</th>
-                    <th>Talla</th>
-                    <th>Detal</th>
-                    <th>Mayor</th>
-                    <th>Stock</th>
+                    <th>Precio al Detal</th>
+                    <th>Precio al Mayor</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -50,10 +49,8 @@
                             </td>
                             <td><?php echo htmlspecialchars($product['Nombre']); ?></td>
                             <td><?php echo htmlspecialchars($nombreCategoria); ?></td>
-                            <td><?php echo htmlspecialchars($product['Talla']); ?></td>
                             <td>$<?php echo htmlspecialchars($product['Detal']); ?></td>
                             <td>$<?php echo htmlspecialchars($product['Mayor']); ?></td>
-                            <td><?php echo htmlspecialchars($product['Stock']); ?></td>
                             <td>
                                 <!-- Botón para ver detalles del producto (abre modal) -->
                                 <button type="button" class="btn btn-sm btn-primary me-1 view-product-btn"
@@ -64,9 +61,7 @@
                                     data-descripcion="<?php echo htmlspecialchars($product['Descripcion']); ?>"
                                     data-detal="<?php echo htmlspecialchars($product['Detal']); ?>"
                                     data-mayor="<?php echo htmlspecialchars($product['Mayor']); ?>"
-                                    data-stock="<?php echo htmlspecialchars($product['Stock']); ?>"
                                     data-categoria="<?php echo htmlspecialchars($nombreCategoria); ?>"
-                                    data-talla="<?php echo htmlspecialchars($product['Talla']); ?>"
                                     data-imagen="<?php echo htmlspecialchars($product['Imagen']); ?>">
                                     <i class="bi bi-eye"></i>
                                 </button>
@@ -80,9 +75,7 @@
                                     data-descripcion="<?php echo htmlspecialchars($product['Descripcion']); ?>"
                                     data-detal="<?php echo htmlspecialchars($product['Detal']); ?>"
                                     data-mayor="<?php echo htmlspecialchars($product['Mayor']); ?>"
-                                    data-stock="<?php echo htmlspecialchars($product['Stock']); ?>"
                                     data-categoria="<?php echo htmlspecialchars($product['IdCategoria']); ?>"
-                                    data-talla="<?php echo htmlspecialchars($product['Talla']); ?>">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
 
@@ -100,7 +93,7 @@
                 <?php else: ?>
                     <!-- Mensaje cuando no hay productos -->
                     <tr>
-                        <td colspan="9" class="text-center">No hay productos disponibles.</td>
+                        <td colspan="7" class="text-center">No hay productos disponibles.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -115,24 +108,19 @@
         var viewProductModal = document.getElementById('verProductoModal');
         viewProductModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget;
-            // Se eliminó 'verProductoId' ya que no está presente en el HTML del modal que proporcionaste.
             var nombre = button.getAttribute('data-name');
             var descripcion = button.getAttribute('data-descripcion');
-            var detal = button.getAttribute('data-detal'); // Corregido a 'detal' para que coincida con el atributo data
-            var mayor = button.getAttribute('data-mayor'); // Obtiene el precio al por mayor
-            var stock = button.getAttribute('data-stock');
+            var detal = button.getAttribute('data-detal');
+            var mayor = button.getAttribute('data-mayor');
             var categoria = button.getAttribute('data-categoria');
-            var talla = button.getAttribute('data-talla');
             var imagen = button.getAttribute('data-imagen');
 
             document.getElementById('verNombreProducto').textContent = nombre;
             document.getElementById('verDescripcionProducto').textContent = descripcion;
-            document.getElementById('verPrecioDetalProducto').textContent = '$' + detal; // Establece el precio Detal
-            document.getElementById('verPrecioMayorProducto').textContent = '$' + mayor; // Establece el precio Mayor
-            document.getElementById('verStockProducto').textContent = stock;
+            document.getElementById('verPrecioDetalProducto').textContent = '$' + detal;
+            document.getElementById('verPrecioMayorProducto').textContent = '$' + mayor;
             document.getElementById('verCategoriaProducto').textContent = categoria;
-            document.getElementById('verTallaProducto').textContent = talla;
-            document.getElementById('verProductoImagen').src = imagen; // Ruta de imagen ajustada
+            document.getElementById('verProductoImagen').src = imagen;
         });
 
         // Modal de Editar
@@ -142,29 +130,17 @@
             var id = button.getAttribute('data-id');
             var nombre = button.getAttribute('data-name');
             var descripcion = button.getAttribute('data-descripcion');
-            var detal = button.getAttribute('data-detal'); // Corregido a 'detal'
-            var mayor = button.getAttribute('data-mayor'); // Obtiene el precio al por mayor para el modal de edición
-            var stock = button.getAttribute('data-stock');
-            var categoria = button.getAttribute('data-categoria'); // Esto ahora será IdCategoria
-            var talla = button.getAttribute('data-talla');
-
-            document.getElementById('editarProductoId').value = id;
-            document.getElementById('editarNombreProducto').value = nombre;
-            document.getElementById('editarDescripcionProducto').value = descripcion;
-            document.getElementById('editarDetalProducto').value = detal;
-            document.getElementById('editarMayorProducto').value = mayor; // Establece el precio al por mayor para el modal de edición
-            document.getElementById('editarStockProducto').value = stock;
-            document.getElementById('editarCategoriaProducto').value = categoria; // Asigna el IdCategoria al select
-            document.getElementById('editarTallaProducto').value = talla;
+            var detal = button.getAttribute('data-detal');
+            var mayor = button.getAttribute('data-mayor');
+            var categoria = button.getAttribute('data-categoria');
+           
             // Rellenamos los campos del formulario
             document.getElementById('editarProductoId').value = id;
             document.getElementById('editarNombreProducto').value = nombre;
             document.getElementById('editarDescripcionProducto').value = descripcion;
             document.getElementById('editarDetalProducto').value = detal;
             document.getElementById('editarMayorProducto').value = mayor;
-            document.getElementById('editarStockProducto').value = stock;
             document.getElementById('editarCategoriaProducto').value = categoria;
-            document.getElementById('editarTallaProducto').value = talla;
         });
     });
 </script>

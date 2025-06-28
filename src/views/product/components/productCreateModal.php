@@ -34,20 +34,6 @@
                             </div>
                         </div>
 
-                        <!-- Selector para talla del producto -->
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <select class="form-select rounded-1" id="tallaProducto" name="Talla" required>
-                                    <option value="">Seleccione una talla</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                </select>
-                                <label for="tallaProducto">Talla</label>
-                            </div>
-                        </div>
-
                         <!-- Campo para descripción del producto -->
                         <div class="col-12">
                             <div class="form-floating">
@@ -61,8 +47,8 @@
                             <div class="input-group border-dark rounded-1 w-75 mx-auto">
                                 <span class="input-group-text bg-transparent rounded-start">$</span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="number" class="form-control rounded-0" id="editarDetalProducto" name="Detal" step="0.01" min="0" placeholder="Precio Detal" required>
-                                    <label for="editarDetalProducto">Precio Detal</label>
+                                    <input type="number" class="form-control rounded-0" id="detalProducto" name="Detal" step="0.01" min="0" placeholder="Precio Detal" required>
+                                    <label for="detalProducto">Precio al Detal</label>
                                 </div>
                             </div>
                         </div>
@@ -72,17 +58,9 @@
                             <div class="input-group border-dark rounded-1 w-75 mx-auto">
                                 <span class="input-group-text bg-transparent rounded-start">$</span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="number" class="form-control rounded-0" id="editarMayorProducto" name="Mayor" step="0.01" min="0" placeholder="Precio Mayor" required>
-                                    <label for="editarMayorProducto">Precio al por mayor</label>
+                                    <input type="number" class="form-control rounded-0" id="mayorProducto" name="Mayor" step="0.01" min="0" placeholder="Precio Mayor" required>
+                                    <label for="mayorProducto">Precio al por mayor</label>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Campo para stock disponible -->
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input type="number" class="form-control rounded-1" id="stockProducto" name="Stock" placeholder="Stock disponible" min="0" required>
-                                <label for="stockProducto">Stock disponible</label>
                             </div>
                         </div>
 
