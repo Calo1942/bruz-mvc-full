@@ -63,5 +63,7 @@ switch ($action) {
 
 // Obtiene todos los clientes para la vista
 $clientes = $model->findAll();
+
+// Incluye la vista de la lista de clientes.
 include __DIR__ . '/../views/client/client.php';
 die();
