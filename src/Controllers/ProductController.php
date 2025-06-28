@@ -25,13 +25,10 @@ switch ($action) {
     case 'store':
         $data = [
             'Nombre' => $_POST['Nombre'] ?? '',
-            'Descripcion' => $_POST['Descripcion'] ?? '',
-            'Talla' => $_POST['Talla'] ?? '',
-            'Imagen' => $imageFileName,
-            'Detal' => $_POST['Detal'] ?? 0,
-            'Mayor' => $_POST['Mayor'] ?? null,
-            'Stock' => $_POST['Stock'] ?? 0,
-            'IdCategoria' => $_POST['IdCategoria'] ?? 0
+            'Descripcion' => $_POST['Descripcion'] ?? null,
+            'PrecioDetal' => $_POST['PrecioDetal'] ?? 0,
+            'PrecioMayor' => $_POST['PrecioMayor'] ?? null,
+            'IdCategoria' => $_POST['IdCategoria'] ?? null
         ];
         $model->store($data);
         break;
@@ -41,13 +38,10 @@ switch ($action) {
         if ($id) {
             $data = [
                 'Nombre' => $_POST['Nombre'] ?? '',
-                'Descripcion' => $_POST['Descripcion'] ?? '',
-                'Talla' => $_POST['Talla'] ?? '',
-                'Imagen' => $imageFileName,
-                'Detal' => $_POST['Detal'] ?? 0,
-                'Mayor' => $_POST['Mayor'] ?? null,
-                'Stock' => $_POST['Stock'] ?? 0,
-                'IdCategoria' => $_POST['IdCategoria'] ?? 0
+                'Descripcion' => $_POST['Descripcion'] ?? null,
+                'PrecioDetal' => $_POST['PrecioDetal'] ?? 0,
+                'PrecioMayor' => $_POST['PrecioMayor'] ?? null,
+                'IdCategoria' => $_POST['IdCategoria'] ?? null
             ];
             $model->update($id, $data);
         }
