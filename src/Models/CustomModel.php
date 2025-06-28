@@ -16,7 +16,7 @@ class CustomModel extends DBConnect implements Crud {
         $stmt = $this->con->prepare($sql);
         return $stmt->execute([
             ':Descripcion' => $data['Descripcion'] ?? null,
-            ':Imagen' => $data['Imagen'] ?? null,
+            ':Imagen' => 'image.jpg',
             ':IdCategoria' => $data['IdCategoria']
         ]);
     }
@@ -24,6 +24,7 @@ class CustomModel extends DBConnect implements Crud {
     public function findAll() {
         $stmt = $this->con->query("SELECT * FROM prodpersonalizacion");
         $customItems = $stmt->fetchAll();
+        // Agregar la URL base a las imágenes
         foreach ($customItems as &$item) {
             if (!empty($item['Imagen'])) {
                 $item['Imagen'] = APP_BASE_URL . '/src/storage/img/customs/' . $item['Imagen'];
@@ -36,9 +37,7 @@ class CustomModel extends DBConnect implements Crud {
         $stmt = $this->con->prepare("SELECT * FROM prodpersonalizacion WHERE IdPersonalizacion = ?");
         $stmt->execute([$idPersonalizacion]);
         $customItem = $stmt->fetch();
-        if ($customItem && !empty($customItem['Imagen'])) {
-            $customItem['Imagen'] = APP_BASE_URL . '/src/storage/img/customs/' . $customItem['Imagen'];
-        }
+
         return $customItem;
     }
     // Actualiza un registro de personalización existente
@@ -51,7 +50,7 @@ class CustomModel extends DBConnect implements Crud {
         $stmt = $this->con->prepare($sql);
         $params = [
             ':Descripcion' => $data['Descripcion'] ?? null,
-            ':Imagen' => $data['Imagen'] ?? null,
+            ':Imagen' => 'image.jpg',
             ':IdCategoria' => $data['IdCategoria'],
             ':IdPersonalizacion' => $idPersonalizacion
         ];
