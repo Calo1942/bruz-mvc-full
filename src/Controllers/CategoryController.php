@@ -13,43 +13,43 @@ $action = null;
 // Determina la acción a realizar basándose en las solicitudes POST recibidas.
 if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar una nueva categoría.
     $action = 'store'; 
-} elseif (isset($_POST['update'])) { // Si se ha enviado el formulario para actualizar una categoría existente.
+} elseif (isset($_POST['update'])) { 
     $action = 'update'; 
-} elseif (isset($_POST['delete'])) { // Si se ha enviado la solicitud para eliminar una categoría.
+} elseif (isset($_POST['delete'])) { 
     $action = 'delete'; 
-} elseif (isset($_POST['show'])) { // Si se ha solicitado mostrar los detalles de una categoría específica.
+} elseif (isset($_POST['show'])) { 
     $action = 'show'; 
 }
 
-// Estructura switch para manejar las diferentes acciones.
+
 switch ($action) {
-    case 'store': // Caso para almacenar una nueva categoría.
+    case 'store': 
         $data = [
-            'Nombre' => $_POST['Nombre'] ?? '' // Obtiene el nombre de la categoría del POST, o una cadena vacía.
+            'Nombre' => $_POST['Nombre'] ?? ''  
         ];
-        $model->store($data); // Llama al método store del modelo para guardar la categoría.
+        $model->store($data); 
         break;
-    case 'update': // Caso para actualizar una categoría existente.
-        $idCategoria = $_POST['IdCategoria'] ?? null; // Obtiene el IdCategoria de la categoría a actualizar del POST.
-        if ($idCategoria) { // Si el IdCategoria existe.
+    case 'update': 
+        $idCategoria = $_POST['IdCategoria'] ?? null; 
+        if ($idCategoria) { 
             $data = [
-                'Nombre' => $_POST['Nombre'] ?? '' // Obtiene el nombre actualizado.
+                'Nombre' => $_POST['Nombre'] ?? '' 
             ];
-            $model->update($idCategoria, $data); // Llama al método update del modelo para actualizar la categoría.
+            $model->update($idCategoria, $data); 
         }
         break;
-    case 'delete': // Caso para eliminar una categoría.
-        $idCategoria = $_POST['delete'] ?? null; // Obtiene el IdCategoria de la categoría a eliminar del POST.
-        if ($idCategoria) { // Si el IdCategoria existe.
-            $model->delete($idCategoria); // Llama al método delete del modelo para eliminar la categoría.
+    case 'delete': 
+        $idCategoria = $_POST['delete'] ?? null; 
+        if ($idCategoria) { 
+            $model->delete($idCategoria); 
         }
         break;
     case 'show': // Caso para mostrar una categoría específica.
         $idCategoria = $_POST['show']; // Obtiene el IdCategoria de la categoría a mostrar.
         $category = $model->find($idCategoria); // Llama al método find del modelo para buscar la categoría.
         break;
-    default: // Acción por defecto si no se especifica ninguna.
-        // No hay acción específica, el controlador simplemente recuperará todas las categorías.
+    default: 
+        
         break;
 }
 
