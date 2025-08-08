@@ -33,19 +33,19 @@ class InventoryModel extends DBConnect implements Crud {
     }
     
     // Busca un registro de Variante por su ID
-    public function find($idInventario) {
+    public function find($idVariante) {
         $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
                 FROM Variante i 
                 LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
                 LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
                 WHERE i.IdVariante = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->execute([$idInventario]);
+        $stmt->execute([$idVariante]);
         return $stmt->fetch();
     }
     
     // Actualiza un registro de Variante existente
-    public function update($idInventario, $data) {
+    public function update($idVariante, $data) {
         $sql = "UPDATE Variante SET
             Stock = :Stock,
             IdProducto = :IdProducto,
@@ -58,15 +58,15 @@ class InventoryModel extends DBConnect implements Crud {
             ':IdProducto' => $data['IdProducto'],
             ':IdTalla' => $data['IdTalla'],
             ':Color' => $data['Color'],
-            ':IdInventario' => $idInventario
+            ':IdInventario' => $idVariante
         ];
         return $stmt->execute($params);
     }
     
     // Elimina un registro de inventario
-    public function delete($idInventario) {
+    public function delete($idVariante) {
         $stmt = $this->con->prepare("DELETE FROM Variante WHERE IdVariante = ?");
-        return $stmt->execute([$idInventario]);
+        return $stmt->execute([$idVariante]);
     }
     
     // Métodos adicionales específicos para inventario
@@ -96,10 +96,10 @@ class InventoryModel extends DBConnect implements Crud {
     }
     
     // Actualizar stock
-    public function updateStock($idInventario, $nuevoStock) {
+    public function updateStock($idVariante, $nuevoStock) {
         $sql = "UPDATE Variante SET Stock = ? WHERE IdVariante = ?";
         $stmt = $this->con->prepare($sql);
-        return $stmt->execute([$nuevoStock, $idInventario]);
+        return $stmt->execute([$nuevoStock, $idVariante]);
     }
     
     // Obtener productos con stock bajo (menos de 10 unidades)

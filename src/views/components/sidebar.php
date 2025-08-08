@@ -49,6 +49,13 @@ $isInventory = ($currentUrl == 'product' || $currentUrl == 'category' || $curren
             <!-- Submenu de Inventario, se muestra si estamos en product o category -->
             <ul class="collapse nav flex-column ms-3 <?php if($isInventory) echo 'show'; ?>" id="inventario-submenu">
                 <li class="nav-item">
+                    <!-- Link a Inventario, activo si es la página actual -->
+                    <a href="?url=inventory" class="nav-link text-white <?php if($currentUrl == 'inventory') echo 'active'; ?>">
+                        <i class="bi bi-boxes me-2"></i>
+                        Inventario
+                    </a>
+                </li>
+                <li class="nav-item">
                     <!-- Link a Productos, activo si es la página actual -->
                     <a href="?url=product" class="nav-link text-white <?php if($currentUrl == 'product') echo 'active'; ?>">
                         <i class="bi bi-box me-2"></i>
