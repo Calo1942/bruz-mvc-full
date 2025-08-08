@@ -8,40 +8,36 @@ use BruzDeporte\Models\CategoryModel;
 $model = new CategoryModel();
 $action = null;
 
-// Detecta la acción solicitada por POST
-if (isset($_POST['store'])) {
-    $action = 'store';
-} elseif (isset($_POST['update'])) {
-    $action = 'update';
-} elseif (isset($_POST['delete'])) {
-    $action = 'delete';
-} elseif (isset($_POST['show'])) {
-    $action = 'show';
+// Determina la acción a realizar basándose en las solicitudes POST recibidas.
+if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar una nueva categoría.
+    $action = 'store'; 
+} elseif (isset($_POST['update'])) { 
+    $action = 'update'; 
+} elseif (isset($_POST['delete'])) { 
+    $action = 'delete'; 
+} elseif (isset($_POST['show'])) { 
+    $action = 'show'; 
 }
 
-// Estructura switch para manejar las diferentes acciones.
 switch ($action) {
-    // Almacena una nueva categoría
-    case 'store':
+    case 'store': 
         $data = [
-            'Nombre' => $_POST['Nombre'] ?? '' 
+            'Nombre' => $_POST['Nombre'] ?? ''  
         ];
         $model->store($data); 
         break;
-    // Actualiza una categoría existente
-    case 'update':
+    case 'update': 
         $idCategoria = $_POST['IdCategoria'] ?? null; 
-        if ($idCategoria) {
+        if ($idCategoria) { 
             $data = [
                 'Nombre' => $_POST['Nombre'] ?? '' 
             ];
             $model->update($idCategoria, $data); 
         }
         break;
-    // Elimina una categoría
-    case 'delete':
-        $idCategoria = $_POST['delete'] ?? null;
-        if ($idCategoria) {
+    case 'delete': 
+        $idCategoria = $_POST['delete'] ?? null; 
+        if ($idCategoria) { 
             $model->delete($idCategoria); 
         }
         break;
@@ -50,8 +46,8 @@ switch ($action) {
         $idCategoria = $_POST['show']; 
         $category = $model->find($idCategoria); 
         break;
-    // Lista categorías si no hay acción
-    default:
+    default: 
+        
         break;
 }
 
