@@ -8,7 +8,7 @@ use BruzDeporte\Config\Interfaces\Crud;
 class InventoryModel extends DBConnect implements Crud {
     // Almacena un nuevo registro de inventario
     public function store($data) {
-        $sql = "INSERT INTO Inventario (
+        $sql = "INSERT INTO Variante (
             Stock, IdProducto, IdTalla, Color
         ) VALUES (
             :Stock, :IdProducto, :IdTalla, :Color
@@ -25,33 +25,33 @@ class InventoryModel extends DBConnect implements Crud {
     // Recupera todos los registros de inventario
     public function findAll() {
         $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Inventario i 
+                FROM Variante i 
                 LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
                 LEFT JOIN Talla t ON i.IdTalla = t.IdTalla";
         $stmt = $this->con->query($sql);
         return $stmt->fetchAll();
     }
     
-    // Busca un registro de inventario por su ID
+    // Busca un registro de Variante por su ID
     public function find($idInventario) {
         $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Inventario i 
+                FROM Variante i 
                 LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
                 LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
-                WHERE i.IdInventario = ?";
+                WHERE i.IdVariante = ?";
         $stmt = $this->con->prepare($sql);
         $stmt->execute([$idInventario]);
         return $stmt->fetch();
     }
     
-    // Actualiza un registro de inventario existente
+    // Actualiza un registro de Variante existente
     public function update($idInventario, $data) {
-        $sql = "UPDATE Inventario SET
+        $sql = "UPDATE Variante SET
             Stock = :Stock,
             IdProducto = :IdProducto,
             IdTalla = :IdTalla,
             Color = :Color
-            WHERE IdInventario = :IdInventario";
+            WHERE IdVariante = :IdInventario";
         $stmt = $this->con->prepare($sql);
         $params = [
             ':Stock' => $data['Stock'],
@@ -65,16 +65,16 @@ class InventoryModel extends DBConnect implements Crud {
     
     // Elimina un registro de inventario
     public function delete($idInventario) {
-        $stmt = $this->con->prepare("DELETE FROM Inventario WHERE IdInventario = ?");
+        $stmt = $this->con->prepare("DELETE FROM Variante WHERE IdVariante = ?");
         return $stmt->execute([$idInventario]);
     }
     
     // Métodos adicionales específicos para inventario
     
-    // Buscar inventario por producto
+    // Buscar Variante por producto
     public function findByProduct($idProducto) {
         $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Inventario i 
+                FROM Variante i 
                 LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
                 LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
                 WHERE i.IdProducto = ?";
@@ -83,10 +83,10 @@ class InventoryModel extends DBConnect implements Crud {
         return $stmt->fetchAll();
     }
     
-    // Buscar inventario por talla
+    // Buscar Variante por talla
     public function findBySize($idTalla) {
         $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Inventario i 
+                FROM Variante i 
                 LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
                 LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
                 WHERE i.IdTalla = ?";
@@ -97,7 +97,7 @@ class InventoryModel extends DBConnect implements Crud {
     
     // Actualizar stock
     public function updateStock($idInventario, $nuevoStock) {
-        $sql = "UPDATE Inventario SET Stock = ? WHERE IdInventario = ?";
+        $sql = "UPDATE Variante SET Stock = ? WHERE IdVariante = ?";
         $stmt = $this->con->prepare($sql);
         return $stmt->execute([$nuevoStock, $idInventario]);
     }
@@ -105,7 +105,7 @@ class InventoryModel extends DBConnect implements Crud {
     // Obtener productos con stock bajo (menos de 10 unidades)
     public function getLowStock() {
         $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Inventario i 
+                FROM Variante i 
                 LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
                 LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
                 WHERE i.Stock < 10";

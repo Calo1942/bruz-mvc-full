@@ -1,0 +1,4 @@
+- Hacer el archivo de variables de entorno .env
+- Base de datos (investigar)
+- Desarrollar el modulo de Producto Personalizado
+- Corregir todo lo que tenga con la Variante en lugar Inventario

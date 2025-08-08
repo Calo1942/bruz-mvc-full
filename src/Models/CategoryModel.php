@@ -1,5 +1,7 @@
 <?php
 
+namespace BruzDeporte\Models;
+
 use Exception;
 use BruzDeporte\Config\Connect\DBConnect;
 use BruzDeporte\Config\Interfaces\Crud;
@@ -9,15 +11,22 @@ class CategoryModel extends DBConnect implements Crud
     private $idCategoria;
     private $nombre;
 
-    public function setIdCategoria($idCategoria){$this->idCategoria = $idCategoria;}
+    public function setIdCategoria($idCategoria) {
+        $this->idCategoria = $idCategoria;
+    }
 
-    public function setNombre($nombre){$this->nombre = $nombre;}
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
 
-    public function getIdCategoria(){return $this->idCategoria;}
+    public function getIdCategoria() {
+        return $this->idCategoria;
+    }
 
-    public function getNombre(){return $this->nombre;}
+    public function getNombre() {
+        return $this->nombre;
+    }
 
-   
     public function store($data)
     {
         try {
