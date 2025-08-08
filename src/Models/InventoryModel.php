@@ -51,14 +51,14 @@ class InventoryModel extends DBConnect implements Crud {
             IdProducto = :IdProducto,
             IdTalla = :IdTalla,
             Color = :Color
-            WHERE IdVariante = :IdInventario";
+            WHERE IdVariante = :IdVariante";
         $stmt = $this->con->prepare($sql);
         $params = [
             ':Stock' => $data['Stock'],
             ':IdProducto' => $data['IdProducto'],
             ':IdTalla' => $data['IdTalla'],
             ':Color' => $data['Color'],
-            ':IdInventario' => $idVariante
+            ':IdVariante' => $idVariante
         ];
         return $stmt->execute($params);
     }
