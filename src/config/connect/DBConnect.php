@@ -14,7 +14,7 @@
         public function __construct()
         {
             $this->local = 'localhost';
-            $this->nameDB = 'db_bruz_deporte_full';
+            $this->nameDB = 'db_bruz_deporte';
             $this->user = 'root';
             $this->pass = '';
             $this->connectDB();

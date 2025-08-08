@@ -1,14 +1,12 @@
 <?php
 
-namespace BruzDeporte\Controllers; // Define el espacio de nombres para la clase.
+namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel; // Importa el modelo CategoryModel para interactuar con la base de datos.
+use BruzDeporte\Models\CategoryModel; 
 
-// Instancia el modelo CategoryModel.
-$model = new CategoryModel(); 
-
-// Inicializa la variable $action a null.
-$action = null; 
+// Controlador para gestionar categorías
+$model = new CategoryModel();
+$action = null;
 
 // Determina la acción a realizar basándose en las solicitudes POST recibidas.
 if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar una nueva categoría.
@@ -28,13 +26,16 @@ switch ($action) {
             'Nombre' => $_POST['Nombre'] ?? ''  
         ];
         $model->store($data); 
+        $model->store($data); 
         break;
     case 'update': 
         $idCategoria = $_POST['IdCategoria'] ?? null; 
         if ($idCategoria) { 
             $data = [
                 'Nombre' => $_POST['Nombre'] ?? '' 
+                'Nombre' => $_POST['Nombre'] ?? '' 
             ];
+            $model->update($idCategoria, $data); 
             $model->update($idCategoria, $data); 
         }
         break;
@@ -44,19 +45,19 @@ switch ($action) {
             $model->delete($idCategoria); 
         }
         break;
-    case 'show': // Caso para mostrar una categoría específica.
-        $idCategoria = $_POST['show']; // Obtiene el IdCategoria de la categoría a mostrar.
-        $category = $model->find($idCategoria); // Llama al método find del modelo para buscar la categoría.
+    // Muestra detalles de una categoría específica
+    case 'show':
+        $idCategoria = $_POST['show']; 
+        $category = $model->find($idCategoria); 
         break;
     default: 
         
         break;
 }
 
-// Recupera todas las categorías de la base de datos para mostrarlas en la vista.
+// Obtiene todas las categorías para la vista
 $categories = $model->findAll(); 
 
 // Incluye la vista de la lista de categorías.
-// Se asume que la vista se encuentra en '../views/category/category.php'.
 include __DIR__ . '/../views/category/category.php'; 
-die(); // Termina la ejecución del script para asegurar que no se procese más código.
+die(); 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ventas</title>
+    <title>Tallas</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="src/assets/css/style.css">
@@ -27,8 +27,8 @@
         <!-- Contenido principal -->
         <main class="flex-grow-1 p-4 bg-light">
             <?php
-            // para cargar la tabla de ventas
-            //require_once 'components/saleDataTable.php';
+            // para cargar la tabla de tallas
+            require_once 'components/sizeDataTable.php';
             ?>
         </main>
 
@@ -37,9 +37,9 @@
         <!-- para javascript <script src="../../assets/js/script.js"> </script> -->
 
         <!-- Modales -->
-        <?php require_once 'components/saleCreateModal.php'; ?>
-        <?php require_once 'components/saleEditModal.php'; ?>
-        <?php require_once 'components/saleViewModal.php'; ?>
+        <?php require_once 'components/sizeCreateModal.php'; ?>
+        <?php require_once 'components/sizeEditModal.php'; ?>
+        <?php require_once 'components/sizeViewModal.php'; ?>
 
 </body>
 
