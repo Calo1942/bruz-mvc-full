@@ -25,7 +25,7 @@
                     <?php foreach ($inventario as $item): ?>
                         <tr>
                             <!-- Datos del inventario con protección contra XSS -->
-                            <td><?php echo htmlspecialchars($item['IdInventario']); ?></td>
+                            <td><?php echo htmlspecialchars($item['IdVariante']); ?></td>
                             <td><?php echo htmlspecialchars($item['NombreProducto'] ?? 'Sin producto'); ?></td>
                             <td><?php echo htmlspecialchars($item['NombreTalla'] ?? 'Sin talla'); ?></td>
                             <td><?php echo htmlspecialchars($item['Color'] ?? 'Sin color'); ?></td>
@@ -38,7 +38,7 @@
                                 <!-- Botón para ver detalles, abre modal con datos del inventario -->
                                 <button type="button" class="btn btn-sm btn-primary me-1 view-inventory-btn"
                                     data-bs-toggle="modal" data-bs-target="#verInventarioModal"
-                                    data-id="<?php echo htmlspecialchars($item['IdInventario']); ?>"
+                                    data-id="<?php echo htmlspecialchars($item['IdVariante']); ?>"
                                     data-producto="<?php echo htmlspecialchars($item['NombreProducto'] ?? ''); ?>"
                                     data-talla="<?php echo htmlspecialchars($item['NombreTalla'] ?? ''); ?>"
                                     data-color="<?php echo htmlspecialchars($item['Color'] ?? ''); ?>"
@@ -49,7 +49,7 @@
                                 <!-- Botón para editar inventario, abre modal con formulario -->
                                 <button type="button" class="btn btn-sm btn-secondary me-1 edit-inventory-btn"
                                     data-bs-toggle="modal" data-bs-target="#editarInventarioModal"
-                                    data-id="<?php echo htmlspecialchars($item['IdInventario']); ?>"
+                                    data-id="<?php echo htmlspecialchars($item['IdVariante']); ?>"
                                     data-producto="<?php echo htmlspecialchars($item['IdProducto'] ?? ''); ?>"
                                     data-talla="<?php echo htmlspecialchars($item['IdTalla'] ?? ''); ?>"
                                     data-color="<?php echo htmlspecialchars($item['Color'] ?? ''); ?>"
@@ -59,7 +59,7 @@
 
                                 <!-- Formulario para eliminar inventario con confirmación -->
                                 <form action="" method="POST" class="d-inline">
-                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($item['IdInventario']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este registro de inventario?');">
+                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($item['IdVariante']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este registro de inventario?');">
                             <i class="bi bi-trash"></i>
                         </button>
                                 </form>

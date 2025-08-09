@@ -36,7 +36,7 @@ switch ($action) {
         break;
     // Actualiza un registro de inventario existente
     case 'update':
-        $id = $_POST['IdInventario'] ?? null;
+        $id = $_POST['IdVariante'] ?? null;
         if ($id) {
             $data = [
                 'Stock' => $_POST['Stock'] ?? 0,
