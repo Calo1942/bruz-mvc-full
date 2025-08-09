@@ -7,5 +7,6 @@
 
 Modificaciones Un_Carlos:
 - implementación del patrón de diseño "Composición sobre Herencia" en DBConnect
+- Corrección de Implementacion de la carga de ConfigSystem en el Composer para la carga automática de las constantes del sistema
 
 **NOTA:** Estudiar todos los patrones de diseño implementandos en el código

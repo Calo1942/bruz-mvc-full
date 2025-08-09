@@ -4,7 +4,10 @@
     "autoload": {
         "psr-4": {
             "BruzDeporte\\": "src/"
-        }
+        },
+        "files": [
+            "src/config/components/configSystem.php"
+        ]
     },
     "authors": [
         {
