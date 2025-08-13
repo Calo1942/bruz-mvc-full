@@ -2,48 +2,107 @@
 
 namespace BruzDeporte\Models;
 
+use Exception;
 use BruzDeporte\Config\Connect\DBConnect;
 use BruzDeporte\Config\Interfaces\Crud;
 
 class SizeModel extends DBConnect implements Crud {
-    // Almacena una nueva talla
+    private $idTalla;
+    private $nombre;
+
+    public function setIdTalla($idTalla) {
+        $this->idTalla = $idTalla;
+    }
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }   
+
+    public function getIdTalla() {
+        return $this->idTalla;
+    }       
+    
+    public function getNombre() {
+        return $this->nombre;
+    }
+
     public function store($data) {
-        $sql = "INSERT INTO talla (
-            Nombre
-        ) VALUES (
-            :Nombre
-        )";
-        $stmt = $this->con->prepare($sql);
-        return $stmt->execute([
-            ':Nombre' => $data['Nombre']
-        ]);
+        try {
+            $this->setNombre($data['Nombre'] ?? '');
+
+            if (empty($this->getNombre())) {
+                throw new Exception('Nombre requerido');
+            }
+            $sql = "INSERT INTO talla (Nombre) VALUES (:Nombre)";
+            $stmt = $this->con->prepare($sql);
+            return $stmt->execute([
+                ':Nombre' => $this->getNombre()
+            ]);
+        } catch (Exception $e) {
+            echo "Ocurrió un problema: " . $e->getMessage();
+            return false;
+        }
     }
-    // Recupera todas las tallas
+
     public function findAll() {
-        $stmt = $this->con->query("SELECT * FROM talla");
-        return $stmt->fetchAll();
+        try {
+            $stmt = $this->con->query("SELECT * FROM talla");
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            echo "Ocurrió un problema: " . $e->getMessage();
+            return false;
+        }
     }
-    // Busca una talla por su ID
+
     public function find($idTalla) {
-        $stmt = $this->con->prepare("SELECT * FROM talla WHERE IdTalla = ?");
-        $stmt->execute([$idTalla]);
-        return $stmt->fetch();
+        try {
+            $stmt = $this->con->prepare("SELECT * FROM talla WHERE IdTalla = ?");
+            $stmt->execute([$idTalla]);
+            $row = $stmt->fetch();
+            if ($row) {
+                $this->setIdTalla($row['IdTalla']);
+                $this->setNombre($row['Nombre']);
+            }
+            return $row;
+        } catch (Exception $e) {
+            echo "Ocurrió un problema: " . $e->getMessage();
+            return false;
+        }
     }
-    // Actualiza una talla existente
-    public function update($idTalla, $data) {
-        $sql = "UPDATE talla SET
-            Nombre = :Nombre
-            WHERE IdTalla = :IdTalla";
-        $stmt = $this->con->prepare($sql);
-        $params = [
-            ':Nombre' => $data['Nombre'],
-            ':IdTalla' => $idTalla
-        ];
-        return $stmt->execute($params);
+
+    public function update($idTalla, $data)
+    {
+        try {
+            $this->setIdTalla($idTalla);
+            $this->setNombre($data['Nombre'] ?? null);
+
+            if (empty($this->getNombre())) {
+                return false;
+            }
+
+            $sql = "UPDATE talla SET Nombre = :Nombre WHERE IdTalla = :IdTalla";
+            $stmt = $this->con->prepare($sql);
+
+            return $stmt->execute([
+                ':Nombre' => $this->getNombre(),
+                ':IdTalla' => $this->getIdTalla()
+            ]);
+        } catch (\Exception $e) {
+            echo "Ocurrió un problema: " . $e->getMessage();
+            return false;
+        }
     }
-    // Elimina una talla
-    public function delete($idTalla) {
-        $stmt = $this->con->prepare("DELETE FROM talla WHERE IdTalla = ?");
-        return $stmt->execute([$idTalla]);
+
+    public function delete($idTalla){
+    
+        try {
+            $this->setIdTalla($idTalla);
+
+        $stmt = $this->con->prepare("DELETE FROM talla WHERE IdTalla = :IdTalla");
+        return $stmt->execute([':IdTalla' => $this->getIdTalla()]);
+
+        } catch (\Exception $e) {
+            echo "Ocurrió un problema: " . $e->getMessage();
+            return false;
+        }
     }
 }
