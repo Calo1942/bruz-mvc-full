@@ -63,7 +63,7 @@ class CustomModel extends DBConnect implements Crud {
     }
     // Recupera todas las categorías (para listas desplegables)
     public function create() {
-        $stmt = $this->con->query("SELECT * FROM categoria");
+        $stmt = $this->con->query("SELECT * FROM Categoria");
         return $stmt->fetchAll();
     }
 }

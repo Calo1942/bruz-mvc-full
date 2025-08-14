@@ -32,7 +32,7 @@ class SizeModel extends DBConnect implements Crud {
             if (empty($this->getNombre())) {
                 throw new Exception('Nombre requerido');
             }
-            $sql = "INSERT INTO talla (Nombre) VALUES (:Nombre)";
+            $sql = "INSERT INTO Talla (Nombre) VALUES (:Nombre)";
             $stmt = $this->con->prepare($sql);
             return $stmt->execute([
                 ':Nombre' => $this->getNombre()
@@ -45,7 +45,7 @@ class SizeModel extends DBConnect implements Crud {
 
     public function findAll() {
         try {
-            $stmt = $this->con->query("SELECT * FROM talla");
+            $stmt = $this->con->query("SELECT * FROM Talla");
             return $stmt->fetchAll();
         } catch (Exception $e) {
             echo "Ocurrió un problema: " . $e->getMessage();
@@ -55,7 +55,7 @@ class SizeModel extends DBConnect implements Crud {
 
     public function find($idTalla) {
         try {
-            $stmt = $this->con->prepare("SELECT * FROM talla WHERE IdTalla = ?");
+            $stmt = $this->con->prepare("SELECT * FROM Talla WHERE IdTalla = ?");
             $stmt->execute([$idTalla]);
             $row = $stmt->fetch();
             if ($row) {
@@ -79,7 +79,7 @@ class SizeModel extends DBConnect implements Crud {
                 return false;
             }
 
-            $sql = "UPDATE talla SET Nombre = :Nombre WHERE IdTalla = :IdTalla";
+            $sql = "UPDATE Talla SET Nombre = :Nombre WHERE IdTalla = :IdTalla";
             $stmt = $this->con->prepare($sql);
 
             return $stmt->execute([
@@ -97,7 +97,7 @@ class SizeModel extends DBConnect implements Crud {
         try {
             $this->setIdTalla($idTalla);
 
-        $stmt = $this->con->prepare("DELETE FROM talla WHERE IdTalla = :IdTalla");
+        $stmt = $this->con->prepare("DELETE FROM Talla WHERE IdTalla = :IdTalla");
         return $stmt->execute([':IdTalla' => $this->getIdTalla()]);
 
         } catch (\Exception $e) {

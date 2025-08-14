@@ -51,7 +51,7 @@ class ProductModel extends DBConnect implements Crud {
 
     public function store($data) {
         try {
-        $sql = "INSERT INTO producto (
+        $sql = "INSERT INTO Producto (
             Nombre, Descripcion, PrecioDetal, PrecioMayor, IdCategoria
         ) VALUES (
             :Nombre, :Descripcion, :PrecioDetal, :PrecioMayor, :IdCategoria
@@ -72,36 +72,36 @@ class ProductModel extends DBConnect implements Crud {
 
     public function findAll() {
             $sql = "SELECT p.*, c.Nombre as NombreCategoria 
-                FROM producto p 
-                LEFT JOIN categoria c ON p.IdCategoria = c.IdCategoria";
+                FROM Producto p 
+                LEFT JOIN Categoria c ON p.IdCategoria = c.IdCategoria";
         try{
             $stmt = $this->con->query($sql);
-            $productos = $stmt->fetchAll();
-            return $productos;
+            $Productos = $stmt->fetchAll();
+            return $Productos;
         } catch (\PDOException $e) {
-            echo "Error al obtener productos: " . $e->getMessage();
+            echo "Error al obtener Productos: " . $e->getMessage();
             return false;
         }
     }
 
     public function find($idProducto) {
         $sql = "SELECT p.*, c.Nombre as NombreCategoria 
-                FROM producto p 
-                LEFT JOIN categoria c ON p.IdCategoria = c.IdCategoria 
+                FROM Producto p 
+                LEFT JOIN Categoria c ON p.IdCategoria = c.IdCategoria 
                 WHERE p.IdProducto = ?";
         try{
             $stmt = $this->con->prepare($sql);
             $stmt->execute([$idProducto]);
-            $producto = $stmt->fetch();
-            return $producto;
+            $Producto = $stmt->fetch();
+            return $Producto;
         } catch (\PDOException $e) {
-            error_log("Error al buscar producto: " . $e->getMessage());
+            error_log("Error al buscar Producto: " . $e->getMessage());
             return false;
         }
     }
 
     public function update($idProducto, $data) {
-        $sql = "UPDATE producto SET
+        $sql = "UPDATE Producto SET
             Nombre = :Nombre,
             Descripcion = :Descripcion,
             PrecioDetal = :PrecioDetal,
@@ -120,17 +120,17 @@ class ProductModel extends DBConnect implements Crud {
         ];
         return $stmt->execute($params);
         } catch (\PDOException $e) {
-            echo "Error al actualizar producto: " . $e->getMessage();
+            echo "Error al actualizar Producto: " . $e->getMessage();
             return false;
     }
     }
     
     public function delete($idProducto) {
         try {
-        $stmt = $this->con->prepare("DELETE FROM producto WHERE IdProducto = ?");
+        $stmt = $this->con->prepare("DELETE FROM Producto WHERE IdProducto = ?");
         return $stmt->execute([$idProducto]);
         } catch (\PDOException $e) {
-            echo "Error al eliminar producto: " . $e->getMessage();
+            echo "Error al eliminar Producto: " . $e->getMessage();
             return false;
         }
     }
