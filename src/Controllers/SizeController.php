@@ -59,5 +59,6 @@ switch ($action) {
 $tallas = $model->findAll(); 
 
 // Incluye la vista de la lista de tallas.
-include __DIR__ . '/../views/size/size.php'; 
+include __ROOT__ . '/views/size/size.php';
+
 die();

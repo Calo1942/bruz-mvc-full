@@ -3,8 +3,8 @@
 namespace BruzDeporte\Models;
 
 use Exception;
-use BruzDeporte\Config\Connect\DBConnect;
-use BruzDeporte\Config\Interfaces\Crud;
+use BruzDeporte\config\connect\DBConnect;
+use BruzDeporte\config\interfaces\Crud;
 
 class CategoryModel extends DBConnect implements Crud
 {
@@ -36,7 +36,7 @@ class CategoryModel extends DBConnect implements Crud
             throw new Exception('Nombre requerido');
         }
 
-        $sql = "INSERT INTO categoria (Nombre) VALUES (:Nombre)";
+        $sql = "INSERT INTO Categoria (Nombre) VALUES (:Nombre)";
         $stmt = $this->con->prepare($sql);
         return $stmt->execute([':Nombre' => $this->getNombre()]);
 
@@ -49,7 +49,7 @@ class CategoryModel extends DBConnect implements Crud
     public function findAll()
     {
         try{
-        $stmt = $this->con->query("SELECT * FROM categoria");
+        $stmt = $this->con->query("SELECT * FROM Categoria");
         return $stmt->fetchAll();
 
         } catch (\Exception $e) {
@@ -63,7 +63,7 @@ class CategoryModel extends DBConnect implements Crud
         try{
         $this->setIdCategoria($idCategoria);
 
-        $stmt = $this->con->prepare("SELECT * FROM categoria WHERE IdCategoria = :IdCategoria");
+        $stmt = $this->con->prepare("SELECT * FROM Categoria WHERE IdCategoria = :IdCategoria");
         $stmt->execute([':IdCategoria' => $this->getIdCategoria()]);
         $result = $stmt->fetch();
 
@@ -88,7 +88,7 @@ class CategoryModel extends DBConnect implements Crud
             return false; 
         }
 
-        $sql = "UPDATE categoria SET Nombre = :Nombre WHERE IdCategoria = :IdCategoria";
+        $sql = "UPDATE Categoria SET Nombre = :Nombre WHERE IdCategoria = :IdCategoria";
         $stmt = $this->con->prepare($sql);
 
         return $stmt->execute([
@@ -106,7 +106,7 @@ class CategoryModel extends DBConnect implements Crud
         try{
         $this->setIdCategoria($idCategoria);
 
-        $stmt = $this->con->prepare("DELETE FROM categoria WHERE IdCategoria = :IdCategoria");
+        $stmt = $this->con->prepare("DELETE FROM Categoria WHERE IdCategoria = :IdCategoria");
         return $stmt->execute([':IdCategoria' => $this->getIdCategoria()]);
 
         } catch (\Exception $e) {

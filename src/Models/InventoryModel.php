@@ -2,8 +2,8 @@
 
 namespace BruzDeporte\Models;
 
-use BruzDeporte\Config\Connect\DBConnect;
-use BruzDeporte\Config\Interfaces\Crud;
+use BruzDeporte\config\connect\DBConnect;
+use BruzDeporte\config\interfaces\Crud;
 
 class InventoryModel extends DBConnect implements Crud {
     // Almacena un nuevo registro de inventario

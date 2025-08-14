@@ -71,5 +71,7 @@ $data = [
     'products' => $products,
     'categories' => $categories
 ];
-include __DIR__ . '/../views/product/product.php';
+
+include __ROOT__ . '/views/product/product.php';
+
 die();

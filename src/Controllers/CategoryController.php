@@ -55,5 +55,5 @@ switch ($action) {
 $categories = $model->findAll(); 
 
 // Incluye la vista de la lista de categorías.
-include __DIR__ . '/../views/category/category.php'; 
+include __ROOT__ . '/views/category/category.php'; 
 die(); 

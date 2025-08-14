@@ -3,8 +3,8 @@
 namespace BruzDeporte\Models;
 
 use Exception;
-use BruzDeporte\Config\Connect\DBConnect;
-use BruzDeporte\Config\Interfaces\Crud;
+use BruzDeporte\config\connect\DBConnect;
+use BruzDeporte\config\interfaces\Crud;
 
 class SizeModel extends DBConnect implements Crud {
     private $idTalla;

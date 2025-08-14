@@ -2,13 +2,13 @@
 
 namespace BruzDeporte\Models;
 
-use BruzDeporte\Config\Connect\DBConnect;
-use BruzDeporte\Config\Interfaces\Crud;
+use BruzDeporte\config\connect\DBConnect;
+use BruzDeporte\config\interfaces\Crud;
 
 class CustomModel extends DBConnect implements Crud {
     // Almacena un nuevo registro de personalización
     public function store($data) {
-        $sql = "INSERT INTO prodpersonalizacion (
+        $sql = "INSERT INTO ProdPersonalizacion (
             Descripcion, Imagen, IdCategoria
         ) VALUES (
             :Descripcion, :Imagen, :IdCategoria
@@ -22,7 +22,7 @@ class CustomModel extends DBConnect implements Crud {
     }
     // Recupera todos los registros de personalización
     public function findAll() {
-        $stmt = $this->con->query("SELECT * FROM prodpersonalizacion");
+        $stmt = $this->con->query("SELECT * FROM ProdPersonalizacion");
         $customItems = $stmt->fetchAll();
         // Agregar la URL base a las imágenes
         foreach ($customItems as &$item) {
@@ -34,7 +34,7 @@ class CustomModel extends DBConnect implements Crud {
     }
     // Busca un registro de personalización por su ID
     public function find($idPersonalizacion) {
-        $stmt = $this->con->prepare("SELECT * FROM prodpersonalizacion WHERE IdPersonalizacion = ?");
+        $stmt = $this->con->prepare("SELECT * FROM ProdPersonalizacion WHERE IdPersonalizacion = ?");
         $stmt->execute([$idPersonalizacion]);
         $customItem = $stmt->fetch();
 
@@ -42,7 +42,7 @@ class CustomModel extends DBConnect implements Crud {
     }
     // Actualiza un registro de personalización existente
     public function update($idPersonalizacion, $data) {
-        $sql = "UPDATE prodpersonalizacion SET
+        $sql = "UPDATE ProdPersonalizacion SET
             Descripcion = :Descripcion,
             Imagen = :Imagen,
             IdCategoria = :IdCategoria
@@ -58,7 +58,7 @@ class CustomModel extends DBConnect implements Crud {
     }
     // Elimina un registro de personalización
     public function delete($idPersonalizacion) {
-        $stmt = $this->con->prepare("DELETE FROM prodpersonalizacion WHERE IdPersonalizacion = ?");
+        $stmt = $this->con->prepare("DELETE FROM ProdPersonalizacion WHERE IdPersonalizacion = ?");
         return $stmt->execute([$idPersonalizacion]);
     }
     // Recupera todas las categorías (para listas desplegables)

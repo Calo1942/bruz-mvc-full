@@ -1,6 +1,6 @@
 <?php
 
-    namespace BruzDeporte\config\Interfaces;
+    namespace BruzDeporte\config\interfaces;
 
     interface Crud {
         public function store($data);

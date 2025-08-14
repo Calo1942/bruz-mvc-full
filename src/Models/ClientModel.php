@@ -4,8 +4,8 @@ namespace BruzDeporte\Models;
 
 use PDOException;
 use Exception;
-use BruzDeporte\Config\Connect\DBConnect;
-use BruzDeporte\Config\Interfaces\Crud;
+use BruzDeporte\config\connect\DBConnect;
+use BruzDeporte\config\interfaces\Crud;
 
 class ClientModel extends DBConnect implements Crud {
 
@@ -37,7 +37,7 @@ class ClientModel extends DBConnect implements Crud {
 
     public function store($data) {
         try{
-        $sql = "INSERT INTO cliente (
+        $sql = "INSERT INTO Cliente (
             Cedula, Nombre, Apellido, Correo, Telefono
         ) VALUES (
             :Cedula, :Nombre, :Apellido, :Correo, :Telefono
@@ -62,28 +62,28 @@ class ClientModel extends DBConnect implements Crud {
 
     public function findAll() {
         try{
-            $stmt = $this->con->query("SELECT * FROM cliente");
+            $stmt = $this->con->query("SELECT * FROM Cliente");
             return $stmt->fetchAll();
 
         } catch (\PDOException $e) {
-            error_log("Error al obtener clientes: " . $e->getMessage());
+            error_log("Error al obtener Clientes: " . $e->getMessage());
             return false;
         }
     }
  
     public function find($cedula) {
         try{
-        $stmt = $this->con->prepare("SELECT * FROM cliente WHERE Cedula = ?");
+        $stmt = $this->con->prepare("SELECT * FROM Cliente WHERE Cedula = ?");
         $stmt->execute([$cedula]);
         return $stmt->fetch();
         } catch (\PDOException $e) {
-            error_log("Error al buscar cliente: " . $e->getMessage());
+            error_log("Error al buscar Cliente: " . $e->getMessage());
             return false;
         }
     }
  
     public function update($cedula, $data) {
-        $sql = "UPDATE cliente SET
+        $sql = "UPDATE Cliente SET
             Nombre = :Nombre,
             Apellido = :Apellido,
             Correo = :Correo,
@@ -101,18 +101,18 @@ class ClientModel extends DBConnect implements Crud {
         ];
         return $stmt->execute($params);
         } catch (\PDOException $e) {
-            error_log("Error al actualizar cliente: " . $e->getMessage());
+            error_log("Error al actualizar Cliente: " . $e->getMessage());
             return false;
         }
     }
 
     public function delete($cedula) {
         try{
-        $stmt = $this->con->prepare("DELETE FROM cliente WHERE Cedula = ?");
+        $stmt = $this->con->prepare("DELETE FROM Cliente WHERE Cedula = ?");
         return $stmt->execute([$cedula]);
         
         } catch (\PDOException $e) {
-            error_log("Error al eliminar cliente: " . $e->getMessage());
+            error_log("Error al eliminar Cliente: " . $e->getMessage());
             return false;
         }
     }

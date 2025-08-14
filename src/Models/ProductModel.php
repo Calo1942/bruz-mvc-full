@@ -2,8 +2,8 @@
 
 namespace BruzDeporte\Models;
 
-use BruzDeporte\Config\Connect\DBConnect;
-use BruzDeporte\Config\Interfaces\Crud;
+use BruzDeporte\config\connect\DBConnect;
+use BruzDeporte\config\interfaces\Crud;
 
 class ProductModel extends DBConnect implements Crud {
     private $IdProducto;

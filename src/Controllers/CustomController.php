@@ -69,5 +69,7 @@ $data = [
     'customItems' => $customItems,
     'categories' => $categories
 ];
-include __DIR__ . '/../views/custom/custom.php';
+
+include __ROOT__ . '/views/custom/custom.php';
+
 die();
