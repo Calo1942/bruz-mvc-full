@@ -10,10 +10,10 @@
             <!-- Cuerpo del modal con el formulario -->
             <div class="modal-body">
                 <form id="formEditarCategoria" action="" method="POST">
-                    <input type="hidden" id="editarCategoriaId" name="IdCategoria">
+                    <input type="hidden" id="editarCategoriaId" name="id_categoria">
                     <div class="mb-3">
                         <label for="editarNombreCategoria" class="form-label">Nombre de la Categoría</label>
-                        <input type="text" class="form-control" id="editarNombreCategoria" name="Nombre" required>
+                        <input type="text" class="form-control" id="editarNombreCategoria" name="nombre" required>
                     </div>
                     <!-- Botones de acción -->
                     <div class="modal-footer">

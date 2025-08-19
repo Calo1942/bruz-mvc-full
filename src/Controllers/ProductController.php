@@ -24,11 +24,11 @@ switch ($action) {
     // Almacena un nuevo producto
     case 'store':
         $data = [
-            'Nombre' => $_POST['Nombre'] ?? '',
-            'Descripcion' => $_POST['Descripcion'] ?? null,
-            'PrecioDetal' => $_POST['PrecioDetal'] ?? 0,
-            'PrecioMayor' => $_POST['PrecioMayor'] ?? null,
-            'IdCategoria' => $_POST['IdCategoria'] ?? null
+            'nombre' => $_POST['Nombre'] ?? '',
+            'descripcion' => $_POST['Descripcion'] ?? null,
+            'precio_detal' => $_POST['PrecioDetal'] ?? 0,
+            'precio_mayor' => $_POST['PrecioMayor'] ?? null,
+            'id_categoria' => $_POST['IdCategoria'] ?? null
         ];
         $model->store($data);
         break;
@@ -37,11 +37,11 @@ switch ($action) {
         $id = $_POST['IdProducto'] ?? null;
         if ($id) {
             $data = [
-                'Nombre' => $_POST['Nombre'] ?? '',
-                'Descripcion' => $_POST['Descripcion'] ?? null,
-                'PrecioDetal' => $_POST['PrecioDetal'] ?? 0,
-                'PrecioMayor' => $_POST['PrecioMayor'] ?? null,
-                'IdCategoria' => $_POST['IdCategoria'] ?? null
+                'nombre' => $_POST['Nombre'] ?? '',
+                'descripcion' => $_POST['Descripcion'] ?? null,
+                'precio_detal' => $_POST['PrecioDetal'] ?? 0,
+                'precio_mayor' => $_POST['PrecioMayor'] ?? null,
+                'id_categoria' => $_POST['IdCategoria'] ?? null
             ];
             $model->update($id, $data);
         }

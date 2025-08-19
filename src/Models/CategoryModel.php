@@ -8,11 +8,11 @@ use BruzDeporte\config\interfaces\Crud;
 
 class CategoryModel extends DBConnect implements Crud
 {
-    private $idCategoria;
+    private $id_categoria;
     private $nombre;
 
-    public function setIdCategoria($idCategoria) {
-        $this->idCategoria = $idCategoria;
+    public function setIdCategoria($id_categoria) {
+        $this->id_categoria = $id_categoria;
     }
 
     public function setNombre($nombre) {
@@ -20,7 +20,7 @@ class CategoryModel extends DBConnect implements Crud
     }
 
     public function getIdCategoria() {
-        return $this->idCategoria;
+        return $this->id_categoria;
     }
 
     public function getNombre() {
@@ -30,27 +30,15 @@ class CategoryModel extends DBConnect implements Crud
     public function store($data)
     {
         try {
-        $this->setNombre($data['Nombre'] ?? '');
+            $this->setNombre($data['nombre'] ?? '');
 
-        if (empty($this->getNombre())) {
-            throw new Exception('Nombre requerido');
-        }
+            if (empty($this->getNombre())) {
+                throw new Exception('Nombre requerido');
+            }
 
-        $sql = "INSERT INTO Categoria (Nombre) VALUES (:Nombre)";
-        $stmt = $this->con->prepare($sql);
-        return $stmt->execute([':Nombre' => $this->getNombre()]);
-
-    } catch (\Exception $e) {
-        echo "Ocurrió un problema: " . $e->getMessage();
-        return false;
-    }
-    }
-
-    public function findAll()
-    {
-        try{
-        $stmt = $this->con->query("SELECT * FROM Categoria");
-        return $stmt->fetchAll();
+            $sql = "INSERT INTO categoria (nombre) VALUES (:nombre)";
+            $stmt = $this->con->prepare($sql);
+            return $stmt->execute([':nombre' => $this->getNombre()]);
 
         } catch (\Exception $e) {
             echo "Ocurrió un problema: " . $e->getMessage();
@@ -58,19 +46,31 @@ class CategoryModel extends DBConnect implements Crud
         }
     }
 
-    public function find($idCategoria)
+    public function findAll()
     {
         try{
-        $this->setIdCategoria($idCategoria);
+            $stmt = $this->con->query("SELECT * FROM categoria");
+            return $stmt->fetchAll();
 
-        $stmt = $this->con->prepare("SELECT * FROM Categoria WHERE IdCategoria = :IdCategoria");
-        $stmt->execute([':IdCategoria' => $this->getIdCategoria()]);
-        $result = $stmt->fetch();
-
-        if ($result) {
-            $this->setNombre($result['Nombre']);
+        } catch (\Exception $e) {
+            echo "Ocurrió un problema: " . $e->getMessage();
+            return false;
         }
-        return $result;
+    }
+
+    public function find($id_categoria)
+    {
+        try{
+            $this->setIdCategoria($id_categoria);
+
+            $stmt = $this->con->prepare("SELECT * FROM categoria WHERE id_categoria = :id_categoria");
+            $stmt->execute([':id_categoria' => $this->getIdCategoria()]);
+            $result = $stmt->fetch();
+
+            if ($result) {
+                $this->setNombre($result['nombre']);
+            }
+            return $result;
 
         }catch (\Exception $e) {
             echo "Ocurrió un problema: " . $e->getMessage();
@@ -78,36 +78,36 @@ class CategoryModel extends DBConnect implements Crud
         }
     }
 
-    public function update($idCategoria, $data)
+    public function update($id_categoria, $data)
     {
         try{
-        $this->setIdCategoria($idCategoria);
-        $this->setNombre($data['Nombre'] ?? null);
+            $this->setIdCategoria($id_categoria);
+            $this->setNombre($data['nombre'] ?? null);
 
-         if (empty($this->getNombre())) {
+            if (empty($this->getNombre())) {
+                return false; 
+            }
+
+            $sql = "UPDATE categoria SET nombre = :nombre WHERE id_categoria = :id_categoria";
+            $stmt = $this->con->prepare($sql);
+
+            return $stmt->execute([
+                ':nombre' => $this->getNombre(),
+                ':id_categoria' => $this->getIdCategoria()
+            ]);
+        } catch (\Exception $e) {
+            echo "Ocurrió un problema: " . $e->getMessage();
             return false; 
         }
-
-        $sql = "UPDATE Categoria SET Nombre = :Nombre WHERE IdCategoria = :IdCategoria";
-        $stmt = $this->con->prepare($sql);
-
-        return $stmt->execute([
-            ':Nombre' => $this->getNombre(),
-            ':IdCategoria' => $this->getIdCategoria()
-        ]);
-        } catch (\Exception $e) {
-        echo "Ocurrió un problema: " . $e->getMessage();
-        return false; 
-    }
     }
 
-    public function delete($idCategoria)
+    public function delete($id_categoria)
     {
         try{
-        $this->setIdCategoria($idCategoria);
+        $this->setIdCategoria($id_categoria);
 
-        $stmt = $this->con->prepare("DELETE FROM Categoria WHERE IdCategoria = :IdCategoria");
-        return $stmt->execute([':IdCategoria' => $this->getIdCategoria()]);
+        $stmt = $this->con->prepare("DELETE FROM categoria WHERE id_categoria = :id_categoria");
+        return $stmt->execute([':id_categoria' => $this->getIdCategoria()]);
 
         } catch (\Exception $e) {
             echo "Ocurrió un problema: " . $e->getMessage();

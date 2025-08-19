@@ -9,49 +9,49 @@ use BruzDeporte\config\interfaces\Crud;
 
 class ClientModel extends DBConnect implements Crud {
 
-    private $Cedula;
-    private $Nombre;
-    private $Apellido;
-    private $Correo;
-    private $Telefono;
+    private $cedula;
+    private $nombre;
+    private $apellido;
+    private $correo;
+    private $telefono;
 
-    public function getCedula() {return $this->Cedula;}
+    public function getCedula() {return $this->cedula;}
 
-    public function getNombre() {return $this->Nombre;}
+    public function getNombre() {return $this->nombre;}
 
-    public function getApellido() {return $this->Apellido;}
+    public function getApellido() {return $this->apellido;}
 
-    public function getCorreo() {return $this->Correo;}
+    public function getCorreo() {return $this->correo;}
 
-    public function getTelefono() {return $this->Telefono;}
+    public function getTelefono() {return $this->telefono;}
 
-    public function setCedula($Cedula) {$this->Cedula = $Cedula;}
+    public function setCedula($cedula) {$this->cedula = $cedula;}
 
-    public function setNombre($Nombre) {$this->Nombre = $Nombre;}
+    public function setNombre($nombre) {$this->nombre = $nombre;}
 
-    public function setApellido($Apellido) {$this->Apellido = $Apellido;}
+    public function setApellido($apellido) {$this->apellido = $apellido;}
 
-    public function setCorreo($Correo) {$this->Correo = $Correo;}
+    public function setCorreo($correo) {$this->correo = $correo;}
 
-    public function setTelefono($Telefono) {$this->Telefono = $Telefono;}
+    public function setTelefono($telefono) {$this->telefono = $telefono;}
 
     public function store($data) {
         try{
-        $sql = "INSERT INTO Cliente (
-            Cedula, Nombre, Apellido, Correo, Telefono
+        $sql = "INSERT INTO cliente (
+            cedula, nombre, apellido, correo, telefono
         ) VALUES (
-            :Cedula, :Nombre, :Apellido, :Correo, :Telefono
+            :cedula, :nombre, :apellido, :correo, :telefono
         )";
         $stmt = $this->con->prepare($sql);
         return $stmt->execute([
-            ':Cedula' => $data['Cedula'],
-            ':Nombre' => $data['Nombre'],
-            ':Apellido' => $data['Apellido'],
-            ':Correo' => $data['Correo'] ?? null,
-            ':Telefono' => $data['Telefono'] ?? null
+            ':cedula' => $data['cedula'],
+            ':nombre' => $data['nombre'],
+            ':apellido' => $data['apellido'],
+            ':correo' => $data['correo'] ?? null,
+            ':telefono' => $data['telefono'] ?? null
         ]);
         }  catch (\PDOException $e) {
-        error_log("Error en Cliente: " . $e->getMessage());
+        error_log("Error en ClientModel::store: " . $e->getMessage());
         return false;
 
         } catch (\Exception $e) {
@@ -62,18 +62,18 @@ class ClientModel extends DBConnect implements Crud {
 
     public function findAll() {
         try{
-            $stmt = $this->con->query("SELECT * FROM Cliente");
+            $stmt = $this->con->query("SELECT * FROM cliente");
             return $stmt->fetchAll();
 
         } catch (\PDOException $e) {
-            error_log("Error al obtener Clientes: " . $e->getMessage());
+            error_log("Error en ClientModel::findAll: " . $e->getMessage());
             return false;
         }
     }
  
     public function find($cedula) {
         try{
-        $stmt = $this->con->prepare("SELECT * FROM Cliente WHERE Cedula = ?");
+        $stmt = $this->con->prepare("SELECT * FROM cliente WHERE cedula = ?");
         $stmt->execute([$cedula]);
         return $stmt->fetch();
         } catch (\PDOException $e) {
@@ -83,32 +83,32 @@ class ClientModel extends DBConnect implements Crud {
     }
  
     public function update($cedula, $data) {
-        $sql = "UPDATE Cliente SET
-            Nombre = :Nombre,
-            Apellido = :Apellido,
-            Correo = :Correo,
-            Telefono = :Telefono
-            WHERE Cedula = :Cedula";
+        $sql = "UPDATE cliente SET
+            nombre = :nombre,
+            apellido = :apellido,
+            correo = :correo,
+            telefono = :telefono
+            WHERE cedula = :cedula";
 
         try{    
         $stmt = $this->con->prepare($sql);
         $params = [
-            ':Nombre' => $data['Nombre'],
-            ':Apellido' => $data['Apellido'],
-            ':Correo' => $data['Correo'] ?? null,
-            ':Telefono' => $data['Telefono'] ?? null,
-            ':Cedula' => $cedula
+            ':nombre' => $data['nombre'],
+            ':apellido' => $data['apellido'],
+            ':correo' => $data['correo'] ?? null,
+            ':telefono' => $data['telefono'] ?? null,
+            ':cedula' => $cedula
         ];
         return $stmt->execute($params);
         } catch (\PDOException $e) {
-            error_log("Error al actualizar Cliente: " . $e->getMessage());
+            error_log("Error en ClientModel::update: " . $e->getMessage());
             return false;
         }
     }
 
     public function delete($cedula) {
         try{
-        $stmt = $this->con->prepare("DELETE FROM Cliente WHERE Cedula = ?");
+        $stmt = $this->con->prepare("DELETE FROM cliente WHERE cedula = ?");
         return $stmt->execute([$cedula]);
         
         } catch (\PDOException $e) {

@@ -6,40 +6,40 @@ use BruzDeporte\config\connect\DBConnect;
 use BruzDeporte\config\interfaces\Crud;
 
 class ProductModel extends DBConnect implements Crud {
-    private $IdProducto;
-    private $Nombre;
-    private $Descripcion;
-    private $PrecioDetal;
-    private $PrecioMayor;
-    private $IdCategoria;
+    private $id_producto;
+    private $nombre;
+    private $descripcion;
+    private $precio_detal;
+    private $precio_mayor;
+    private $id_categoria;
 
     
     public function setProducto(
-        $IdProducto = null,
-        $Nombre = null,
-        $Descripcion = null,
-        $PrecioDetal = null,
-        $PrecioMayor = null,
-        $IdCategoria = null
+        $id_producto = null,
+        $nombre = null,
+        $descripcion = null,
+        $precio_detal = null,
+        $precio_mayor = null,
+        $id_categoria = null
     ) {
-        if ($IdProducto !== null)   $this->IdProducto   = $IdProducto;
-        if ($Nombre !== null)       $this->Nombre       = $Nombre;
-        if ($Descripcion !== null)  $this->Descripcion  = $Descripcion;
-        if ($PrecioDetal !== null)  $this->PrecioDetal  = $PrecioDetal;
-        if ($PrecioMayor !== null)  $this->PrecioMayor  = $PrecioMayor;
-        if ($IdCategoria !== null)  $this->IdCategoria  = $IdCategoria;
+        if ($id_producto !== null)   $this->id_producto   = $id_producto;
+        if ($nombre !== null)       $this->nombre       = $nombre;
+        if ($descripcion !== null)  $this->descripcion  = $descripcion;
+        if ($precio_detal !== null)  $this->precio_detal  = $precio_detal;
+        if ($precio_mayor !== null)  $this->precio_mayor  = $precio_mayor;
+        if ($id_categoria !== null)  $this->id_categoria  = $id_categoria;
 
-        return $this; 
+        return $this;
     }
 
     public function getProducto($field = null) {
             $data = [
-                'IdProducto'   => $this->IdProducto,
-                'Nombre'       => $this->Nombre,
-                'Descripcion'  => $this->Descripcion,
-                'PrecioDetal'  => $this->PrecioDetal,
-                'PrecioMayor'  => $this->PrecioMayor,
-                'IdCategoria'  => $this->IdCategoria
+                'id_producto'   => $this->id_producto,
+                'nombre'       => $this->nombre,
+                'descripcion'  => $this->descripcion,
+                'precio_detal'  => $this->precio_detal,
+                'precio_mayor'  => $this->precio_mayor,
+                'id_categoria'  => $this->id_categoria
             ];
 
             if ($field === null) {
@@ -51,18 +51,18 @@ class ProductModel extends DBConnect implements Crud {
 
     public function store($data) {
         try {
-        $sql = "INSERT INTO Producto (
-            Nombre, Descripcion, PrecioDetal, PrecioMayor, IdCategoria
+        $sql = "INSERT INTO producto (
+            nombre, descripcion, precio_detal, precio_mayor, id_categoria
         ) VALUES (
-            :Nombre, :Descripcion, :PrecioDetal, :PrecioMayor, :IdCategoria
+            :nombre, :descripcion, :precio_detal, :precio_mayor, :id_categoria
         )";
         $stmt = $this->con->prepare($sql);
         return $stmt->execute([
-            ':Nombre' => $data['Nombre'],
-            ':Descripcion' => $data['Descripcion'] ?? null,
-            ':PrecioDetal' => $data['PrecioDetal'],
-            ':PrecioMayor' => $data['PrecioMayor'] ?? null,
-            ':IdCategoria' => $data['IdCategoria']
+            ':nombre' => $data['nombre'],
+            ':descripcion' => $data['descripcion'] ?? null,
+            ':precio_detal' => $data['precio_detal'],
+            ':precio_mayor' => $data['precio_mayor'] ?? null,
+            ':id_categoria' => $data['id_categoria']
         ]);
         } catch (\PDOException $e) {
         echo "Error en Producto: " . $e->getMessage();
@@ -71,9 +71,9 @@ class ProductModel extends DBConnect implements Crud {
     }
 
     public function findAll() {
-            $sql = "SELECT p.*, c.Nombre as NombreCategoria 
-                FROM Producto p 
-                LEFT JOIN Categoria c ON p.IdCategoria = c.IdCategoria";
+            $sql = "SELECT p.*, c.nombre as nombre_categoria 
+                FROM producto p 
+                LEFT JOIN categoria c ON p.id_categoria = c.id_categoria";
         try{
             $stmt = $this->con->query($sql);
             $Productos = $stmt->fetchAll();
@@ -84,14 +84,14 @@ class ProductModel extends DBConnect implements Crud {
         }
     }
 
-    public function find($idProducto) {
-        $sql = "SELECT p.*, c.Nombre as NombreCategoria 
-                FROM Producto p 
-                LEFT JOIN Categoria c ON p.IdCategoria = c.IdCategoria 
-                WHERE p.IdProducto = ?";
+    public function find($id_producto) {
+        $sql = "SELECT p.*, c.nombre as nombre_categoria 
+                FROM producto p 
+                LEFT JOIN categoria c ON p.id_categoria = c.id_categoria 
+                WHERE p.id_producto = ?";
         try{
             $stmt = $this->con->prepare($sql);
-            $stmt->execute([$idProducto]);
+            $stmt->execute([$id_producto]);
             $Producto = $stmt->fetch();
             return $Producto;
         } catch (\PDOException $e) {
@@ -100,23 +100,23 @@ class ProductModel extends DBConnect implements Crud {
         }
     }
 
-    public function update($idProducto, $data) {
-        $sql = "UPDATE Producto SET
-            Nombre = :Nombre,
-            Descripcion = :Descripcion,
-            PrecioDetal = :PrecioDetal,
-            PrecioMayor = :PrecioMayor,
-            IdCategoria = :IdCategoria
-            WHERE IdProducto = :IdProducto";
+    public function update($id_producto, $data) {
+        $sql = "UPDATE producto SET
+            nombre = :nombre,
+            descripcion = :descripcion,
+            precio_detal = :precio_detal,
+            precio_mayor = :precio_mayor,
+            id_categoria = :id_categoria
+            WHERE id_producto = :id_producto";
         try {
         $stmt = $this->con->prepare($sql);
         $params = [
-            ':Nombre' => $data['Nombre'],
-            ':Descripcion' => $data['Descripcion'] ?? null,
-            ':PrecioDetal' => $data['PrecioDetal'],
-            ':PrecioMayor' => $data['PrecioMayor'] ?? null,
-            ':IdCategoria' => $data['IdCategoria'],
-            ':IdProducto' => $idProducto
+            ':nombre' => $data['nombre'],
+            ':descripcion' => $data['descripcion'] ?? null,
+            ':precio_detal' => $data['precio_detal'],
+            ':precio_mayor' => $data['precio_mayor'] ?? null,
+            ':id_categoria' => $data['id_categoria'],
+            ':id_producto' => $id_producto
         ];
         return $stmt->execute($params);
         } catch (\PDOException $e) {
@@ -125,10 +125,10 @@ class ProductModel extends DBConnect implements Crud {
     }
     }
     
-    public function delete($idProducto) {
+    public function delete($id_producto) {
         try {
-        $stmt = $this->con->prepare("DELETE FROM Producto WHERE IdProducto = ?");
-        return $stmt->execute([$idProducto]);
+        $stmt = $this->con->prepare("DELETE FROM producto WHERE id_producto = ?");
+        return $stmt->execute([$id_producto]);
         } catch (\PDOException $e) {
             echo "Error al eliminar Producto: " . $e->getMessage();
             return false;

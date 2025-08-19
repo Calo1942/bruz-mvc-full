@@ -75,3 +75,9 @@ Aunque MySQL no impone reglas estrictas sobre cómo nombrar columnas y tablas, s
 ---
 
 ¿Quieres que te ayude a revisar o diseñar nombres para una base de datos específica? Puedo ayudarte a pulirlos o sugerir una estructura más clara.
+
+# Tilulo
+### Tilulo
+###### Titulo
+
+---
