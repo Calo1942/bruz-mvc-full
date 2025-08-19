@@ -8,107 +8,107 @@ use BruzDeporte\config\interfaces\Crud;
 class InventoryModel extends DBConnect implements Crud {
     // Almacena un nuevo registro de inventario
     public function store($data) {
-        $sql = "INSERT INTO Variante (
-            Stock, IdProducto, IdTalla, Color
+        $sql = "INSERT INTO variante (
+            stock, id_producto, id_talla, color
         ) VALUES (
-            :Stock, :IdProducto, :IdTalla, :Color
+            :stock, :id_producto, :id_talla, :color
         )";
         $stmt = $this->con->prepare($sql);
         return $stmt->execute([
-            ':Stock' => $data['Stock'],
-            ':IdProducto' => $data['IdProducto'],
-            ':IdTalla' => $data['IdTalla'],
-            ':Color' => $data['Color']
+            ':stock' => $data['stock'],
+            ':id_producto' => $data['id_producto'],
+            ':id_talla' => $data['id_talla'],
+            ':color' => $data['color']
         ]);
     }
     
     // Recupera todos los registros de inventario
     public function findAll() {
-        $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Variante i 
-                LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
-                LEFT JOIN Talla t ON i.IdTalla = t.IdTalla";
+        $sql = "SELECT i.*, p.nombre as nombre_producto, t.nombre as nombre_talla 
+                FROM variante i 
+                LEFT JOIN producto p ON i.id_producto = p.id_producto 
+                LEFT JOIN talla t ON i.id_talla = t.id_talla";
         $stmt = $this->con->query($sql);
         return $stmt->fetchAll();
     }
     
-    // Busca un registro de Variante por su ID
-    public function find($idVariante) {
-        $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Variante i 
-                LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
-                LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
-                WHERE i.IdVariante = ?";
+    // Busca un registro de variante por su ID
+    public function find($id_variante) {
+        $sql = "SELECT i.*, p.nombre as nombre_producto, t.nombre as nombre_talla 
+                FROM variante i 
+                LEFT JOIN producto p ON i.id_producto = p.id_producto 
+                LEFT JOIN talla t ON i.id_talla = t.id_talla 
+                WHERE i.id_variante = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->execute([$idVariante]);
+        $stmt->execute([$id_variante]);
         return $stmt->fetch();
     }
     
-    // Actualiza un registro de Variante existente
-    public function update($idVariante, $data) {
-        $sql = "UPDATE Variante SET
-            Stock = :Stock,
-            IdProducto = :IdProducto,
-            IdTalla = :IdTalla,
-            Color = :Color
-            WHERE IdVariante = :IdVariante";
+    // Actualiza un registro de variante existente
+    public function update($id_variante, $data) {
+        $sql = "UPDATE variante SET
+            stock = :stock,
+            id_producto = :id_producto,
+            id_talla = :id_talla,
+            color = :color
+            WHERE id_variante = :id_variante";
         $stmt = $this->con->prepare($sql);
         $params = [
-            ':Stock' => $data['Stock'],
-            ':IdProducto' => $data['IdProducto'],
-            ':IdTalla' => $data['IdTalla'],
-            ':Color' => $data['Color'],
-            ':IdVariante' => $idVariante
+            ':stock' => $data['stock'],
+            ':id_producto' => $data['id_producto'],
+            ':id_talla' => $data['id_talla'],
+            ':color' => $data['color'],
+            ':id_variante' => $id_variante
         ];
         return $stmt->execute($params);
     }
     
     // Elimina un registro de inventario
-    public function delete($idVariante) {
-        $stmt = $this->con->prepare("DELETE FROM Variante WHERE IdVariante = ?");
-        return $stmt->execute([$idVariante]);
+    public function delete($id_variante) {
+        $stmt = $this->con->prepare("DELETE FROM variante WHERE id_variante = ?");
+        return $stmt->execute([$id_variante]);
     }
     
     // Métodos adicionales específicos para inventario
     
-    // Buscar Variante por producto
-    public function findByProduct($idProducto) {
-        $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Variante i 
-                LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
-                LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
-                WHERE i.IdProducto = ?";
+    // Buscar variante por producto
+    public function findByProduct($id_producto) {
+        $sql = "SELECT i.*, p.nombre as nombre_producto, t.nombre as nombre_talla 
+                FROM variante i 
+                LEFT JOIN producto p ON i.id_producto = p.id_producto 
+                LEFT JOIN talla t ON i.id_talla = t.id_talla 
+                WHERE i.id_producto = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->execute([$idProducto]);
+        $stmt->execute([$id_producto]);
         return $stmt->fetchAll();
     }
     
-    // Buscar Variante por talla
-    public function findBySize($idTalla) {
-        $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Variante i 
-                LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
-                LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
-                WHERE i.IdTalla = ?";
+    // Buscar variante por talla
+    public function findBySize($id_talla) {
+        $sql = "SELECT i.*, p.nombre as nombre_producto, t.nombre as nombre_talla 
+                FROM variante i 
+                LEFT JOIN producto p ON i.id_producto = p.id_producto 
+                LEFT JOIN talla t ON i.id_talla = t.id_talla 
+                WHERE i.id_talla = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->execute([$idTalla]);
+        $stmt->execute([$id_talla]);
         return $stmt->fetchAll();
     }
     
     // Actualizar stock
-    public function updateStock($idVariante, $nuevoStock) {
-        $sql = "UPDATE Variante SET Stock = ? WHERE IdVariante = ?";
+    public function updatestock($id_variante, $nuevostock) {
+        $sql = "UPDATE variante SET stock = ? WHERE id_variante = ?";
         $stmt = $this->con->prepare($sql);
-        return $stmt->execute([$nuevoStock, $idVariante]);
+        return $stmt->execute([$nuevostock, $id_variante]);
     }
     
     // Obtener productos con stock bajo (menos de 10 unidades)
-    public function getLowStock() {
-        $sql = "SELECT i.*, p.Nombre as NombreProducto, t.Nombre as NombreTalla 
-                FROM Variante i 
-                LEFT JOIN Producto p ON i.IdProducto = p.IdProducto 
-                LEFT JOIN Talla t ON i.IdTalla = t.IdTalla 
-                WHERE i.Stock < 10";
+    public function getLowstock() {
+        $sql = "SELECT i.*, p.nombre as nombre_producto, t.nombre as nombre_talla 
+                FROM variante i 
+                LEFT JOIN producto p ON i.id_producto = p.id_producto 
+                LEFT JOIN talla t ON i.id_talla = t.id_talla 
+                WHERE i.stock < 10";
         $stmt = $this->con->query($sql);
         return $stmt->fetchAll();
     }
