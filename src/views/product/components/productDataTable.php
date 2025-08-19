@@ -25,22 +25,22 @@
                     <?php foreach ($products as $product): ?>
                         <tr>
                             <!-- Datos de cada producto -->
-                            <td><?php echo htmlspecialchars($product['IdProducto']); ?></td>
-                            <td><?php echo htmlspecialchars($product['Nombre']); ?></td>
-                            <td><?php echo htmlspecialchars($product['NombreCategoria'] ?? 'Sin categoría'); ?></td>
-                            <td>$<?php echo htmlspecialchars($product['PrecioDetal']); ?></td>
-                            <td>$<?php echo htmlspecialchars($product['PrecioMayor'] ?? 'N/A'); ?></td>
+                            <td><?php echo htmlspecialchars($product['id_producto']); ?></td>
+                            <td><?php echo htmlspecialchars($product['nombre']); ?></td>
+                            <td><?php echo htmlspecialchars($product['nombre_categoria'] ?? 'Sin categoría'); ?></td>
+                            <td>$<?php echo htmlspecialchars($product['precio_detal']); ?></td>
+                            <td>$<?php echo htmlspecialchars($product['precio_mayor'] ?? 'N/A'); ?></td>
                             <td>
                                 <!-- Botón para ver detalles del producto (abre modal) -->
                                 <button type="button" class="btn btn-sm btn-primary me-1 view-product-btn"
                                     data-bs-toggle="modal"
                                     data-bs-target="#verProductoModal"
-                                    data-id="<?php echo htmlspecialchars($product['IdProducto']); ?>"
-                                    data-name="<?php echo htmlspecialchars($product['Nombre']); ?>"
-                                    data-descripcion="<?php echo htmlspecialchars($product['Descripcion'] ?? ''); ?>"
-                                    data-detal="<?php echo htmlspecialchars($product['PrecioDetal']); ?>"
-                                    data-mayor="<?php echo htmlspecialchars($product['PrecioMayor'] ?? ''); ?>"
-                                    data-categoria="<?php echo htmlspecialchars($product['NombreCategoria'] ?? 'Sin categoría'); ?>">
+                                    data-id="<?php echo htmlspecialchars($product['id_producto']); ?>"
+                                    data-name="<?php echo htmlspecialchars($product['nombre']); ?>"
+                                    data-descripcion="<?php echo htmlspecialchars($product['descripcion'] ?? ''); ?>"
+                                    data-detal="<?php echo htmlspecialchars($product['precio_detal']); ?>"
+                                    data-mayor="<?php echo htmlspecialchars($product['precio_mayor'] ?? ''); ?>"
+                                    data-categoria="<?php echo htmlspecialchars($product['nombre_categoria'] ?? 'Sin categoría'); ?>">
                                     <i class="bi bi-eye"></i>
                                 </button>
 
@@ -48,18 +48,18 @@
                                 <button type="button" class="btn btn-sm btn-secondary me-1 edit-product-btn"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editarProductoModal"
-                                    data-id="<?php echo htmlspecialchars($product['IdProducto']); ?>"
-                                    data-name="<?php echo htmlspecialchars($product['Nombre']); ?>"
-                                    data-descripcion="<?php echo htmlspecialchars($product['Descripcion'] ?? ''); ?>"
-                                    data-detal="<?php echo htmlspecialchars($product['PrecioDetal']); ?>"
-                                    data-mayor="<?php echo htmlspecialchars($product['PrecioMayor'] ?? ''); ?>"
-                                    data-categoria="<?php echo htmlspecialchars($product['IdCategoria']); ?>">
+                                    data-id="<?php echo htmlspecialchars($product['id_producto']); ?>"
+                                    data-name="<?php echo htmlspecialchars($product['nombre']); ?>"
+                                    data-descripcion="<?php echo htmlspecialchars($product['descripcion'] ?? ''); ?>"
+                                    data-detal="<?php echo htmlspecialchars($product['precio_detal']); ?>"
+                                    data-mayor="<?php echo htmlspecialchars($product['precio_mayor'] ?? ''); ?>"
+                                    data-categoria="<?php echo htmlspecialchars($product['id_categoria']); ?>">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
 
                                 <!-- Formulario para eliminar producto -->
                                 <form action="" method="POST" class="d-inline">
-                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($product['IdProducto']); ?>"
+                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($product['id_producto']); ?>"
                                         class="btn btn-sm btn-danger"
                                         onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
                                         <i class="bi bi-trash"></i>

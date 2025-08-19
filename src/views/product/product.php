@@ -39,6 +39,11 @@
         <?php require_once 'components/productEditModal.php'; ?>
         <?php require_once 'components/productViewModal.php'; ?>
 
+        <script>
+            console.log("Página de productos cargada correctamente.");
+            console.log(<?php echo json_encode($data); ?>);
+        </script>
+
 </body>
 
 </html>
