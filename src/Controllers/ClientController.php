@@ -23,23 +23,23 @@ switch ($action) {
     // Almacena un nuevo cliente
     case 'store':
         $data = [
-            'Cedula' => $_POST['Cedula'] ?? '',
-            'Nombre' => $_POST['Nombre'] ?? '',
-            'Apellido' => $_POST['Apellido'] ?? '',
-            'Correo' => $_POST['Correo'] ?? null,
-            'Telefono' => $_POST['Telefono'] ?? null
+            'cedula' => $_POST['cedula'] ?? '',
+            'nombre' => $_POST['nombre'] ?? '',
+            'apellido' => $_POST['apellido'] ?? '',
+            'correo' => $_POST['correo'] ?? null,
+            'telefono' => $_POST['telefono'] ?? null
         ];
         $model->store($data);
         break;
     // Actualiza un cliente existente
     case 'update':
-        $cedula = $_POST['Cedula'] ?? null;
+        $cedula = $_POST['cedula'] ?? null;
         if ($cedula) {
             $data = [
-                'Nombre' => $_POST['Nombre'] ?? '',
-                'Apellido' => $_POST['Apellido'] ?? '',
-                'Correo' => $_POST['Correo'] ?? null,
-                'Telefono' => $_POST['Telefono'] ?? null
+                'nombre' => $_POST['nombre'] ?? '',
+                'apellido' => $_POST['apellido'] ?? '',
+                'correo' => $_POST['correo'] ?? null,
+                'telefono' => $_POST['telefono'] ?? null
             ];
             $model->update($cedula, $data);
         }
@@ -65,5 +65,6 @@ switch ($action) {
 $clientes = $model->findAll();
 
 // Incluye la vista de la lista de clientes.
-include __DIR__ . '/../views/client/client.php';
+include __ROOT__ . '/views/client/client.php';
+
 die();

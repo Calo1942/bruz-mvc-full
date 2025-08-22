@@ -1,9 +1,7 @@
 <?php
 
-namespace BruzDeporte\Config\Components;
-
 // Directorio raíz del proyecto
-define('__ROOT__', __DIR__);
+define('__ROOT__', __DIR__ . "/../..");
 
 // URL base del proyecto
 define('APP_BASE_URL', '/uni/bruz-mvc-full/');

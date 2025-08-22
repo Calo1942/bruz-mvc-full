@@ -78,5 +78,6 @@ $data = [
 ];
 
 // Incluye la vista de la lista de inventario.
-include __DIR__ . '/../views/inventory/inventory.php';
+include __ROOT__ . '/views/inventory/inventory.php';
+
 die();

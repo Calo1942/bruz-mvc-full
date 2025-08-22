@@ -21,26 +21,26 @@
                 <?php if (!empty($categories)): ?>
                     <?php foreach ($categories as $category): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($category['IdCategoria']); ?></td>
-                            <td><?php echo htmlspecialchars($category['Nombre']); ?></td>
+                            <td><?php echo htmlspecialchars($category['id_categoria']); ?></td>
+                            <td><?php echo htmlspecialchars($category['nombre']); ?></td>
                             <td>
                                 <!-- Botones de accione para los modales -->
                                 <button type="button" class="btn btn-sm btn-primary me-1 view-category-btn"
                                         data-bs-toggle="modal" data-bs-target="#verCategoriaModal"
-                                        data-id="<?php echo htmlspecialchars($category['IdCategoria']); ?>"
-                                        data-name="<?php echo htmlspecialchars($category['Nombre']); ?>">
+                                        data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
+                                        data-name="<?php echo htmlspecialchars($category['nombre']); ?>">
                                     <i class="bi bi-eye"></i>
                                 </button>
 
                                 <button type="button" class="btn btn-sm btn-secondary me-1 edit-category-btn"
                                         data-bs-toggle="modal" data-bs-target="#editarCategoriaModal"
-                                        data-id="<?php echo htmlspecialchars($category['IdCategoria']); ?>"
-                                        data-name="<?php echo htmlspecialchars($category['Nombre']); ?>">
+                                        data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
+                                        data-name="<?php echo htmlspecialchars($category['nombre']); ?>">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
 
                                 <form action="" method="POST" class="d-inline">
-                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($category['IdCategoria']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar esta categoría?');">
+                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($category['id_categoria']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar esta categoría?');">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>

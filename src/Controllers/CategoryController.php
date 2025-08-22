@@ -22,15 +22,15 @@ if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar una
 switch ($action) {
     case 'store': 
         $data = [
-            'Nombre' => $_POST['Nombre'] ?? ''  
+            'nombre' => $_POST['nombre'] ?? ''  
         ];
         $model->store($data); 
         break;
     case 'update': 
-        $idCategoria = $_POST['IdCategoria'] ?? null; 
+        $idCategoria = $_POST['id_categoria'] ?? null; 
         if ($idCategoria) { 
             $data = [
-                'Nombre' => $_POST['Nombre'] ?? '' 
+                'nombre' => $_POST['nombre'] ?? '' 
             ];
             $model->update($idCategoria, $data); 
         }
@@ -55,5 +55,5 @@ switch ($action) {
 $categories = $model->findAll(); 
 
 // Incluye la vista de la lista de categorías.
-include __DIR__ . '/../views/category/category.php'; 
+include __ROOT__ . '/views/category/category.php'; 
 die(); 

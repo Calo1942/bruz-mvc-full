@@ -12,27 +12,27 @@
                     <!-- Campo Cédula: solo lectura para evitar cambios en el identificador -->
                     <div class="mb-3">
                         <label for="editarCedula" class="form-label">Cédula</label>
-                        <input type="text" class="form-control" id="editarCedula" name="Cedula" required readonly>
+                        <input type="text" class="form-control" id="editarCedula" name="cedula" required readonly>
                     </div>
                     <!-- Campo Nombre editable -->
                     <div class="mb-3">
                         <label for="editarNombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="editarNombre" name="Nombre" required>
+                        <input type="text" class="form-control" id="editarNombre" name="nombre" required>
                     </div>
                     <!-- Campo Apellido editable -->
                     <div class="mb-3">
                         <label for="editarApellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="editarApellido" name="Apellido" required>
+                        <input type="text" class="form-control" id="editarApellido" name="apellido" required>
                     </div>
                     <!-- Campo Correo editable -->
                     <div class="mb-3">
                         <label for="editarCorreo" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="editarCorreo" name="Correo" required>
+                        <input type="email" class="form-control" id="editarCorreo" name="correo" required>
                     </div>
                     <!-- Campo Teléfono editable -->
                     <div class="mb-3">
                         <label for="editarTelefono" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="editarTelefono" name="Telefono">
+                        <input type="tel" class="form-control" id="editarTelefono" name="telefono">
                     </div>
             </div>
             <!-- Footer del modal con botones para cancelar o guardar -->

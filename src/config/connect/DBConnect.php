@@ -1,6 +1,6 @@
 <?php
 
-    namespace BruzDeporte\Config\Connect;
+    namespace BruzDeporte\config\connect;
     use PDO;
     use PDOException;
 

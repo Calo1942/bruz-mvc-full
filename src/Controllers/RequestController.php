@@ -63,5 +63,6 @@ switch ($action) {
 $requests = $model->findAll(); 
 
 // Incluye la vista de la lista de solicitudes.
-include __DIR__ . '/../views/request/request.php'; 
+include __ROOT__ . '/views/request/request.php';
+
 die();
