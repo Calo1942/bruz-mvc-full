@@ -18,7 +18,7 @@ $isInventory = ($currentUrl == 'product' || $currentUrl == 'category' || $curren
             <!-- Link a Dashboard, agrega clase 'active' si es la página actual -->
             <a href="?url=dashboard" class="nav-link text-white <?php if($currentUrl == 'dashboard') echo 'active'; ?>" aria-current="page">
                 <i class="bi bi-house me-2"></i> <!-- Icono de casa para Dashboard -->
-                Dashboard
+                Inicio
             </a>
         </li>
         <!-- 
