@@ -1,10 +1,7 @@
 #### Presiona **Ctrl+Mayus+v** para visualizar
 
-- [Listo] ~~Hacer el archivo de variables de entorno~~
-- [Listo] ~~Investigar la conección de Base de datos~~
-- Desarrollar el modulo de Producto Personalizado
+- Desarrollar el modulo de Producto
 - Corregir todo lo que tenga con la Variante en lugar Inventario
-- Corregir Mayúsculas del sistema
 - Implementar vista de Error 404
 
 Modificaciones Un_Carlos:
@@ -61,23 +58,3 @@ Aunque MySQL no impone reglas estrictas sobre cómo nombrar columnas y tablas, s
 - **Prefijos útiles para fechas o estados**:  
   - `fecha_` para campos de tiempo: `fecha_registro`, `fecha_entrega`  
   - `es_` para booleanos: `es_activo`, `es_admin`
-
----
-
-### 🧠 Buenas prácticas adicionales
-
-- **Evita palabras reservadas de MySQL**: Como `select`, `order`, `group`, etc.
-
-- **Sé coherente en todo el esquema**: Si usas `snake_case`, úsalo en todas partes
-
-- **Documenta tu convención**: Si trabajas en equipo, tener una guía escrita evita confusiones
-
----
-
-¿Quieres que te ayude a revisar o diseñar nombres para una base de datos específica? Puedo ayudarte a pulirlos o sugerir una estructura más clara.
-
-# Tilulo
-### Tilulo
-###### Titulo
-
----
