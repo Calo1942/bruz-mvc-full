@@ -14,10 +14,10 @@
                         <input type="file" class="form-control" id="imagenCatalogo" name="Imagen" accept="image/*"> </div>
                     <div class="mb-3">
                         <label for="categoriaCatalogo" class="form-label">Categoría</label>
-                        <select class="form-select" id="categoriaCatalogo" name="IdCategoria" required>
+                        <select class="form-select" id="categoriaCatalogo" name="id_categoria" required>
                             <option value="">Seleccione una categoría</option>
                             <?php foreach ($data['categories'] as $category): ?>
-                                <option value="<?php echo $category['IdCategoria']; ?>"><?php echo $category['Nombre']; ?></option>
+                                <option value="<?php echo $category['id_categoria']; ?>"><?php echo $category['Nombre']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
