@@ -1,8 +1,10 @@
 <!-- Encabezado de la tabla con título y botón de agregar -->
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mb-4">Tabla de Categorías</h2>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarCategoriaModal">
-        <i class="bi bi-plus-lg me-2"></i> Agregar Categoría
+<div class="d-flex align-items-center mb-3">
+    <h2 class="me-2 mb-0 titulo">Categorías</h2>
+    <button class="btn btn-agregar"
+        data-bs-toggle="modal"
+        data-bs-target="#agregarCategoriaModal">
+        <i class="bi bi-plus-lg icon-center"></i>
     </button>
 </div>
 
@@ -25,23 +27,22 @@
                             <td><?php echo htmlspecialchars($category['nombre']); ?></td>
                             <td>
                                 <!-- Botones de accione para los modales -->
-                                <button type="button" class="btn btn-sm btn-primary me-1 view-category-btn"
-                                        data-bs-toggle="modal" data-bs-target="#verCategoriaModal"
-                                        data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
-                                        data-name="<?php echo htmlspecialchars($category['nombre']); ?>">
-                                    <i class="bi bi-eye"></i>
+                                <button type="button" class="btn btn-detalle me-1"
+                                    data-bs-toggle="modal" data-bs-target="#verCategoriaModal"
+                                    data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
+                                    data-name="<?php echo htmlspecialchars($category['nombre']); ?>">
+                                    <i class="bi bi-eye icon-center mb-0" style="font-size: 1.10rem;"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-sm btn-secondary me-1 edit-category-btn"
-                                        data-bs-toggle="modal" data-bs-target="#editarCategoriaModal"
-                                        data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
-                                        data-name="<?php echo htmlspecialchars($category['nombre']); ?>">
-                                    <i class="bi bi-pencil-square"></i>
+                                <button type="button" class="btn me-1 p-1 btn-editar" data-bs-toggle="modal" data-bs-target="#editarCategoriaModal"
+                                    data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
+                                    data-name="<?php echo htmlspecialchars($category['nombre']); ?>">
+                                    <i class="bi bi-pencil-square fs-6 icon-center"></i>
                                 </button>
 
                                 <form action="" method="POST" class="d-inline">
-                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($category['id_categoria']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar esta categoría?');">
-                                        <i class="bi bi-trash"></i>
+                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($category['id_categoria']); ?>" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar esta categoría?');">
+                                        <i class="bi bi-trash fs-6 icon-center"></i>
                                     </button>
                                 </form>
                             </td>
@@ -63,12 +64,12 @@
         // ===== MODAL DE VER CATEGORÍA =====
         // Obtenemos una referencia al modal de ver categoría usando su ID
         var viewCategoryModal = document.getElementById('verCategoriaModal');
-        
+
         // Agregamos un evento que se dispara cuando el modal está a punto de abrirse
-        viewCategoryModal.addEventListener('show.bs.modal', function (event) {
+        viewCategoryModal.addEventListener('show.bs.modal', function(event) {
             // Obtenemos el botón que activó el modal (el que tiene los datos de la categoría)
             var button = event.relatedTarget;
-            
+
             // Extraemos los datos de la categoría del botón
             // Estos datos vienen de los atributos data-id y data-name del botón
             var id = button.getAttribute('data-id');
@@ -86,12 +87,12 @@
         // ===== MODAL DE EDITAR CATEGORÍA =====
         // Obtenemos una referencia al modal de editar categoría
         var editCategoryModal = document.getElementById('editarCategoriaModal');
-        
+
         // Agregamos un evento que se dispara cuando el modal está a punto de abrirse
-        editCategoryModal.addEventListener('show.bs.modal', function (event) {
+        editCategoryModal.addEventListener('show.bs.modal', function(event) {
             // Obtenemos el botón que activó el modal
             var button = event.relatedTarget;
-            
+
             // Extraemos los datos de la categoría del botón
             var id = button.getAttribute('data-id');
             var name = button.getAttribute('data-name');

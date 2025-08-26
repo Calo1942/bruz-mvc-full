@@ -36,7 +36,7 @@ $isInventory = ($currentUrl == 'product' || $currentUrl == 'category' || $curren
                 Clientes
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" style="width: 100%;">
             <!-- Link para mostrar el submenu de Inventario con colapso -->
             <a href="?url=inventory"
                data-bs-toggle="collapse"
@@ -48,28 +48,28 @@ $isInventory = ($currentUrl == 'product' || $currentUrl == 'category' || $curren
             </a>
             <!-- Submenu de Inventario, se muestra si estamos en product o category -->
             <ul class="collapse nav flex-column ms-3 <?php if($isInventory) echo 'show'; ?>" id="inventario-submenu">
-                <li class="nav-item">
+                <li class="nav-item" style="width: 100%;">
                     <!-- Link a Inventario, activo si es la página actual -->
                     <a href="?url=inventory" class="nav-link text-white <?php if($currentUrl == 'inventory') echo 'active'; ?>">
                         <i class="bi bi-boxes me-2"></i>
-                        Inventario
+                        Variante
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="width: 100%">
                     <!-- Link a Productos, activo si es la página actual -->
                     <a href="?url=product" class="nav-link text-white <?php if($currentUrl == 'product') echo 'active'; ?>">
                         <i class="bi bi-box me-2"></i>
                         Productos
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="width: 100%;">
                     <!-- Link a Categorías, activo si es la página actual -->
                     <a href="?url=category" class="nav-link text-white <?php if($currentUrl == 'category') echo 'active'; ?>">
                         <i class="bi bi-tags me-2"></i>
                         Categoria
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item"style="width: 100%;">
                     <!-- Link a Tallas, activo si es la página actual -->
                     <a href="?url=size" class="nav-link text-white <?php if($currentUrl == 'size') echo 'active'; ?>">
                         <i class="bi bi-rulers me-2"></i>

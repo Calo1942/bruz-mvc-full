@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mb-4">Tabla de Productos</h2>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
-        <i class="bi bi-plus-lg me-2"></i> Agregar Producto
+<div class="d-flex  align-items-center mb-3">
+    <h2 class="me-2 mb-0 titulo">Productos</h2>
+    <button class="btn btn-agregar" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
+        <i class="bi icon-center bi-plus-lg"></i>
     </button>
 </div>
 
@@ -32,7 +32,7 @@
                             <td>$<?php echo htmlspecialchars($product['precio_mayor'] ?? 'N/A'); ?></td>
                             <td>
                                 <!-- Botón para ver detalles del producto (abre modal) -->
-                                <button type="button" class="btn btn-sm btn-primary me-1 view-product-btn"
+                                <button type="button" class="btn btn-detalle me-1"
                                     data-bs-toggle="modal"
                                     data-bs-target="#verProductoModal"
                                     data-id="<?php echo htmlspecialchars($product['id_producto']); ?>"
@@ -41,11 +41,11 @@
                                     data-detal="<?php echo htmlspecialchars($product['precio_detal']); ?>"
                                     data-mayor="<?php echo htmlspecialchars($product['precio_mayor'] ?? ''); ?>"
                                     data-categoria="<?php echo htmlspecialchars($product['nombre_categoria'] ?? 'Sin categoría'); ?>">
-                                    <i class="bi bi-eye"></i>
+                                    <i class="bi bi-eye icon-center"></i>
                                 </button>
 
                                 <!-- Botón para editar producto (abre modal) -->
-                                <button type="button" class="btn btn-sm btn-secondary me-1 edit-product-btn"
+                                <button type="button" class="btn me-1 p-1 btn-editar"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editarProductoModal"
                                     data-id="<?php echo htmlspecialchars($product['id_producto']); ?>"
@@ -54,15 +54,15 @@
                                     data-detal="<?php echo htmlspecialchars($product['precio_detal']); ?>"
                                     data-mayor="<?php echo htmlspecialchars($product['precio_mayor'] ?? ''); ?>"
                                     data-categoria="<?php echo htmlspecialchars($product['id_categoria']); ?>">
-                                    <i class="bi bi-pencil-square"></i>
+                                    <i class="bi bi-pencil-square icon-center"></i>
                                 </button>
 
                                 <!-- Formulario para eliminar producto -->
                                 <form action="" method="POST" class="d-inline">
                                     <button type="submit" name="delete" value="<?php echo htmlspecialchars($product['id_producto']); ?>"
-                                        class="btn btn-sm btn-danger"
+                                        class="btn btn-eliminar"
                                         onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash icon-center"></i>
                                     </button>
                                 </form>
                             </td>

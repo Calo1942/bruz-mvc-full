@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Logo y marca de la empresa -->
     <a class="navbar-brand" href="#">
-      <img src="src/assets/img/logo.jpeg" alt="Logo BruzTextil" style="height: 40px;">
+      <img src="src/assets/img/logo.jpeg" alt="Logo BruzTextil" style="height: 53px;">
     </a>
     <!-- Formulario de búsqueda -->
     <form class="d-flex">
@@ -12,7 +12,7 @@
         placeholder="Buscar" 
         aria-label="Search"
       >
-      <button class="btn btn-danger" type="submit">Buscar</button>
+      <button class="btn btn-guardar" type="submit">Buscar</button>
     </form>
   </div>
 </nav>
