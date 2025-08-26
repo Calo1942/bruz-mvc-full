@@ -4,7 +4,7 @@
     <button class="btn btn-agregar"
         data-bs-toggle="modal"
         data-bs-target="#agregarCategoriaModal">
-        <i class="bi bi-plus-lg mb-0 icon-center"></i>
+        <i class="bi bi-plus-lg icon-center"></i>
     </button>
 </div>
 

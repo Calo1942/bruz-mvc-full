@@ -105,7 +105,7 @@ html, body {
 }
 h1, h2, h3, .titulo {
     font-family: 'Poppins', sans-serif;
-    color: var(--primary-900);
+    color: var(--secondary-900);
     font-weight: bolder; /* Regular */
   }
 
@@ -208,7 +208,7 @@ main {
 }
 .btn-cancelar:hover{
     background-color: var(--secondary-600);
-    color: var(--secondary-100);  
+    color: var(--secondary-100);
 }
 /* Media query para ajustar el margen del main en pantallas más pequeñas si el sidebar no es fijo */
 /* Si quieres que el sidebar se comporte diferente en móvil, necesitaríamos más reglas aquí */
