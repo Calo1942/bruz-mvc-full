@@ -9,16 +9,19 @@
             </div>
             <!-- Cuerpo del modal con el formulario -->
             <div class="modal-body">
-                <form id="formAgregarCategoria" action="" method="POST">
+                <form id="formAgregarCategoria" class="needs-validation" action="" method="POST" novalidate>
                     <div class="mb-3">
                         <label for="nombreCategoria" class="form-label texto">Nombre de la Categoría:</label>
-                        <input type="text" class="form-control" id="nombreCategoria" name="nombre" required>
+                        <input type="text" class="form-control validar-texto" id="nombreCategoria" name="nombre" data-validar="texto"required>
+
+                        <span class="invalid-feedback" id="mensajeError">Solo se permiten letras y números, sin caracteres especiales.</span>
                     </div>
                     <!-- Botones de acción -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" name="store" class="btn btn-guardar">Guardar</button>
                     </div>
+                   
                 </form>
             </div>
         </div>

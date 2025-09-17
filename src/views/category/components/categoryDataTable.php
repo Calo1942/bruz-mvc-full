@@ -9,7 +9,7 @@
 </div>
 
 <!-- Contenedor de la tabla -->
-<div class="container mt-4">
+<div class=" ontainer mt-4">
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead class="table-dark">

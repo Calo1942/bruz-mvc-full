@@ -7,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <?php
     // Incluye el archivo que contiene la variable con los links
-    include 'src/assets/configFront.php';
+    include 'src/config/components/Front/linksFront.php';
     // Imprime la variable dentro de la etiqueta <head>
     echo $css_links;
     ?>
