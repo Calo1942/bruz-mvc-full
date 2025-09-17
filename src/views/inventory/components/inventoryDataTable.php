@@ -1,8 +1,8 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex align-items-center mb-3">
     <!-- Título y botón para abrir modal de agregar inventario -->
-    <h2 class="mb-4">Tabla de Inventario</h2>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarInventarioModal">
-        <i class="bi bi-plus-lg me-2"></i> Agregar Inventario
+    <h2 class="me-2 mb-0 titulo">Variantes</h2>
+    <button class="btn btn-agregar" data-bs-toggle="modal" data-bs-target="#agregarInventarioModal">
+        <i class="bi bi-plus-lg icon-center"></i>
 </button>
 </div>
 <div class="container mt-4">
@@ -36,31 +36,31 @@
                     </td>
                             <td>
                                 <!-- Botón para ver detalles, abre modal con datos del inventario -->
-                                <button type="button" class="btn btn-sm btn-primary me-1 view-inventory-btn"
+                                <button type="button" class="btn btn-ver me-1"
                                     data-bs-toggle="modal" data-bs-target="#verInventarioModal"
                                     data-id="<?php echo htmlspecialchars($item['IdVariante']); ?>"
                                     data-producto="<?php echo htmlspecialchars($item['NombreProducto'] ?? ''); ?>"
                                     data-talla="<?php echo htmlspecialchars($item['NombreTalla'] ?? ''); ?>"
                                     data-color="<?php echo htmlspecialchars($item['Color'] ?? ''); ?>"
                                     data-stock="<?php echo htmlspecialchars($item['Stock']); ?>">
-                            <i class="bi bi-eye"></i>
+                            <i class="bi bi-eye icon-center"></i>
                         </button>
 
                                 <!-- Botón para editar inventario, abre modal con formulario -->
-                                <button type="button" class="btn btn-sm btn-secondary me-1 edit-inventory-btn"
+                                <button type="button" class="btn btn-editar me-1"
                                     data-bs-toggle="modal" data-bs-target="#editarInventarioModal"
                                     data-id="<?php echo htmlspecialchars($item['IdVariante']); ?>"
                                     data-producto="<?php echo htmlspecialchars($item['IdProducto'] ?? ''); ?>"
                                     data-talla="<?php echo htmlspecialchars($item['IdTalla'] ?? ''); ?>"
                                     data-color="<?php echo htmlspecialchars($item['Color'] ?? ''); ?>"
                                     data-stock="<?php echo htmlspecialchars($item['Stock']); ?>">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square icon-center"></i>
                         </button>
 
                                 <!-- Formulario para eliminar inventario con confirmación -->
                                 <form action="" method="POST" class="d-inline">
-                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($item['IdVariante']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este registro de inventario?');">
-                            <i class="bi bi-trash"></i>
+                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($item['IdVariante']); ?>" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar este registro de inventario?');">
+                            <i class="bi bi-trash icon-center"></i>
                         </button>
                                 </form>
                     </td>

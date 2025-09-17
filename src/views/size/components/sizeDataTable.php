@@ -1,9 +1,8 @@
 <!-- Encabezado de la tabla con título y botón de agregar -->
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mb-4">Tabla de Tallas</h2>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarTallaModal">
-        <i class="bi bi-plus-lg me-2"></i> Agregar Talla
-    </button>
+<div class="d-flex align-items-center mb-3">
+    <h2 class="me-2 mb-0 titulo">Tallas</h2>
+    <button class="btn btn-agregar" data-bs-toggle="modal" data-bs-target="#agregarTallaModal">
+        <i class="bi bi-plus-lg icon-center"></i> 
 </div>
 
 <!-- Contenedor de la tabla -->
