@@ -1,8 +1,7 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mb-4">Catálogo de productos personalizados</h2>
-    <!-- Botón para abrir el modal de agregar producto -->
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarCatalogoModal">
-        <i class="bi bi-plus-lg me-2"></i> Agregar Producto
+<div class="d-flex align-items-center mb-3">
+    <h2 class="me-2 mb-0 titulo">Productos Personalizados</h2>
+    <button class="btn btn-agregar" data-bs-toggle="modal" data-bs-target="#agregarCatalogoModal">
+        <i class="bi bi-plus-lg icon-center"></i>
     </button>
 </div>
 
@@ -48,12 +47,12 @@
                             <!-- Botón para ver detalles del producto personalizado en un modal -->
                             <form action="" method="POST" style="display:inline;">
                                 <input type="hidden" name="show" value="<?php echo $customItem['IdPersonalizacion']; ?>">
-                                <button type="button" class="btn btn-sm btn-primary me-1 view-custom-btn"
+                                <button type="button" class="btn btn-ver me-1"
                                         data-bs-toggle="modal" data-bs-target="#verCatalogoModal"
                                         data-id="<?php echo $customItem['IdPersonalizacion']; ?>"
                                         data-description="<?php echo htmlspecialchars($customItem['Descripcion']); ?>"
                                         data-image="<?php echo htmlspecialchars($customItem['Imagen']); ?>"
-                                        data-category-id="<?php echo htmlspecialchars($customItem['IdCategoria']); ?>">
+                                        data-category-id="<?php echo htmlspecialchars($customItem['id_categoria']); ?>">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </form>
@@ -61,20 +60,20 @@
                             <!-- Botón para editar el producto personalizado en un modal -->
                             <form action="" method="POST" style="display:inline;">
                                 <input type="hidden" name="show" value="<?php echo $customItem['IdPersonalizacion']; ?>">
-                                <button type="button" class="btn btn-sm btn-secondary me-1 edit-custom-btn"
+                                <button type="button" class="btn btn-editar me-1"
                                         data-bs-toggle="modal" data-bs-target="#editarCatalogoModal"
                                         data-id="<?php echo $customItem['IdPersonalizacion']; ?>"
                                         data-description="<?php echo htmlspecialchars($customItem['Descripcion']); ?>"
                                         data-image="<?php echo htmlspecialchars($customItem['Imagen']); ?>"
-                                        data-category-id="<?php echo htmlspecialchars($customItem['IdCategoria']); ?>">
-                                    <i class="bi bi-pencil-square"></i>
+                                        data-category-id="<?php echo htmlspecialchars($customItem['id_categoria']); ?>">
+                                    <i class="bi bi-pencil-square icon-center"></i>
                                 </button>
                             </form>
 
                             <!-- Botón para eliminar el producto personalizado con confirmación -->
                             <form action="" method="POST" style="display:inline;" onsubmit="return confirm('¿Está seguro de que desea eliminar este elemento personalizado?');">
                                 <input type="hidden" name="delete" value="<?php echo $customItem['IdPersonalizacion']; ?>">
-                                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                <button type="submit" class="btn btn-eliminar"><i class="bi bi-trash icon-center"></i></button>
                             </form>
                         </td>
                     </tr>

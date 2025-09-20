@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Categorías</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="src/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <?php
+    // Incluye el archivo que contiene la variable con los links
+    include 'src/config/components/Front/linksFront.php';
+    // Imprime la variable dentro de la etiqueta <head>
+    echo $css_links;
+    ?>
 </head>
 
 <body>
@@ -32,10 +35,10 @@
             ?>
         </main>
 
-        <!-- Scripts Bootstrap -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- para javascript <script src="../../assets/js/script.js"> </script> -->
-
+        <?php include 'src/config/components/Front/linksFront.php';
+        echo $scripts_links;
+        ?>
+        
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>
         <?php require_once 'components/categoryEditModal.php'; ?>

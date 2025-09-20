@@ -1,3 +1,52 @@
+/*Paleta de colores*/
+:root {
+   /* Paleta Primary (rojo) */
+                             
+   --primary-100: #db7f7f; /* muy claro */
+   --primary-200: #cf6666;
+   --primary-300: #cc5553;
+   --primary-400: #b92727;
+   --primary-500: #a52828; /* tu rojo principal */
+   --primary-600: #8b2020; /* más oscuro */
+   --primary-700: #701818;
+   --primary-800: #561010;
+   --primary-900: #3b0808;
+
+   /* Paleta Secondary (colores neutros para textos) */
+   --secondary-100: #ffffff; /* blanco */
+   --secondary-200: #d9d9d9;
+   --secondary-300: #bfbfbf;
+   --secondary-400: #a6a6a6;
+   --secondary-500: #808080; /* gris medio */
+   --secondary-600: #737373;
+   --secondary-700: #595959;
+   --secondary-800: #404040;
+   --secondary-900: #1a1a1a; /* casi negro */
+
+    /* Verde */
+    --green-100: #99d699;
+    --green-200: #73c473;
+    --green-300: #4db34d;  /* verde principal */
+    --green-400: #439f43;
+    --green-500: #229645;
+    --green-600: #2a7e3b;
+    --green-700: #2e5c32;
+    --green-800: #254725;
+    --green-900: #133117;  /* muy oscuro */
+   
+    /* Azul */
+    --blue-100: #e6f0ff;  /* muy claro */
+    --blue-200: #b8d1ff;
+    --blue-300: #8ab2ff;
+    --blue-400: #5c93ff;
+    --blue-500: #2e74ff;  /* azul principal */
+    --blue-600: #265fcc;
+    --blue-700: #1e4b99;
+    --blue-800: #153766;
+    --blue-900: #0c2340;  /* muy oscuro */
+
+}
+
 /* Asegura que html y body ocupen toda la altura disponible */
 html, body {
     height: 100%;
@@ -5,11 +54,6 @@ html, body {
     padding: 0; /* Asegurar que no haya padding por defecto */
     overflow-x: hidden; /* Evitar scroll horizontal no deseado */
 }
-
-/* Estilo para el contenedor principal que abarca sidebar y contenido */
-/* .container-fluid, .row.h-100 {
-    min-height: 100vh; /* Usa min-height: 100vh para asegurar altura mínima */
-/* } */ /* Eliminamos estas reglas ya que no usamos el grid principal */
 
 /* Estilo para la barra lateral */
 .sidebar {
@@ -28,7 +72,7 @@ html, body {
 }
 
 .sidebar .nav-link.active {
-    background-color: #a52828; /* Un tono de rojo */
+    background-color: var(--primary-500); /* Un tono de rojo */
     color: #fff; /* Asegurar que el texto sea blanco para contraste */
 }
 
@@ -53,17 +97,28 @@ html, body {
 .navbar {
     position: fixed; /* Fija el navbar en la parte superior */
     top: 0; /* Alinea el navbar a la parte superior */
-    left: 280px; /* Inicia el navbar justo después del sidebar */
-    right: 0; /* Estira el navbar hasta el borde derecho */
+    left: 290px; /* Inicia el navbar justo después del sidebar */
+    right: 10px; /* Estira el navbar hasta el borde derecho */
     z-index: 999; /* Asegura que esté por encima del contenido principal, justo debajo del sidebar */
-    /* La altura la controlará el padding (p-3) y el contenido */
+    height: 70px;
+    border-bottom: 1px solid var(--primary-500);
 }
+h1, h2, h3, .titulo {
+    font-family: 'Poppins', sans-serif;
+    color: var(--secondary-900);
+    font-weight: bolder; /* Regular */
+  }
 
+  p, span, label, .texto {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500; /* Regular */
+    color: var(--secondary-800);
+  }
 
 /* Estilo para el contenido principal para estar debajo del navbar y al lado del sidebar */
 main {
     position: absolute; /* Posiciona el contenido principal absolutamente */
-    top: 60px; /* Inicia el main justo debajo del navbar (ajustar 60px si es necesario) */
+    top: 70px; /* Inicia el main justo debajo del navbar (ajustar 60px si es necesario) */
     bottom: 0; /* Estira el main hasta la parte inferior */
     left: 280px; /* Inicia el main justo después del sidebar */
     right: 0; /* Estira el main hasta el borde derecho */
@@ -72,6 +127,89 @@ main {
     padding-top: 0; /* Quitar padding superior si el navbar ya lo proporciona o si hay contenido pegado */
 }
 
+.btn-agregar{
+    width: 25px; 
+    height: 25px; 
+    background-color: var(--primary-400); 
+    color:white;
+    border-radius: 100%;
+    display: flex;        
+    align-items: center;
+    justify-content: center;
+}
+.btn-agregar:hover{
+    background-color: var(--primary-500);
+    color: var(--secondary-100);  
+}
+
+.btn-detalle{
+    width: 30px; 
+    height: 30px;
+    background-color: var(--green-500); 
+    color:var(--secondary-100);
+    border-radius: 100%;
+}
+.btn-detalle:hover{
+    background-color: var(--green-600);
+    color: var(--secondary-100);  
+}
+.btn-editar{
+    width: 30px; 
+    height: 30px;
+    background-color: var(--secondary-500); 
+    color:var(--secondary-100);
+    border-radius: 100%;
+}
+.btn-editar:hover{
+    background-color: var(--secondary-600);
+    color: var(--secondary-100);  
+}
+.btn-eliminar{
+    width: 30px; 
+    height: 30px;
+    background-color: var(--primary-400); 
+    color:var(--secondary-100);
+    border-radius: 100%;
+}
+.btn-eliminar:hover{
+    background-color: var(--primary-500);
+    color: var(--secondary-100);  
+}
+.btn-guardar{
+    background-color: var(--primary-500); 
+    color:var(--secondary-100);
+}
+.btn-guardar:hover{
+    background-color: var(--primary-600);
+    color: var(--secondary-100);  
+}
+.icon-center{
+    display: flex;        
+    align-items: center;
+    justify-content: center;
+}
+.modal-title{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    color: var(--primary-500);
+}
+.form-control:focus {
+    border-color: var(--secondary-500); /* rojo Bootstrap danger */
+    box-shadow: 0 0 0 0.2rem rgba(190, 190, 190, 0.6);
+}
+.btn-close:focus{
+    border-color: var(--primary-500); /* rojo Bootstrap danger */
+    box-shadow: 0 0 0 0.2rem rgba(206, 82, 88, 0.6);
+}
+
+.btn-cancelar{
+    background-color: var(--secondary-500); 
+    color:var(--secondary-100);
+}
+.btn-cancelar:hover{
+    background-color: var(--secondary-600);
+    color: var(--secondary-100);
+}
 /* Media query para ajustar el margen del main en pantallas más pequeñas si el sidebar no es fijo */
 /* Si quieres que el sidebar se comporte diferente en móvil, necesitaríamos más reglas aquí */
 /* Por ahora, este estilo asume un sidebar fijo en todos los tamaños */

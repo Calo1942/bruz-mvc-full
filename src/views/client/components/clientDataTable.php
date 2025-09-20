@@ -1,8 +1,8 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex align-items-center mb-3">
     <!-- Título y botón para abrir modal de agregar cliente -->
-    <h2 class="mb-4">Tabla de Clientes</h2>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
-        <i class="bi bi-plus-lg me-2"></i> Agregar Cliente
+    <h2 class="me-2 mb-0 titulo">Clientes</h2>
+    <button class="btn btn-agregar" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
+        <i class="bi bi-plus-lg icon-center"></i>
     </button>
 </div>
 <div class="container mt-4">
@@ -25,37 +25,37 @@
                     <?php foreach ($clientes as $cliente): ?>
                         <tr>
                             <!-- Datos del cliente con protección contra XSS -->
-                            <td><?php echo htmlspecialchars($cliente['Cedula']); ?></td>
-                            <td><?php echo htmlspecialchars($cliente['Nombre']); ?></td>
-                            <td><?php echo htmlspecialchars($cliente['Apellido']); ?></td>
-                            <td><?php echo htmlspecialchars($cliente['Correo']); ?></td>
-                            <td><?php echo htmlspecialchars($cliente['Telefono']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['cedula']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['nombre']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['apellido']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['correo']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['telefono']); ?></td>
                             <td>
                                 <!-- Botón para ver detalles, abre modal con datos del cliente -->
                                 <button type="button" class="btn btn-sm btn-primary me-1 view-client-btn"
                                     data-bs-toggle="modal" data-bs-target="#verClienteModal"
-                                    data-cedula="<?php echo htmlspecialchars($cliente['Cedula']); ?>"
-                                    data-nombre="<?php echo htmlspecialchars($cliente['Nombre']); ?>"
-                                    data-apellido="<?php echo htmlspecialchars($cliente['Apellido']); ?>"
-                                    data-correo="<?php echo htmlspecialchars($cliente['Correo']); ?>"
-                                    data-telefono="<?php echo htmlspecialchars($cliente['Telefono']); ?>">
+                                    data-cedula="<?php echo htmlspecialchars($cliente['cedula']); ?>"
+                                    data-nombre="<?php echo htmlspecialchars($cliente['nombre']); ?>"
+                                    data-apellido="<?php echo htmlspecialchars($cliente['apellido']); ?>"
+                                    data-correo="<?php echo htmlspecialchars($cliente['correo']); ?>"
+                                    data-telefono="<?php echo htmlspecialchars($cliente['telefono']); ?>">
                                     <i class="bi bi-eye"></i>
                                 </button>
 
                                 <!-- Botón para editar cliente, abre modal con formulario -->
                                 <button type="button" class="btn btn-sm btn-secondary me-1 edit-client-btn"
                                     data-bs-toggle="modal" data-bs-target="#editarClienteModal"
-                                    data-cedula="<?php echo htmlspecialchars($cliente['Cedula']); ?>"
-                                    data-nombre="<?php echo htmlspecialchars($cliente['Nombre']); ?>"
-                                    data-apellido="<?php echo htmlspecialchars($cliente['Apellido']); ?>"
-                                    data-correo="<?php echo htmlspecialchars($cliente['Correo']); ?>"
-                                    data-telefono="<?php echo htmlspecialchars($cliente['Telefono']); ?>">
+                                    data-cedula="<?php echo htmlspecialchars($cliente['cedula']); ?>"
+                                    data-nombre="<?php echo htmlspecialchars($cliente['nombre']); ?>"
+                                    data-apellido="<?php echo htmlspecialchars($cliente['apellido']); ?>"
+                                    data-correo="<?php echo htmlspecialchars($cliente['correo']); ?>"
+                                    data-telefono="<?php echo htmlspecialchars($cliente['telefono']); ?>">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
 
                                 <!-- Formulario para eliminar cliente con confirmación -->
                                 <form action="" method="POST" class="d-inline">
-                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($cliente['Cedula']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar a este cliente?');">
+                                    <button type="submit" name="delete" value="<?php echo htmlspecialchars($cliente['cedula']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar a este cliente?');">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>

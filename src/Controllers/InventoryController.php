@@ -36,7 +36,7 @@ switch ($action) {
         break;
     // Actualiza un registro de inventario existente
     case 'update':
-        $id = $_POST['IdInventario'] ?? null;
+        $id = $_POST['IdVariante'] ?? null;
         if ($id) {
             $data = [
                 'Stock' => $_POST['Stock'] ?? 0,
@@ -78,5 +78,6 @@ $data = [
 ];
 
 // Incluye la vista de la lista de inventario.
-include __DIR__ . '/../views/inventory/inventory.php';
+include __ROOT__ . '/views/inventory/inventory.php';
+
 die();

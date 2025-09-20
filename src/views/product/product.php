@@ -5,9 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="src/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <?php
+    // Incluye el archivo que contiene la variable con los links
+    include 'src/config/components/Front/linksFront.php';
+    // Imprime la variable dentro de la etiqueta <head>
+    echo $css_links;
+    ?>
 </head>
 
 <body>
@@ -38,6 +41,11 @@
         <?php require_once 'components/productCreateModal.php'; ?>
         <?php require_once 'components/productEditModal.php'; ?>
         <?php require_once 'components/productViewModal.php'; ?>
+
+        <script>
+            console.log("Página de productos cargada correctamente.");
+            console.log(<?php echo json_encode($data); ?>);
+        </script>
 
 </body>
 

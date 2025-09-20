@@ -13,12 +13,12 @@
                 <div class="modal-body">
                     <div class="row g-3">
                         <!-- Campo oculto para el ID del producto -->
-                        <input type="hidden" id="editarProductoId" name="IdProducto">
+                        <input type="hidden" id="editarProductoId" name="id_producto">
                         
                         <!-- Campo para nombre del producto -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <input type="text" class="form-control rounded-1" id="editarNombreProducto" name="Nombre" placeholder="Nombre" required>
+                                <input type="text" class="form-control rounded-1" id="editarNombreProducto" name="nombre" placeholder="Nombre" required>
                                 <label for="editarNombreProducto">Nombre</label>
                             </div>
                         </div>
@@ -26,11 +26,11 @@
                         <!-- Selector para categoría del producto -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <select class="form-select rounded-1" id="editarCategoriaProducto" name="IdCategoria" required>
+                                <select class="form-select rounded-1" id="editarCategoriaProducto" name="id_categoria" required>
                                     <option value="">Seleccione una categoría</option>
                                     <?php foreach ($categories as $category): ?>
-                                        <option value="<?= htmlspecialchars($category['IdCategoria']) ?>">
-                                            <?= htmlspecialchars($category['Nombre']) ?>
+                                        <option value="<?= htmlspecialchars($category['id_categoria']) ?>">
+                                            <?= htmlspecialchars($category['nombre']) ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
@@ -41,7 +41,7 @@
                         <!-- Campo para descripción del producto -->
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control rounded-1" id="editarDescripcionProducto" name="Descripcion" style="height: 100px"></textarea>
+                                <textarea class="form-control rounded-1" id="editarDescripcionProducto" name="descripcion" style="height: 100px"></textarea>
                                 <label for="editarDescripcionProducto">Descripción</label>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                             <div class="input-group border-dark rounded-1 w-75 mx-auto">
                                 <span class="input-group-text bg-transparent rounded-start">$</span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="number" class="form-control rounded-0" id="editarDetalProducto" name="PrecioDetal" step="0.01" min="0" placeholder="Precio Detal" required>
+                                    <input type="number" class="form-control rounded-0" id="editarDetalProducto" name="precio_detal" step="0.01" min="0" placeholder="Precio Detal" required>
                                     <label for="editarDetalProducto">Precio al Detal</label>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                             <div class="input-group border-dark rounded-1 w-75 mx-auto">
                                 <span class="input-group-text bg-transparent rounded-start">$</span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="number" class="form-control rounded-0" id="editarMayorProducto" name="PrecioMayor" step="0.01" min="0" placeholder="Precio Mayor">
+                                    <input type="number" class="form-control rounded-0" id="editarMayorProducto" name="precio_mayor" step="0.01" min="0" placeholder="Precio Mayor">
                                     <label for="editarMayorProducto">Precio al por mayor (opcional)</label>
                                 </div>
                             </div>

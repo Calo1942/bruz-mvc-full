@@ -5,6 +5,30 @@ namespace BruzDeporte\Controllers;
 use BruzDeporte\Models\CustomModel;
 use BruzDeporte\Models\CategoryModel;
 
+// Función para manejar la subida de imágenes
+function handleImageUpload($file) {
+    if (isset($file) && $file['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __ROOT__ . '/src/storage/img/customs/';
+        $imageFileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $newFileName = uniqid('custom_') . '.' . $imageFileType;
+        $uploadFile = $uploadDir . $newFileName;
+
+        // Verificar si el archivo es una imagen real
+        $check = getimagesize($file['tmp_name']);
+        if ($check === false) {
+            return ['error' => 'El archivo no es una imagen válida.'];
+        }
+
+        // Mover el archivo a la carpeta de destino
+        if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
+            return ['fileName' => $newFileName];
+        } else {
+            return ['error' => 'Hubo un error al subir la imagen.'];
+        }
+    }
+    return ['error' => 'No se seleccionó ninguna imagen.'];
+}
+
 // Controlador para gestionar personalizaciones
 $model = new CustomModel();
 $action = null;
@@ -69,5 +93,7 @@ $data = [
     'customItems' => $customItems,
     'categories' => $categories
 ];
-include __DIR__ . '/../views/custom/custom.php';
+
+include __ROOT__ . '/views/custom/custom.php';
+
 die();
