@@ -12,10 +12,12 @@ class CategoryModel extends DBConnect implements Crud
     private $nombre;
 
     public function setIdCategoria($id_categoria) {
+        // Aquí va la validación
         $this->id_categoria = $id_categoria;
     }
 
     public function setNombre($nombre) {
+        // Aquí va la validación
         $this->nombre = $nombre;
     }
 

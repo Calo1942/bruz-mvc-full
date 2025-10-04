@@ -9,7 +9,7 @@ $model = new CategoryModel();
 $action = null;
 
 // Determina la acción a realizar basándose en las solicitudes POST recibidas.
-if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar una nueva categoría.
+if (isset($_POST['store'])) {
     $action = 'store'; 
 } elseif (isset($_POST['update'])) { 
     $action = 'update'; 
@@ -22,10 +22,8 @@ if (isset($_POST['store'])) { // Si se ha enviado el formulario para guardar una
 switch ($action) {
     case 'store': 
         $data = [
-            'nombre' => $_POST['nombre'] ?? ''  
-
+            'nombre' => $_POST['nombre'] ?? ''
         ];
-        $model->store($data); 
         $model->store($data); 
         break;
     case 'update': 
@@ -34,7 +32,6 @@ switch ($action) {
             $data = [
                 'nombre' => $_POST['nombre'] ?? '' 
             ];
-            $model->update($idCategoria, $data); 
             $model->update($idCategoria, $data); 
         }
         break;
@@ -50,7 +47,6 @@ switch ($action) {
         $category = $model->find($idCategoria); 
         break;
     default: 
-        
         break;
 }
 
@@ -59,4 +55,5 @@ $categories = $model->findAll();
 
 // Incluye la vista de la lista de categorías.
 include __ROOT__ . '/views/category/category.php'; 
-die(); 
+
+die();
