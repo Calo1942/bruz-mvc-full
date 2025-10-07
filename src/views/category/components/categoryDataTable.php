@@ -9,7 +9,7 @@
 </div>
 
 <!-- Contenedor de la tabla -->
-<div class=" ontainer mt-4">
+<div class="container mt-4">
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead class="table-dark">
@@ -26,7 +26,7 @@
                             <td><?php echo htmlspecialchars($category['id_categoria']); ?></td>
                             <td><?php echo htmlspecialchars($category['nombre']); ?></td>
                             <td>
-                                <!-- Botones de accione para los modales -->
+                                <!-- Botones para los modales -->
                                 <button type="button" class="btn btn-detalle me-1"
                                     data-bs-toggle="modal" data-bs-target="#verCategoriaModal"
                                     data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
@@ -34,7 +34,8 @@
                                     <i class="bi bi-eye icon-center mb-0" style="font-size: 1.10rem;"></i>
                                 </button>
 
-                                <button type="button" class="btn me-1 p-1 btn-editar" data-bs-toggle="modal" data-bs-target="#editarCategoriaModal"
+                                <button type="button" class="btn me-1 p-1 btn-editar"
+                                    data-bs-toggle="modal" data-bs-target="#editarCategoriaModal"
                                     data-id="<?php echo htmlspecialchars($category['id_categoria']); ?>"
                                     data-name="<?php echo htmlspecialchars($category['nombre']); ?>">
                                     <i class="bi bi-pencil-square fs-6 icon-center"></i>
@@ -59,52 +60,32 @@
 </div>
 
 <script>
-    // Esperamos a que el documento HTML esté completamente cargado antes de ejecutar el código
-    document.addEventListener('DOMContentLoaded', function() {
-        // ===== MODAL DE VER CATEGORÍA =====
-        // Obtenemos una referencia al modal de ver categoría usando su ID
-        var viewCategoryModal = document.getElementById('verCategoriaModal');
+$(document).ready(function () {
+    // ===== MODAL DE VER CATEGORÍA =====
+    $('#verCategoriaModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // botón que disparó el modal
+        var id = button.data('id');
+        var name = button.data('name');
 
-        // Agregamos un evento que se dispara cuando el modal está a punto de abrirse
-        viewCategoryModal.addEventListener('show.bs.modal', function(event) {
-            // Obtenemos el botón que activó el modal (el que tiene los datos de la categoría)
-            var button = event.relatedTarget;
-
-            // Extraemos los datos de la categoría del botón
-            // Estos datos vienen de los atributos data-id y data-name del botón
-            var id = button.getAttribute('data-id');
-            var name = button.getAttribute('data-name');
-
-            // Buscamos los elementos dentro del modal donde mostraremos la información
-            var modalIdSpan = viewCategoryModal.querySelector('#verCategoriaId');
-            var modalNameSpan = viewCategoryModal.querySelector('#verNombreCategoria');
-
-            // Actualizamos el contenido del modal con los datos de la categoría
-            modalIdSpan.textContent = id;
-            modalNameSpan.textContent = name;
-        });
-
-        // ===== MODAL DE EDITAR CATEGORÍA =====
-        // Obtenemos una referencia al modal de editar categoría
-        var editCategoryModal = document.getElementById('editarCategoriaModal');
-
-        // Agregamos un evento que se dispara cuando el modal está a punto de abrirse
-        editCategoryModal.addEventListener('show.bs.modal', function(event) {
-            // Obtenemos el botón que activó el modal
-            var button = event.relatedTarget;
-
-            // Extraemos los datos de la categoría del botón
-            var id = button.getAttribute('data-id');
-            var name = button.getAttribute('data-name');
-
-            // Buscamos los campos de entrada dentro del modal
-            var modalIdInput = editCategoryModal.querySelector('#editarCategoriaId');
-            var modalNameInput = editCategoryModal.querySelector('#editarNombreCategoria');
-
-            // Prellenamos los campos del formulario con los datos actuales de la categoría
-            // Usamos .value en lugar de .textContent porque son campos de entrada (input)
-            modalIdInput.value = id;
-            modalNameInput.value = name;
-        });
+        // Setear los valores en el modal
+        $(this).find('#verCategoriaId').text(id);
+        $(this).find('#verNombreCategoria').text(name);
     });
+
+    // ===== MODAL DE EDITAR CATEGORÍA =====
+    $('#editarCategoriaModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var name = button.data('name');
+
+        $(this).find('#editarCategoriaId').val(id);
+        $(this).find('#editarNombreCategoria').val(name);
+    });
+
+    // ===== PATRÓN PRG: abrir modal después de un redirect =====
+    <?php if (!empty($_GET['modal']) && $_GET['modal'] === 'agregarCategoriaModal'): ?>
+        var modalId = '#<?php echo $_GET['modal']; ?>';
+        $(modalId).modal('show');
+    <?php endif; ?>
+});
 </script>
