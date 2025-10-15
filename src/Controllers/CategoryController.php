@@ -26,7 +26,6 @@ switch ($action) {
 
         ];
         $model->store($data); 
-        $model->store($data); 
         break;
     case 'update': 
         $idCategoria = $_POST['id_categoria'] ?? null; 
@@ -34,7 +33,6 @@ switch ($action) {
             $data = [
                 'nombre' => $_POST['nombre'] ?? '' 
             ];
-            $model->update($idCategoria, $data); 
             $model->update($idCategoria, $data); 
         }
         break;

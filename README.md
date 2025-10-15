@@ -73,3 +73,26 @@ Aunque MySQL no impone reglas estrictas sobre cómo nombrar columnas y tablas, s
 - **Prefijos útiles para fechas o estados**:
   - `fecha_` para campos de tiempo: `fecha_registro`, `fecha_entrega`
   - `es_` para booleanos: `es_activo`, `es_admin`
+
+# Convenciones de repuestas del Back-End:
+
+Formato petición exitosa
+
+```
+res_success = {
+    "status": "success",
+    "code": 200,
+    "message": "Producto creado exitosamente",
+}
+```
+
+Formato error en la petición
+
+```
+res_error = {
+    "status": "error",
+    "code": 404,
+    "message": "Producto no encontrado",
+    "data": ""
+}
+```
