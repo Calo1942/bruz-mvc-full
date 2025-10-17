@@ -33,21 +33,16 @@
             require_once 'components/categoryDataTable.php';
             ?>
         </main>
-        
+
+        <?php include 'src/config/components/Front/linksFront.php';
+        echo $scripts_links;
+        ?>
+       
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>
         <?php require_once 'components/categoryEditModal.php'; ?>
         <?php require_once 'components/categoryViewModal.php'; ?>
 
-        <!-- Scripts -->
-        <?php include 'src/views/commons/linksFront.php';
-        echo $scripts_links;
-        ?>
-        <script src="src\assets\js\category\categoryConfigDatable.js"></script>
-        <script src="src\assets\js\commons\templateDatables.js"></script>
-
-    </div>
-        
 </body>
 
 </html>

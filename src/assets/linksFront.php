@@ -11,11 +11,6 @@ $css_links = '
 $scripts_links = '
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<<<<<<<< HEAD:src/views/commons/linksFront.php
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="src/assets/js/commons/validationFront.js"></script>';
-========
-    <script src="src/assets/js/validations.js"></script>
-';
->>>>>>>> 9cc7713 (feat(links): add Bootstrap and custom styles/scripts, update includes in views):src/assets/linksFront.php
