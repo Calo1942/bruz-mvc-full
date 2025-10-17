@@ -38,11 +38,12 @@
         <?php include 'src/config/components/Front/linksFront.php';
         echo $scripts_links;
         ?>
-        
+       
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>
         <?php require_once 'components/categoryEditModal.php'; ?>
         <?php require_once 'components/categoryViewModal.php'; ?>
+         <script type="module" src="src/assets/js/validationCategory.js"></script>
 
 </body>
 
