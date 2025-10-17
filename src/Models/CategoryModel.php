@@ -5,20 +5,33 @@ namespace BruzDeporte\Models;
 use Exception;
 use BruzDeporte\config\connect\DBConnect;
 use BruzDeporte\config\interfaces\Crud;
+use BruzDeporte\Helpers\Validations;
 
 class CategoryModel extends DBConnect implements Crud
 {
+    use Validations;
+    
     private $id_categoria;
     private $nombre;
 
     public function setIdCategoria($id_categoria) {
-        // Aquí va la validación
-        $this->id_categoria = $id_categoria;
-    }
 
+        if (self::validate_id($id_categoria) === false) {
+            //throw new Exception('ID de categoría inválido');;
+            return "<script>alert('ID de categoría inválido');</script>";
+        } else {
+            $this->id_categoria = $id_categoria;
+        }
+        
+    }
+    
     public function setNombre($nombre) {
-        // Aquí va la validación
-        $this->nombre = $nombre;
+        if (self::validate_names($nombre) === false) {
+            //throw new Exception('Nombre inválido');;
+            return "<script>alert('Nombre inválido');</script>";
+        } else {
+            $this->nombre = $nombre;
+        }
     }
 
     public function getIdCategoria() {
@@ -43,26 +56,26 @@ class CategoryModel extends DBConnect implements Crud
             return $stmt->execute([':nombre' => $this->getNombre()]);
 
         } catch (\Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
+            return '<script>alert("Ocurrió un problema al almacenar los datos") ;</script>';
+            //return false;
         }
     }
 
     public function findAll()
     {
-        try{
+        try {
             $stmt = $this->con->query("SELECT * FROM categoria");
             return $stmt->fetchAll();
 
         } catch (\Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
+            return '<script>alert("Ocurrió un problema al extraer los datos") ;</script>';
+            //return false;
         }
     }
 
     public function find($id_categoria)
     {
-        try{
+        try {
             $this->setIdCategoria($id_categoria);
 
             $stmt = $this->con->prepare("SELECT * FROM categoria WHERE id_categoria = :id_categoria");
@@ -75,14 +88,14 @@ class CategoryModel extends DBConnect implements Crud
             return $result;
 
         }catch (\Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
+            return '<script>alert("Ocurrió un problema al extraer el dato") ;</script>';
+            //return false;
         }
     }
 
     public function update($id_categoria, $data)
     {
-        try{
+        try {
             $this->setIdCategoria($id_categoria);
             $this->setNombre($data['nombre'] ?? null);
 
@@ -98,22 +111,22 @@ class CategoryModel extends DBConnect implements Crud
                 ':id_categoria' => $this->getIdCategoria()
             ]);
         } catch (\Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false; 
+            return '<script>alert("Ocurrió un problema al actualizar el dato") ;</script>';
+            //return false; 
         }
     }
 
     public function delete($id_categoria)
     {
-        try{
-        $this->setIdCategoria($id_categoria);
+        try {
+            $this->setIdCategoria($id_categoria);
 
-        $stmt = $this->con->prepare("DELETE FROM categoria WHERE id_categoria = :id_categoria");
-        return $stmt->execute([':id_categoria' => $this->getIdCategoria()]);
+            $stmt = $this->con->prepare("DELETE FROM categoria WHERE id_categoria = :id_categoria");
+            return $stmt->execute([':id_categoria' => $this->getIdCategoria()]);
 
         } catch (\Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
+            return '<script>alert("Ocurrió un problema al eliminar el dato") ;</script>';
+            //return false;
         }
     }
 }

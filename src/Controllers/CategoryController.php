@@ -24,7 +24,7 @@ switch ($action) {
         $data = [
             'nombre' => $_POST['nombre'] ?? ''
         ];
-        $model->store($data); 
+        $response = $model->store($data); 
         break;
     case 'update': 
         $idCategoria = $_POST['id_categoria'] ?? null; 
@@ -32,13 +32,13 @@ switch ($action) {
             $data = [
                 'nombre' => $_POST['nombre'] ?? '' 
             ];
-            $model->update($idCategoria, $data); 
+            $response = $model->update($idCategoria, $data); 
         }
         break;
     case 'delete': 
         $idCategoria = $_POST['delete'] ?? null; 
         if ($idCategoria) { 
-            $model->delete($idCategoria); 
+            $response = $model->delete($idCategoria); 
         }
         break;
     // Muestra detalles de una categoría específica
@@ -48,6 +48,11 @@ switch ($action) {
         break;
     default: 
         break;
+}
+
+// Capturar respuesta para mostrar alertas
+if (isset($response)) {
+    echo $response;
 }
 
 // Obtiene todas las categorías para la vista
