@@ -52,7 +52,8 @@ switch ($action) {
 
 // Capturar respuesta para mostrar alertas
 if (isset($response)) {
-    echo $response;
+    //echo $response;
+    echo "<script> console.log(" . json_encode($response) . ")</script>";
 }
 
 // Obtiene todas las categorías para la vista
