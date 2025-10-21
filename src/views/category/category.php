@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <?php
     // Incluye el archivo que contiene la variable con los links
-    include 'src/config/components/Front/linksFront.php';
+    include 'src/assets/linksFront.php';
     // Imprime la variable dentro de la etiqueta <head>
     echo $css_links;
     ?>
@@ -38,11 +38,12 @@
         <?php include 'src/config/components/Front/linksFront.php';
         echo $scripts_links;
         ?>
-        
+       
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>
         <?php require_once 'components/categoryEditModal.php'; ?>
         <?php require_once 'components/categoryViewModal.php'; ?>
+         <script type="module" src="src/assets/js/validationCategory.js"></script>
 
 </body>
 

@@ -12,9 +12,8 @@
                 <form id="formAgregarCategoria" class="needs-validation" action="" method="POST" novalidate>
                     <div class="mb-3">
                         <label for="nombreCategoria" class="form-label texto">Nombre de la Categoría:</label>
-                        <input type="text" class="form-control validar-texto" id="nombreCategoria" name="nombre" data-validar="texto"required>
-
-                        <span class="invalid-feedback" id="mensajeError">Solo se permiten letras y números, sin caracteres especiales.</span>
+                        <input type="text" class="form-control" id="nombreCategoria" name="nombre"required>
+                        <div class="invalid-feedback" id="mensajeError">Solo se permiten letras y números, sin caracteres especiales.</div>
                     </div>
                     <!-- Botones de acción -->
                     <div class="modal-footer">
