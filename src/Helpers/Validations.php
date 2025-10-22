@@ -1,7 +1,7 @@
 <?php
 
 namespace BruzDeporte\Helpers;
-
+// pruebas de validaciones
 trait Validations
 {
     // Numbers 
