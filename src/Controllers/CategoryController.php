@@ -17,6 +17,8 @@ if (isset($_POST['store'])) {
     $action = 'delete'; 
 } elseif (isset($_POST['show'])) { 
     $action = 'show'; 
+} elseif (isset($_POST['getAll'])) {
+    $action = 'getAll'; 
 }
 
 switch ($action) {
@@ -24,40 +26,54 @@ switch ($action) {
         $data = [
             'nombre' => $_POST['nombre'] ?? ''
         ];
-        $response = $model->store($data); 
+        $result = $model->store($data); 
+        if ($result) {
+            echo json_encode($result);
+        }
         break;
     case 'update': 
-        $idCategoria = $_POST['id_categoria'] ?? null; 
+        $idCategoria = $_POST['id_categoria'] ?? null;  // Eliminar redundancia
         if ($idCategoria) { 
             $data = [
                 'nombre' => $_POST['nombre'] ?? '' 
             ];
-            $response = $model->update($idCategoria, $data); 
+            $result = $model->update($idCategoria, $data); 
+            if ($result) {
+                echo json_encode($result);
+            }
         }
         break;
     case 'delete': 
-        $idCategoria = $_POST['delete'] ?? null; 
+        $idCategoria = $_POST['delete'] ?? null;   // Eliminar redundancia
         if ($idCategoria) { 
-            $response = $model->delete($idCategoria); 
+            $result = $model->delete($idCategoria); 
+            if ($result) {
+                echo json_encode($result);
+            }
         }
         break;
-    // Muestra detalles de una categoría específica
     case 'show':
-        $idCategoria = $_POST['show']; 
-        $category = $model->find($idCategoria); 
+        $idCategoria = $_POST['show'];  // Eliminar redundancia
+        $result = $model->find($idCategoria);
+        if ($result) {
+            echo json_encode($result);
+        }
+        break;
+    case 'getAll':
+        $result = $model->findAll();
+        if ($result) {
+            echo json_encode($result);
+        }
         break;
     default: 
         break;
 }
 
 // Capturar respuesta para mostrar alertas
-if (isset($response)) {
+if (isset($result)) {
     //echo $response;
-    echo "<script> console.log(" . json_encode($response) . ")</script>";
+    echo "<script> console.log(" . json_encode($result) . ")</script>";
 }
-
-// Obtiene todas las categorías para la vista
-$categories = $model->findAll(); 
 
 // Incluye la vista de la lista de categorías.
 include __ROOT__ . '/views/category/category.php'; 
