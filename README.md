@@ -78,21 +78,24 @@ Aunque MySQL no impone reglas estrictas sobre cómo nombrar columnas y tablas, s
 
 Formato petición exitosa
 
-```
-res_success = {
+``` json
+// respuesta exitosa
+{
     "status": "success",
     "code": 200,
-    "message": "Producto creado exitosamente",
+    "message": "Dato creado exitosamente",
+    "data": ""
 }
 ```
 
 Formato error en la petición
 
-```
-res_error = {
+``` json
+// respuesta error
+{
     "status": "error",
     "code": 404,
-    "message": "Producto no encontrado",
+    "message": "Dato no encontrado",
     "data": ""
 }
 ```
