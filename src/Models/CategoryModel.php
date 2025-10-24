@@ -16,11 +16,12 @@ class CategoryModel extends DBConnect implements Crud
 
     private function setIdCategoria($id_categoria) {
         if (self::validate_id($id_categoria) === false) {
-            //throw new Exception('ID de categoría inválido');;
-            //return "<script>alert('ID de categoría inválido');</script>";
-            return ['status' => 'error', 
+            //throw new Exception('ID de categoría inválido');
+            // Respuesta Error
+            return ['status' => 'error',    
                     'code' => 400,
-                    'message' => 'ID de categoría inválido'
+                    'message' => 'ID de categoría inválido',
+                    'error' => ''    
                 ];
         } else {
             $this->id_categoria = $id_categoria;
@@ -29,11 +30,12 @@ class CategoryModel extends DBConnect implements Crud
     
     private function setNombre($nombre) {
         if (self::validate_names($nombre) === false) {
-            //throw new Exception('Nombre inválido');;
-            // return "<script>alert('Nombre inválido');</script>";
-            return ['status' => 'error', 
+            //throw new Exception('Nombre inválido');
+            // Respuesta Error
+            return ['status' => 'error',    
                     'code' => 400,
-                    'message' => 'Nombre inválido'
+                    'message' => 'Nombre inválido',
+                    'error' => ''    
                 ];
         } else {
             $this->nombre = $nombre;
@@ -56,6 +58,7 @@ class CategoryModel extends DBConnect implements Crud
             $stmt = $this->con->prepare($sql);
             $stmt->bindValue(1, $this->getNombre());
             if ($stmt->execute()) {
+                // Respuesta Éxito
                 return ['status' => 'success', 
                         'code' => 201,
                         'message' => 'Categoría almacenada exitosamente',
@@ -65,13 +68,12 @@ class CategoryModel extends DBConnect implements Crud
                 throw new Exception('Error al almacenar la categoría');
             }
         } catch (\Exception $e) {
-            //return '<script>alert("Ocurrió un problema al almacenar los datos") ;</script>';
-            return ['status' => 'error', 
+            // Respuesta Error
+            return ['status' => 'error',    
                     'code' => 500,
                     'message' => 'Ocurrió un problema al almacenar los datos',
                     'error' => $e->getMessage()
                 ];
-            //return false;
         }
     }
 
@@ -81,21 +83,20 @@ class CategoryModel extends DBConnect implements Crud
             $stmt = $this->con->query("SELECT * FROM categoria");
             $result = $stmt->fetchAll();
 
-            /*
+            // Respuesta Éxito
             return ['status' => 'success', 
                     'code' => 200,
                     'message' => 'Categorías extraídas exitosamente',
                     'data' => $result
             ];
-            */
+
         } catch (\Exception $e) {
-            //return '<script>alert("Ocurrió un problema al extraer los datos") ;</script>';
-            return ['status' => 'error', 
+            // Respuesta Error
+            return ['status' => 'error',    
                     'code' => 500,
                     'message' => 'Ocurrió un problema al extraer las categorias',
                     'error' => $e->getMessage()
             ];
-            //return false;
         }
     }
 
@@ -109,24 +110,22 @@ class CategoryModel extends DBConnect implements Crud
             $stmt->execute();
             $result = $stmt->fetch();
             
-            /*
             if ($result) {
+                // Respuesta Éxito
                 return ['status' => 'success', 
                         'code' => 201,
                         'message' => 'Categoría almacenada exitosamente',
                         'data' => $result
-                    ];
+                ];
             }
-            */
 
         } catch (\Exception $e) {
-            //return '<script>alert("Ocurrió un problema al extraer el dato") ;</script>';
-            return ['status' => 'error', 
+            // Respuesta Error
+            return ['status' => 'error',    
                     'code' => 500,
                     'message' => 'Ocurrió un problema al extraer la categoria',
                     'error' => $e->getMessage()
             ];
-            //return false;
         }
     }
 
@@ -144,8 +143,8 @@ class CategoryModel extends DBConnect implements Crud
 
             $result = $stmt->execute();
 
-            /*
             if ($result) {
+                // Respuesta Éxito
                 return ['status' => 'success', 
                         'code' => 200,
                         'message' => 'Categorías editada exitosamente',
@@ -154,16 +153,14 @@ class CategoryModel extends DBConnect implements Crud
             } else {
                 throw new Exception('Error al editar la categoría');
             }
-            */
 
         } catch (\Exception $e) {
-            //return '<script>alert("Ocurrió un problema al actualizar el dato") ;</script>';
-            return ['status' => 'error', 
+            // Respuesta Error
+            return ['status' => 'error',    
                     'code' => 500,
                     'message' => 'Ocurrió un problema al actualizar la categoria',
                     'error' => $e->getMessage()
             ];
-            //return false; 
         }
     }
 
@@ -176,8 +173,8 @@ class CategoryModel extends DBConnect implements Crud
             $stmt->bindValue(1, $this->getIdCategoria());
             $result = $stmt->execute();
 
-            /*
             if ($result) {
+                // Respuesta Éxito
                 return ['status' => 'success', 
                         'code' => 200,
                         'message' => 'Categorías eliminada exitosamente',
@@ -186,16 +183,14 @@ class CategoryModel extends DBConnect implements Crud
             } else {
                 throw new Exception('Error al eliminar la categoría');
             }
-            */
 
         } catch (\Exception $e) {
-            //return '<script>alert("Ocurrió un problema al eliminar el dato") ;</script>';
-            return ['status' => 'error', 
+            // Respuesta Error
+            return ['status' => 'error',    
                     'code' => 500,
                     'message' => 'Ocurrió un problema al eliminar la categoria',
                     'error' => $e->getMessage()
             ];
-            //return false;
         }
     }
 }

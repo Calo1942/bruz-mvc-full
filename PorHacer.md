@@ -94,3 +94,9 @@ Acciones concretas:
 ¿Por qué al final? Porque en este punto ya tendrás un "plano" o un patrón de trabajo sólido y probado. Crear nuevos
 módulos será mucho más rápido y consistente, ya que solo tendrás que replicar la estructura que definiste y
 perfeccionaste en los pasos anteriores (errores, validación, manejo de imágenes).
+
+---
+
+# Por Hacer (24/10/2025)
+
+- Actualizar autores del Composer.json
