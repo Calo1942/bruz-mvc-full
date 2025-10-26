@@ -63,7 +63,7 @@ class CategoryModel extends DBConnect implements Crud
                         'code' => 201,
                         'message' => 'Categoría almacenada exitosamente',
                         'data' => ''
-                    ];
+                    ]; 
             } else {
                 throw new Exception('Error al almacenar la categoría');
             }
@@ -82,16 +82,15 @@ class CategoryModel extends DBConnect implements Crud
         try {
             $stmt = $this->con->query("SELECT * FROM categoria");
             $result = $stmt->fetchAll();
-
+            
             // Respuesta Éxito
             return ['status' => 'success', 
                     'code' => 200,
                     'message' => 'Categorías extraídas exitosamente',
                     'data' => $result
             ];
-
-        } catch (\Exception $e) {
-            // Respuesta Error
+    } catch (\Exception $e) {
+        // Respuesta Error
             return ['status' => 'error',    
                     'code' => 500,
                     'message' => 'Ocurrió un problema al extraer las categorias',

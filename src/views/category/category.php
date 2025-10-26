@@ -38,6 +38,8 @@
         <?php include 'src/config/components/Front/linksFront.php';
         echo $scripts_links;
         ?>
+
+        <script src="src/assets/js/category/categoryDatables.js"></script>
         
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>

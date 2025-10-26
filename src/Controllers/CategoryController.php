@@ -21,58 +21,60 @@ if (isset($_POST['store'])) {
     $action = 'getAll'; 
 }
 
-switch ($action) {
-    case 'store': 
-        $data = [
-            'nombre' => $_POST['nombre'] ?? ''
-        ];
-        $result = $model->store($data); 
-        if ($result) {
-            echo json_encode($result);
-        }
-        break;
-    case 'update': 
-        $idCategoria = $_POST['id_categoria'] ?? null;  // Eliminar redundancia
-        if ($idCategoria) { 
+// Si es una petición AJAX, solo devolvemos JSON
+if ($action) {
+    switch ($action) {
+        case 'store': 
             $data = [
-                'nombre' => $_POST['nombre'] ?? '' 
+                'nombre' => $_POST['nombre'] ?? ''
             ];
-            $result = $model->update($idCategoria, $data); 
+            $result = $model->store($data); 
             if ($result) {
+                header('Content-Type: application/json');
                 echo json_encode($result);
             }
-        }
-        break;
-    case 'delete': 
-        $idCategoria = $_POST['delete'] ?? null;   // Eliminar redundancia
-        if ($idCategoria) { 
-            $result = $model->delete($idCategoria); 
+            exit;
+        case 'update': 
+            $idCategoria = $_POST['id_categoria'] ?? null;
+            if ($idCategoria) { 
+                $data = [
+                    'nombre' => $_POST['nombre'] ?? '' 
+                ];
+                $result = $model->update($idCategoria, $data); 
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+        case 'delete': 
+            $idCategoria = $_POST['delete'] ?? null;
+            if ($idCategoria) { 
+                $result = $model->delete($idCategoria); 
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+        case 'show':
+            $idCategoria = $_POST['show'];
+            $result = $model->find($idCategoria);
             if ($result) {
+                header('Content-Type: application/json');
                 echo json_encode($result);
             }
-        }
-        break;
-    case 'show':
-        $idCategoria = $_POST['show'];  // Eliminar redundancia
-        $result = $model->find($idCategoria);
-        if ($result) {
-            echo json_encode($result);
-        }
-        break;
-    case 'getAll':
-        $result = $model->findAll();
-        if ($result) {
-            echo json_encode($result);
-        }
-        break;
-    default: 
-        break;
-}
-
-// Capturar respuesta para mostrar alertas
-if (isset($result)) {
-    //echo $response;
-    echo "<script> console.log(" . json_encode($result) . ")</script>";
+            exit;
+        case 'getAll':
+            $result = $model->findAll();
+            if ($result) {
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            }
+            exit;
+        default: 
+            break;
+    }
 }
 
 // Incluye la vista de la lista de categorías.
