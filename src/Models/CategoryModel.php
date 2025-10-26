@@ -6,23 +6,20 @@ use Exception;
 use BruzDeporte\config\connect\DBConnect;
 use BruzDeporte\config\interfaces\Crud;
 use BruzDeporte\Helpers\Validations;
+use BruzDeporte\Helpers\ApiResponse;
 
 class CategoryModel extends DBConnect implements Crud
 {
     use Validations;
+    use ApiResponse;
     
+    // private $module_name = ["singular" => "Categoría", "plural" => "Categorías"];
     private $id_categoria;
     private $nombre;
 
     private function setIdCategoria($id_categoria) {
         if (self::validate_id($id_categoria) === false) {
-            //throw new Exception('ID de categoría inválido');
-            // Respuesta Error
-            return ['status' => 'error',    
-                    'code' => 400,
-                    'message' => 'ID de categoría inválido',
-                    'error' => ''    
-                ];
+            throw new Exception('ID de categoría inválido');
         } else {
             $this->id_categoria = $id_categoria;
         }
@@ -30,13 +27,7 @@ class CategoryModel extends DBConnect implements Crud
     
     private function setNombre($nombre) {
         if (self::validate_names($nombre) === false) {
-            //throw new Exception('Nombre inválido');
-            // Respuesta Error
-            return ['status' => 'error',    
-                    'code' => 400,
-                    'message' => 'Nombre inválido',
-                    'error' => ''    
-                ];
+            throw new Exception('Nombre de categoría inválido');
         } else {
             $this->nombre = $nombre;
         }
@@ -57,23 +48,17 @@ class CategoryModel extends DBConnect implements Crud
             $sql = "INSERT INTO categoria (nombre) VALUES (:nombre)";
             $stmt = $this->con->prepare($sql);
             $stmt->bindValue(1, $this->getNombre());
+
             if ($stmt->execute()) {
                 // Respuesta Éxito
-                return ['status' => 'success', 
-                        'code' => 201,
-                        'message' => 'Categoría almacenada exitosamente',
-                        'data' => ''
-                    ]; 
+                return self::success($code = 201, $message = 'Categoría almacenada exitosamente', $data = null);
             } else {
-                throw new Exception('Error al almacenar la categoría');
+                throw new Exception('Error al guardar categoría');
             }
+
         } catch (\Exception $e) {
             // Respuesta Error
-            return ['status' => 'error',    
-                    'code' => 500,
-                    'message' => 'Ocurrió un problema al almacenar los datos',
-                    'error' => $e->getMessage()
-                ];
+            return self::error($code = 500, $message = 'Ocurrió un problema al almacenar la categoría', $error = $e->getMessage());
         }
     }
 
@@ -82,20 +67,17 @@ class CategoryModel extends DBConnect implements Crud
         try {
             $stmt = $this->con->query("SELECT * FROM categoria");
             $result = $stmt->fetchAll();
-            
-            // Respuesta Éxito
-            return ['status' => 'success', 
-                    'code' => 200,
-                    'message' => 'Categorías extraídas exitosamente',
-                    'data' => $result
-            ];
+
+            if ($result) {
+                // Respuesta Éxito
+                return self::success($code = 200, $message = 'Categorías extraídas exitosamente', $data = $result);
+            } else {
+                throw new Exception('Error al extraer categorías');
+            }
+
     } catch (\Exception $e) {
-        // Respuesta Error
-            return ['status' => 'error',    
-                    'code' => 500,
-                    'message' => 'Ocurrió un problema al extraer las categorias',
-                    'error' => $e->getMessage()
-            ];
+            // Respuesta Error
+            return self::error($code = 500, $message = 'Ocurrió un problema al extraer las categorías', $error = $e->getMessage());
         }
     }
 
@@ -111,20 +93,14 @@ class CategoryModel extends DBConnect implements Crud
             
             if ($result) {
                 // Respuesta Éxito
-                return ['status' => 'success', 
-                        'code' => 201,
-                        'message' => 'Categoría almacenada exitosamente',
-                        'data' => $result
-                ];
+                return self::success($code = 201, $message = 'Categoría extraída exitosamente', $data = $result);
+            } else {
+                throw new Exception('Error al extraer la categoría');
             }
 
         } catch (\Exception $e) {
             // Respuesta Error
-            return ['status' => 'error',    
-                    'code' => 500,
-                    'message' => 'Ocurrió un problema al extraer la categoria',
-                    'error' => $e->getMessage()
-            ];
+            return self::error($code = 500, $message = 'Ocurrió un problema al extraer la categoría', $error = $e->getMessage());
         }
     }
 
@@ -144,22 +120,14 @@ class CategoryModel extends DBConnect implements Crud
 
             if ($result) {
                 // Respuesta Éxito
-                return ['status' => 'success', 
-                        'code' => 200,
-                        'message' => 'Categorías editada exitosamente',
-                        'data' => ''
-                ];
+                return self::success($code = 200, $message = 'Categoría editada exitosamente', $data = null);
             } else {
                 throw new Exception('Error al editar la categoría');
             }
 
         } catch (\Exception $e) {
             // Respuesta Error
-            return ['status' => 'error',    
-                    'code' => 500,
-                    'message' => 'Ocurrió un problema al actualizar la categoria',
-                    'error' => $e->getMessage()
-            ];
+            return self::error($code = 500, $message = 'Ocurrió un problema al actualizar la categoria', $error = $e->getMessage());
         }
     }
 
@@ -174,22 +142,14 @@ class CategoryModel extends DBConnect implements Crud
 
             if ($result) {
                 // Respuesta Éxito
-                return ['status' => 'success', 
-                        'code' => 200,
-                        'message' => 'Categorías eliminada exitosamente',
-                        'data' => ''
-                ];
+                return self::success($code = 200, $message = 'Categoría eliminada exitosamente', $data = null);
             } else {
                 throw new Exception('Error al eliminar la categoría');
             }
 
         } catch (\Exception $e) {
             // Respuesta Error
-            return ['status' => 'error',    
-                    'code' => 500,
-                    'message' => 'Ocurrió un problema al eliminar la categoria',
-                    'error' => $e->getMessage()
-            ];
+            return self::error($code = 500, $message = 'Ocurrió un problema al eliminar la categoria', $error = $e->getMessage());
         }
     }
 }
