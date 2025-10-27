@@ -2,80 +2,94 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel; 
+use BruzDeporte\Models\CategoryModel;
 
-// Controlador para gestionar categorías
+// Configuración del Módulo
+$module_config = [
+    'primary_key' => 'id_categoria',
+    'fields' => ['nombre'],
+    'view_path' => 'category/category.php'
+];
+
 $model = new CategoryModel();
 $action = null;
 
-// Determina la acción a realizar basándose en las solicitudes POST recibidas.
+// Determina la acción basándose en las solicitudes POST
 if (isset($_POST['store'])) {
-    $action = 'store'; 
-} elseif (isset($_POST['update'])) { 
-    $action = 'update'; 
-} elseif (isset($_POST['delete'])) { 
-    $action = 'delete'; 
-} elseif (isset($_POST['show'])) { 
-    $action = 'show'; 
+    $action = 'store';
+} elseif (isset($_POST['update'])) {
+    $action = 'update';
+} elseif (isset($_POST['delete'])) {
+    $action = 'delete';
+} elseif (isset($_POST['show'])) {
+    $action = 'show';
 } elseif (isset($_POST['getAll'])) {
-    $action = 'getAll'; 
+    $action = 'getAll';
 }
 
-switch ($action) {
-    case 'store': 
-        $data = [
-            'nombre' => $_POST['nombre'] ?? ''
-        ];
-        $result = $model->store($data); 
-        if ($result) {
-            echo json_encode($result);
-        }
-        break;
-    case 'update': 
-        $idCategoria = $_POST['id_categoria'] ?? null;  // Eliminar redundancia
-        if ($idCategoria) { 
-            $data = [
-                'nombre' => $_POST['nombre'] ?? '' 
-            ];
-            $result = $model->update($idCategoria, $data); 
+// Procesar acciones
+if ($action) {
+    switch ($action) {
+        case 'store':
+            $data = [];
+            foreach ($module_config['fields'] as $field) {
+                $data[$field] = $_POST[$field] ?? '';
+            }
+            $result = $model->store($data);
             if ($result) {
+                header('Content-Type: application/json');
                 echo json_encode($result);
             }
-        }
-        break;
-    case 'delete': 
-        $idCategoria = $_POST['delete'] ?? null;   // Eliminar redundancia
-        if ($idCategoria) { 
-            $result = $model->delete($idCategoria); 
+            exit;
+
+        case 'update':
+            $id = $_POST[$module_config['primary_key']] ?? null;
+            if ($id) {
+                $data = [];
+                foreach ($module_config['fields'] as $field) {
+                    $data[$field] = $_POST[$field] ?? '';
+                }
+                $result = $model->update($id, $data);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'delete':
+            $id = $_POST['delete'] ?? null;
+            if ($id) {
+                $result = $model->delete($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'show':
+            $id = $_POST['show'] ?? null;
+            if ($id) {
+                $result = $model->find($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'getAll':
+            $result = $model->findAll();
             if ($result) {
+                header('Content-Type: application/json');
                 echo json_encode($result);
             }
-        }
-        break;
-    case 'show':
-        $idCategoria = $_POST['show'];  // Eliminar redundancia
-        $result = $model->find($idCategoria);
-        if ($result) {
-            echo json_encode($result);
-        }
-        break;
-    case 'getAll':
-        $result = $model->findAll();
-        if ($result) {
-            echo json_encode($result);
-        }
-        break;
-    default: 
-        break;
+            exit;
+    }
 }
 
-// Capturar respuesta para mostrar alertas
-if (isset($result)) {
-    //echo $response;
-    echo "<script> console.log(" . json_encode($result) . ")</script>";
-}
-
-// Incluye la vista de la lista de categorías.
-include __ROOT__ . '/views/category/category.php'; 
+// Incluir vista
+include __ROOT__ . '/views/' . $module_config['view_path'];
 
 die();

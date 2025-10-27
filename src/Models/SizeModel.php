@@ -5,104 +5,121 @@ namespace BruzDeporte\Models;
 use Exception;
 use BruzDeporte\config\connect\DBConnect;
 use BruzDeporte\config\interfaces\Crud;
+use BruzDeporte\Helpers\Validations;
+use BruzDeporte\Helpers\ApiResponse;
 
-class SizeModel extends DBConnect implements Crud {
-    private $idTalla;
-    private $nombre;
-
-    public function setIdTalla($idTalla) {
-        $this->idTalla = $idTalla;
-    }
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
-    }   
-
-    public function getIdTalla() {
-        return $this->idTalla;
-    }       
+class SizeModel extends DBConnect implements Crud
+{
+    use Validations, ApiResponse;
     
-    public function getNombre() {
-        return $this->nombre;
-    }
+    protected $table = 'talla';
+    protected $idField = 'id_talla';
+    protected $fields = [
+        'nombre' => 'validate_talla',
+        'estatus_activo' => 'validate_boolean'
+    ];
+    protected $module_name = [
+        'singular' => 'Talla',
+        'plural' => 'Tallas'
+    ];
 
-    public function store($data) {
-        try {
-            $this->setNombre($data['Nombre'] ?? '');
-
-            if (empty($this->getNombre())) {
-                throw new Exception('Nombre requerido');
-            }
-            $sql = "INSERT INTO Talla (Nombre) VALUES (:Nombre)";
-            $stmt = $this->con->prepare($sql);
-            return $stmt->execute([
-                ':Nombre' => $this->getNombre()
-            ]);
-        } catch (Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function findAll() {
-        try {
-            $stmt = $this->con->query("SELECT * FROM Talla");
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function find($idTalla) {
-        try {
-            $stmt = $this->con->prepare("SELECT * FROM Talla WHERE IdTalla = ?");
-            $stmt->execute([$idTalla]);
-            $row = $stmt->fetch();
-            if ($row) {
-                $this->setIdTalla($row['IdTalla']);
-                $this->setNombre($row['Nombre']);
-            }
-            return $row;
-        } catch (Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function update($idTalla, $data)
+    public function store($data)
     {
         try {
-            $this->setIdTalla($idTalla);
-            $this->setNombre($data['Nombre'] ?? null);
-
-            if (empty($this->getNombre())) {
-                return false;
+            $columns = [];
+            $placeholders = [];
+            $values = [];
+            
+            foreach ($this->fields as $field => $validation) {
+                if (isset($data[$field])) {
+                    if ($validation && !$this->$validation($data[$field])) {
+                        throw new Exception("Campo $field inválido");
+                    }
+                    $columns[] = $field;
+                    $placeholders[] = "?";
+                    $values[] = $data[$field];
+                }
             }
-
-            $sql = "UPDATE Talla SET Nombre = :Nombre WHERE IdTalla = :IdTalla";
+            
+            $sql = "INSERT INTO {$this->table} (" . implode(', ', $columns) . ") 
+                    VALUES (" . implode(', ', $placeholders) . ")";
+                    
             $stmt = $this->con->prepare($sql);
-
-            return $stmt->execute([
-                ':Nombre' => $this->getNombre(),
-                ':IdTalla' => $this->getIdTalla()
-            ]);
+            if ($stmt->execute($values)) {
+                return self::success(201, "{$this->module_name['singular']} creado exitosamente");
+            }
+            throw new Exception('Error al guardar');
+            
         } catch (\Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
+            return self::error(500, 'Error al almacenar', $e->getMessage());
         }
     }
 
-    public function delete($idTalla){
-    
+    public function findAll()
+    {
         try {
-            $this->setIdTalla($idTalla);
-
-        $stmt = $this->con->prepare("DELETE FROM Talla WHERE IdTalla = :IdTalla");
-        return $stmt->execute([':IdTalla' => $this->getIdTalla()]);
-
+            $stmt = $this->con->query("SELECT * FROM {$this->table} WHERE estatus_activo = 1");
+            $result = $stmt->fetchAll();
+            return self::success(200, "{$this->module_name['plural']} obtenidos", $result);
         } catch (\Exception $e) {
-            echo "Ocurrió un problema: " . $e->getMessage();
-            return false;
+            return self::error(500, 'Error al obtener', $e->getMessage());
+        }
+    }
+
+    public function find($id)
+    {
+        try {
+            $stmt = $this->con->prepare("SELECT * FROM {$this->table} WHERE {$this->idField} = ?");
+            $stmt->execute([$id]);
+            $result = $stmt->fetch();
+            return self::success(200, "{$this->module_name['singular']} obtenido", $result);
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al obtener', $e->getMessage());
+        }
+    }
+
+    public function update($id, $data)
+    {
+        try {
+            $updates = [];
+            $values = [];
+            
+            foreach ($this->fields as $field => $validation) {
+                if (isset($data[$field])) {
+                    if ($validation && !$this->$validation($data[$field])) {
+                        throw new Exception("Campo $field inválido");
+                    }
+                    $updates[] = "$field = ?";
+                    $values[] = $data[$field];
+                }
+            }
+            
+            $values[] = $id;
+            $sql = "UPDATE {$this->table} SET " . implode(', ', $updates) . " 
+                    WHERE {$this->idField} = ?";
+                    
+            $stmt = $this->con->prepare($sql);
+            if ($stmt->execute($values)) {
+                return self::success(200, "{$this->module_name['singular']} actualizado");
+            }
+            throw new Exception('Error al actualizar');
+            
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al actualizar', $e->getMessage());
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $sql = "UPDATE {$this->table} SET estatus_activo = 0 WHERE {$this->idField} = ?";
+            $stmt = $this->con->prepare($sql);
+            if ($stmt->execute([$id])) {
+                return self::success(200, "{$this->module_name['singular']} eliminado");
+            }
+            throw new Exception('Error al eliminar');
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al eliminar', $e->getMessage());
         }
     }
 }

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <?php
     // Incluye el archivo que contiene la variable con los links
-    include 'src/config/components/Front/linksFront.php';
+    include 'src/views/commons/linksFront.php';
     // Imprime la variable dentro de la etiqueta <head>
     echo $css_links;
     ?>
@@ -18,14 +18,14 @@
 
     <!-- Barra lateral -->
     <div class="p-0 bg-dark sidebar">
-        <?php require_once __DIR__ . '/../components/sidebar.php'; ?>
+        <?php require_once __DIR__ . '/../commons/sidebar.php'; ?>
     </div>
 
     <!-- Contenedor principal -->
     <div class="flex-grow-1 d-flex flex-column">
 
         <!-- Contenido del navbar -->
-        <?php require_once __DIR__ . '/../components/navbar.php'; ?>
+        <?php require_once __DIR__ . '/../commons/navbar.php'; ?>
 
         <!-- Contenido principal -->
         <main class="flex-grow-1 p-4 bg-light">
@@ -35,9 +35,13 @@
             ?>
         </main>
 
-        <?php include 'src/config/components/Front/linksFront.php';
+        <?php include 'src/views/commons/linksFront.php';
         echo $scripts_links;
         ?>
+
+        <script src="src\assets\js\category\categoryConfigDatable.js"></script>
+        
+        <script src="src\assets\js\commons\templateDatables.js"></script>
         
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>

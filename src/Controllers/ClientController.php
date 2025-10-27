@@ -2,13 +2,19 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\ClientModel;
+use BruzDeporte\Models\CategoryModel;
 
-// Controlador para gestionar clientes
-$model = new ClientModel();
+// Configuración del Módulo
+$module_config = [
+    'primary_key' => 'cedula',
+    'fields' => ['nombre', 'apellido', 'correo', 'telefono'],
+    'view_path' => 'client/client.php'
+],
+
+$model = new CategoryModel();
 $action = null;
 
-// Detecta la acción solicitada por POST
+// Determina la acción basándose en las solicitudes POST
 if (isset($_POST['store'])) {
     $action = 'store';
 } elseif (isset($_POST['update'])) {
@@ -17,54 +23,73 @@ if (isset($_POST['store'])) {
     $action = 'delete';
 } elseif (isset($_POST['show'])) {
     $action = 'show';
+} elseif (isset($_POST['getAll'])) {
+    $action = 'getAll';
 }
 
-switch ($action) {
-    // Almacena un nuevo cliente
-    case 'store':
-        $data = [
-            'cedula' => $_POST['cedula'] ?? '',
-            'nombre' => $_POST['nombre'] ?? '',
-            'apellido' => $_POST['apellido'] ?? '',
-            'correo' => $_POST['correo'] ?? null,
-            'telefono' => $_POST['telefono'] ?? null
-        ];
-        $model->store($data);
-        break;
-    // Actualiza un cliente existente
-    case 'update':
-        $cedula = $_POST['cedula'] ?? null;
-        if ($cedula) {
-            $data = [
-                'nombre' => $_POST['nombre'] ?? '',
-                'apellido' => $_POST['apellido'] ?? '',
-                'correo' => $_POST['correo'] ?? null,
-                'telefono' => $_POST['telefono'] ?? null
-            ];
-            $model->update($cedula, $data);
-        }
-        break;
-    // Elimina un cliente
-    case 'delete':
-        $cedula = $_POST['delete'] ?? null;
-        if ($cedula) {
-            $model->delete($cedula);
-        }
-        break;
-    // Muestra detalles de un cliente específico
-    case 'show':
-        $cedula = $_POST['show'];
-        $cliente = $model->find($cedula);
-        break;
-    // Lista clientes si no hay acción
-    default:
-        break;
+// Procesar acciones
+if ($action) {
+    switch ($action) {
+        case 'store':
+            $data = [];
+            foreach ($module_config['fields'] as $field) {
+                $data[$field] = $_POST[$field] ?? '';
+            }
+            $result = $model->store($data);
+            if ($result) {
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            }
+            exit;
+
+        case 'update':
+            $id = $_POST[$module_config['primary_key']] ?? null;
+            if ($id) {
+                $data = [];
+                foreach ($module_config['fields'] as $field) {
+                    $data[$field] = $_POST[$field] ?? '';
+                }
+                $result = $model->update($id, $data);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'delete':
+            $id = $_POST['delete'] ?? null;
+            if ($id) {
+                $result = $model->delete($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'show':
+            $id = $_POST['show'] ?? null;
+            if ($id) {
+                $result = $model->find($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'getAll':
+            $result = $model->findAll();
+            if ($result) {
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            }
+            exit;
+    }
 }
 
-// Obtiene todos los clientes para la vista
-$clientes = $model->findAll();
-
-// Incluye la vista de la lista de clientes.
-include __ROOT__ . '/views/client/client.php';
+// Incluir vista
+include __ROOT__ . '/views/' . $module_config['view_path'];
 
 die();

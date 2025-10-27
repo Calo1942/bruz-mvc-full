@@ -2,14 +2,18 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\ProductModel;
 use BruzDeporte\Models\CategoryModel;
 
-// Controlador para gestionar productos
-$model = new ProductModel();
+$module_config = [
+    'primary_key' => 'id_producto',
+    'fields' => ['nombre', 'descripcion', 'stock', 'precio_detal', 'precio_mayor', 'id_categoria'],
+    'view_path' => 'product/product.php'
+],
+
+$model = new CategoryModel();
 $action = null;
 
-// Detecta la acción solicitada por POST
+// Determina la acción basándose en las solicitudes POST
 if (isset($_POST['store'])) {
     $action = 'store';
 } elseif (isset($_POST['update'])) {
@@ -18,60 +22,73 @@ if (isset($_POST['store'])) {
     $action = 'delete';
 } elseif (isset($_POST['show'])) {
     $action = 'show';
+} elseif (isset($_POST['getAll'])) {
+    $action = 'getAll';
 }
 
-switch ($action) {
-    // Almacena un nuevo producto
-    case 'store':
-        $data = [
-            'nombre' => $_POST['nombre'] ?? '',
-            'descripcion' => $_POST['descripcion'] ?? null,
-            'precio_detal' => $_POST['precio_detal'] ?? 0,
-            'precio_mayor' => $_POST['precio_mayor'] ?? null,
-            'id_categoria' => $_POST['id_categoria'] ?? null
-        ];
-        $model->store($data);
-        break;
-    // Actualiza un producto existente
-    case 'update':
-        $id = $_POST['id_producto'] ?? null;
-        if ($id) {
-            $data = [
-                'nombre' => $_POST['nombre'] ?? '',
-                'descripcion' => $_POST['descripcion'] ?? null,
-                'precio_detal' => $_POST['precio_detal'] ?? 0,
-                'precio_mayor' => $_POST['precio_mayor'] ?? null,
-                'id_categoria' => $_POST['id_categoria'] ?? null
-            ];
-            $model->update($id, $data);
-        }
-        break;
-    // Elimina un producto
-    case 'delete':
-        $id = filter_input(INPUT_POST, 'delete', FILTER_VALIDATE_INT);
-        if ($id !== false) {
-            $model->delete($id);
-        }
-        break;
-    // Muestra detalles de un producto específico
-    case 'show':
-        $id = $_POST['show'];
-        $producto = $model->find($id);
-        break;
-    // Lista productos si no hay acción
-    default:
-        break;
+// Procesar acciones
+if ($action) {
+    switch ($action) {
+        case 'store':
+            $data = [];
+            foreach ($module_config['fields'] as $field) {
+                $data[$field] = $_POST[$field] ?? '';
+            }
+            $result = $model->store($data);
+            if ($result) {
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            }
+            exit;
+
+        case 'update':
+            $id = $_POST[$module_config['primary_key']] ?? null;
+            if ($id) {
+                $data = [];
+                foreach ($module_config['fields'] as $field) {
+                    $data[$field] = $_POST[$field] ?? '';
+                }
+                $result = $model->update($id, $data);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'delete':
+            $id = $_POST['delete'] ?? null;
+            if ($id) {
+                $result = $model->delete($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'show':
+            $id = $_POST['show'] ?? null;
+            if ($id) {
+                $result = $model->find($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'getAll':
+            $result = $model->findAll();
+            if ($result) {
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            }
+            exit;
+    }
 }
 
-// Obtiene todos los productos y categorías para la vista
-$products = $model->findAll();
-$categoryModel = new CategoryModel();
-$categories = $categoryModel->findAll();
-$data = [
-    'products' => $products,
-    'categories' => $categories
-];
-
-include __ROOT__ . '/views/product/product.php';
+// Incluir vista
+include __ROOT__ . '/views/' . $module_config['view_path'];
 
 die();

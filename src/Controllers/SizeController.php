@@ -2,13 +2,19 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\SizeModel; 
+use BruzDeporte\Models\CategoryModel;
 
-// Controlador para gestionar tallas
-$model = new SizeModel();
+// Configuración del Módulo
+$module_config = [
+    'primary_key' => 'id_talla',
+    'fields' => ['nombre'],
+    'view_path' => 'size/size.php'
+],
+
+$model = new CategoryModel();
 $action = null;
 
-// Detecta la acción solicitada por POST
+// Determina la acción basándose en las solicitudes POST
 if (isset($_POST['store'])) {
     $action = 'store';
 } elseif (isset($_POST['update'])) {
@@ -17,48 +23,73 @@ if (isset($_POST['store'])) {
     $action = 'delete';
 } elseif (isset($_POST['show'])) {
     $action = 'show';
+} elseif (isset($_POST['getAll'])) {
+    $action = 'getAll';
 }
 
-// Estructura switch para manejar las diferentes acciones.
-switch ($action) {
-    // Almacena una nueva talla
-    case 'store':
-        $data = [
-            'Nombre' => $_POST['Nombre'] ?? '' 
-        ];
-        $model->store($data); 
-        break;
-    // Actualiza una talla existente
-    case 'update':
-        $idTalla = $_POST['IdTalla'] ?? null; 
-        if ($idTalla) {
-            $data = [
-                'Nombre' => $_POST['Nombre'] ?? '' 
-            ];
-            $model->update($idTalla, $data); 
-        }
-        break;
-    // Elimina una talla
-    case 'delete':
-        $idTalla = $_POST['delete'] ?? null;
-        if ($idTalla) {
-            $model->delete($idTalla); 
-        }
-        break;
-    // Muestra detalles de una talla específica
-    case 'show':
-        $idTalla = $_POST['show']; 
-        $size = $model->find($idTalla); 
-        break;
-    // Lista tallas si no hay acción
-    default:
-        break;
+// Procesar acciones
+if ($action) {
+    switch ($action) {
+        case 'store':
+            $data = [];
+            foreach ($module_config['fields'] as $field) {
+                $data[$field] = $_POST[$field] ?? '';
+            }
+            $result = $model->store($data);
+            if ($result) {
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            }
+            exit;
+
+        case 'update':
+            $id = $_POST[$module_config['primary_key']] ?? null;
+            if ($id) {
+                $data = [];
+                foreach ($module_config['fields'] as $field) {
+                    $data[$field] = $_POST[$field] ?? '';
+                }
+                $result = $model->update($id, $data);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'delete':
+            $id = $_POST['delete'] ?? null;
+            if ($id) {
+                $result = $model->delete($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'show':
+            $id = $_POST['show'] ?? null;
+            if ($id) {
+                $result = $model->find($id);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                }
+            }
+            exit;
+
+        case 'getAll':
+            $result = $model->findAll();
+            if ($result) {
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            }
+            exit;
+    }
 }
 
-// Obtiene todas las tallas para la vista
-$tallas = $model->findAll(); 
-
-// Incluye la vista de la lista de tallas.
-include __ROOT__ . '/views/size/size.php';
+// Incluir vista
+include __ROOT__ . '/views/' . $module_config['view_path'];
 
 die();

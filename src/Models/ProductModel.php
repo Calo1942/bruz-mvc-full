@@ -2,164 +2,129 @@
 
 namespace BruzDeporte\Models;
 
+use Exception;
 use BruzDeporte\config\connect\DBConnect;
 use BruzDeporte\config\interfaces\Crud;
+use BruzDeporte\Helpers\Validations;
+use BruzDeporte\Helpers\ApiResponse;
 
-class ProductModel extends DBConnect implements Crud {
+class ProductModel extends DBConnect implements Crud
+{
+    use Validations, ApiResponse;
     
-    private $id_producto;
-    private $nombre;
-    private $descripcion;
-    private $precio_detal;
-    private $precio_mayor;
-    private $id_categoria;
+    protected $table = 'producto';
+    protected $idField = 'id_producto';
+    protected $fields = [
+        'nombre' => 'validate_text_long',
+        'descripcion' => 'validate_description',
+        'stock' => 'validate_stock',
+        'precio_detal' => 'validate_precio',
+        'precio_mayor' => 'validate_precio',
+        'id_categoria' => 'validate_id',
+        'estatus_activo' => 'validate_boolean'
+    ];
+    protected $module_name = [
+        'singular' => 'Producto',
+        'plural' => 'Productos'
+    ];
 
-    // Getters
-    public function getIdProducto() {
-        return $this->id_producto;
-    }
-
-    public function getNombre() {
-        return $this->nombre;
-    }
-
-    public function getDescripcion() {
-        return $this->descripcion;
-    }
-
-    public function getPrecioDetal() {
-        return $this->precio_detal;
-    }
-
-    public function getPrecioMayor() {
-        return $this->precio_mayor;
-    }
-
-    public function getIdCategoria() {
-        return $this->id_categoria;
-    }
-
-    // Setters
-    public function setIdProducto($id_producto) {
-        $this->id_producto = $id_producto;
-    }
-
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
-    }
-
-    public function setDescripcion($descripcion) {
-        $this->descripcion = $descripcion;
-    }
-
-    public function setPrecioDetal($precio_detal) {
-        $this->precio_detal = $precio_detal;
-    }
-
-    public function setPrecioMayor($precio_mayor) {
-        $this->precio_mayor = $precio_mayor;
-    }
-
-    public function setIdCategoria($id_categoria) {
-        $this->id_categoria = $id_categoria;
-    }
-
-    public function store($data) {
-        $this->setNombre($data['nombre']);
-        $this->setDescripcion($data['descripcion'] ?? null);
-        $this->setPrecioDetal($data['precio_detal']);
-        $this->setPrecioMayor($data['precio_mayor'] ?? null);
-        $this->setIdCategoria($data['id_categoria']);
-
+    public function store($data)
+    {
         try {
-            $sql = "INSERT INTO producto (
-                nombre, descripcion, precio_detal, precio_mayor, id_categoria
-            ) VALUES (
-                :nombre, :descripcion, :precio_detal, :precio_mayor, :id_categoria
-            )";
+            $columns = [];
+            $placeholders = [];
+            $values = [];
+            
+            foreach ($this->fields as $field => $validation) {
+                if (isset($data[$field])) {
+                    if ($validation && !$this->$validation($data[$field])) {
+                        throw new Exception("Campo $field inválido");
+                    }
+                    $columns[] = $field;
+                    $placeholders[] = "?";
+                    $values[] = $data[$field];
+                }
+            }
+            
+            $sql = "INSERT INTO {$this->table} (" . implode(', ', $columns) . ") 
+                    VALUES (" . implode(', ', $placeholders) . ")";
+                    
             $stmt = $this->con->prepare($sql);
-            return $stmt->execute([
-                ':nombre' => $this->getNombre(),
-                ':descripcion' => $this->getDescripcion(),
-                ':precio_detal' => $this->getPrecioDetal(),
-                ':precio_mayor' => $this->getPrecioMayor(),
-                ':id_categoria' => $this->getIdCategoria()
-            ]);
-        } catch (\PDOException $e) {
-            error_log("Error en Producto: " . $e->getMessage());
-            return false;
+            if ($stmt->execute($values)) {
+                return self::success(201, "{$this->module_name['singular']} creado exitosamente");
+            }
+            throw new Exception('Error al guardar');
+            
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al almacenar', $e->getMessage());
         }
     }
 
-    public function findAll() {
-        $sql = "SELECT p.*, c.nombre as nombre_categoria 
-            FROM producto p 
-            LEFT JOIN categoria c ON p.id_categoria = c.id_categoria";
-        try{
-            $stmt = $this->con->query($sql);
-            $Productos = $stmt->fetchAll();
-            return $Productos;
-        } catch (\PDOException $e) {
-            error_log("Error al obtener Productos: " . $e->getMessage());
-            return false;
+    public function findAll()
+    {
+        try {
+            $stmt = $this->con->query("SELECT * FROM {$this->table} WHERE estatus_activo = 1");
+            $result = $stmt->fetchAll();
+            return self::success(200, "{$this->module_name['plural']} obtenidos", $result);
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al obtener', $e->getMessage());
         }
     }
 
-    public function find($id_producto) {
-        $sql = "SELECT p.*, c.nombre as nombre_categoria 
-                FROM producto p 
-                LEFT JOIN categoria c ON p.id_categoria = c.id_categoria 
-                WHERE p.id_producto = ?";
-        try{
-            $stmt = $this->con->prepare($sql);
-            $stmt->execute([$id_producto]);
-            $Producto = $stmt->fetch();
-            return $Producto;
-        } catch (\PDOException $e) {
-            error_log("Error al buscar Producto: " . $e->getMessage());
-            return false;
+    public function find($id)
+    {
+        try {
+            $stmt = $this->con->prepare("SELECT * FROM {$this->table} WHERE {$this->idField} = ?");
+            $stmt->execute([$id]);
+            $result = $stmt->fetch();
+            return self::success(200, "{$this->module_name['singular']} obtenido", $result);
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al obtener', $e->getMessage());
         }
     }
 
-    public function update($id_producto, $data) {
-        $this->setIdProducto($id_producto);
-        $this->setNombre($data['nombre']);
-        $this->setDescripcion($data['descripcion'] ?? null);
-        $this->setPrecioDetal($data['precio_detal']);
-        $this->setPrecioMayor($data['precio_mayor'] ?? null);
-        $this->setIdCategoria($data['id_categoria']);
-
-        $sql = "UPDATE producto SET
-            nombre = :nombre,
-            descripcion = :descripcion,
-            precio_detal = :precio_detal,
-            precio_mayor = :precio_mayor,
-            id_categoria = :id_categoria
-            WHERE id_producto = :id_producto";
+    public function update($id, $data)
+    {
         try {
+            $updates = [];
+            $values = [];
+            
+            foreach ($this->fields as $field => $validation) {
+                if (isset($data[$field])) {
+                    if ($validation && !$this->$validation($data[$field])) {
+                        throw new Exception("Campo $field inválido");
+                    }
+                    $updates[] = "$field = ?";
+                    $values[] = $data[$field];
+                }
+            }
+            
+            $values[] = $id;
+            $sql = "UPDATE {$this->table} SET " . implode(', ', $updates) . " 
+                    WHERE {$this->idField} = ?";
+                    
             $stmt = $this->con->prepare($sql);
-            $params = [
-                ':nombre' => $this->getNombre(),
-                ':descripcion' => $this->getDescripcion(),
-                ':precio_detal' => $this->getPrecioDetal(),
-                ':precio_mayor' => $this->getPrecioMayor(),
-                ':id_categoria' => $this->getIdCategoria(),
-                ':id_producto' => $this->getIdProducto()
-            ];
-            return $stmt->execute($params);
-        } catch (\PDOException $e) {
-            error_log("Error al actualizar Producto: " . $e->getMessage());
-            return false;
+            if ($stmt->execute($values)) {
+                return self::success(200, "{$this->module_name['singular']} actualizado");
+            }
+            throw new Exception('Error al actualizar');
+            
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al actualizar', $e->getMessage());
+        }
     }
-    }
-    
-    public function delete($id_producto) {
+
+    public function delete($id)
+    {
         try {
-            $stmt = $this->con->prepare("DELETE FROM producto WHERE id_producto = ?");
-            return $stmt->execute([$id_producto]);
-        } catch (\PDOException $e) {
-            error_log("Error al eliminar Producto: " . $e->getMessage());
-            return false;
+            $sql = "UPDATE {$this->table} SET estatus_activo = 0 WHERE {$this->idField} = ?";
+            $stmt = $this->con->prepare($sql);
+            if ($stmt->execute([$id])) {
+                return self::success(200, "{$this->module_name['singular']} eliminado");
+            }
+            throw new Exception('Error al eliminar');
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al eliminar', $e->getMessage());
         }
     }
 }

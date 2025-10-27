@@ -9,22 +9,26 @@ CREATE TABLE cliente (
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     correo VARCHAR(50) NOT NULL UNIQUE,
-    telefono VARCHAR(25) NOT NULL
+    telefono VARCHAR(25) NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true
 ) ENGINE=InnoDB;
 
 CREATE TABLE categoria (
     id_categoria INT(4) PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL UNIQUE
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true
 ) ENGINE=InnoDB;
 
 CREATE TABLE banco (
     id_banco INT(4) PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL UNIQUE
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true
 ) ENGINE=InnoDB;
 
 CREATE TABLE talla (
     id_talla INT(11) PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(5) NOT NULL UNIQUE
+    nombre VARCHAR(5) NOT NULL UNIQUE,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true
 ) ENGINE=InnoDB;
 
 CREATE TABLE producto (
@@ -35,6 +39,7 @@ CREATE TABLE producto (
     precio_detal DECIMAL(10,2) NOT NULL,
     precio_mayor DECIMAL(10,2) NOT NULL,
     id_categoria INT(4) NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
 ) ENGINE=InnoDB;
 
@@ -44,6 +49,7 @@ CREATE TABLE variante (
     id_producto INT(11) NOT NULL,
     id_talla INT(11) NOT NULL,
     color VARCHAR(50) NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
     FOREIGN KEY (id_talla) REFERENCES talla(id_talla)
 ) ENGINE=InnoDB;
@@ -54,6 +60,7 @@ CREATE TABLE pedido (
     tipo_venta VARCHAR(25) NOT NULL,
     estado_venta VARCHAR(25) NOT NULL,  /* Aquí se puede implementar un ENUM */
     estado_envio VARCHAR(25) NOT NULL,  /* Aquí se puede implementar un ENUM */
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     FOREIGN KEY (cedula) REFERENCES cliente(cedula)
 ) ENGINE=InnoDB;
 
@@ -68,6 +75,7 @@ CREATE TABLE comprobante_pago (
     cotizacion_dolar DECIMAL(10,2) NOT NULL,
     estado_pago VARCHAR(25) NOT NULL,
     fecha DATETIME NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
     FOREIGN KEY (id_banco) REFERENCES banco(id_banco)
 ) ENGINE=InnoDB;
@@ -78,6 +86,7 @@ CREATE TABLE pedido_item (
     cantidad INT(11) NOT NULL,
     precio DECIMAL(10,2) NOT NULL,
     es_venta_mayor BOOLEAN NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     PRIMARY KEY (id_pedido, id_variante),
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
     FOREIGN KEY (id_variante) REFERENCES variante(id_variante)
@@ -87,19 +96,22 @@ CREATE TABLE imagen (
     id_imagen INT(11) PRIMARY KEY AUTO_INCREMENT,
     nombre_img VARCHAR(100) NOT NULL UNIQUE,
     id_variante INT(11) NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     FOREIGN KEY (id_variante) REFERENCES variante(id_variante)
 ) ENGINE=InnoDB;
 
 CREATE TABLE orden_fabricacion (
     id_orden_fabricacion INT(11) PRIMARY KEY AUTO_INCREMENT,
     fecha_entrega DATETIME NOT NULL,
-    estado_orden VARCHAR(25) NOT NULL
+    estado_orden VARCHAR(25) NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true
 ) ENGINE=InnoDB;
 
 CREATE TABLE orden_fabricacionItem (
     id_orden_fabricacion INT(11) NOT NULL,
     id_variante INT(11) NOT NULL,
     cantidad INT(11) NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     PRIMARY KEY (id_orden_fabricacion, id_variante),
     FOREIGN KEY (id_orden_fabricacion) REFERENCES orden_fabricacion(id_orden_fabricacion),
     FOREIGN KEY (id_variante) REFERENCES variante(id_variante)
@@ -110,5 +122,6 @@ CREATE TABLE prod_personalizacion (
     descripcion TEXT NOT NULL,
     id_categoria INT(4) NOT NULL,
     imagen VARCHAR(100) NOT NULL,
+    estatus_activo BOOLEAN NOT NULL DEFAULT true,
     FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
 ) ENGINE=InnoDB;
