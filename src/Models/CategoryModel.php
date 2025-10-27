@@ -1,4 +1,5 @@
 <?php
+
 namespace BruzDeporte\Models;
 
 use Exception;
@@ -42,7 +43,7 @@ class CategoryModel extends DBConnect implements Crud
             
             $sql = "INSERT INTO {$this->table} (" . implode(', ', $columns) . ") 
                     VALUES (" . implode(', ', $placeholders) . ")";
-                    
+            
             $stmt = $this->con->prepare($sql);
             if ($stmt->execute($values)) {
                 return self::success(201, "{$this->module_name['singular']} creado exitosamente");

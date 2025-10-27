@@ -6,10 +6,10 @@ use BruzDeporte\Models\CategoryModel;
 
 // Configuración del Módulo
 $module_config = [
-    'primary_key' => 'id_personalizacion',
-    'fields' => ['descripcion', 'id_categoria', 'imagen'],
-    'view_path' => 'product_customization/product_customization.php'
-]
+    'primary_key' => 'id_pedido',
+    'fields' => ['cedula', 'tipo_venta', 'estado_venta', 'estado_envio'],
+    'view_path' => 'order/order.php'
+],
 
 $model = new CategoryModel();
 $action = null;

@@ -8,21 +8,22 @@ use BruzDeporte\config\interfaces\Crud;
 use BruzDeporte\Helpers\Validations;
 use BruzDeporte\Helpers\ApiResponse;
 
-class CustomModel extends DBConnect implements Crud
+class VariantModel extends DBConnect implements Crud
 {
     use Validations, ApiResponse;
     
-    protected $table = 'prod_personalizacion';
-    protected $idField = 'id_personalizacion';
+    protected $table = 'variante';
+    protected $idField = 'id_variante';
     protected $fields = [
-        'descripcion' => 'validate_description',
-        'id_categoria' => 'validate_id',
-        'imagen' => 'validate_nombre_archivo',
+        'stock' => 'validate_stock',
+        'id_producto' => 'validate_id',
+        'id_talla' => 'validate_id',
+        'color' => 'validate_color',
         'estatus_activo' => 'validate_boolean'
     ];
     protected $module_name = [
-        'singular' => 'Personalización de Producto',
-        'plural' => 'Personalizaciones de Producto'
+        'singular' => 'Variante',
+        'plural' => 'Variantes'
     ];
 
     public function store($data)

@@ -6,9 +6,9 @@ use BruzDeporte\Models\CategoryModel;
 
 // Configuración del Módulo
 $module_config = [
-    'primary_key' => 'id_categoria',      // Clave primaria
-    'fields' => ['nombre'],               // Campos del formulario
-    'view_path' => 'category/category.php' // Ruta de la vista
+    'primary_key' => 'id_categoria',
+    'fields' => ['nombre'],
+    'view_path' => 'category/category.php'
 ];
 
 $model = new CategoryModel();
