@@ -1,5 +1,4 @@
 <?php
-
 namespace BruzDeporte\Models;
 
 use Exception;
@@ -10,146 +9,114 @@ use BruzDeporte\Helpers\ApiResponse;
 
 class CategoryModel extends DBConnect implements Crud
 {
-    use Validations;
-    use ApiResponse;
+    use Validations, ApiResponse;
     
-    // private $module_name = ["singular" => "Categoría", "plural" => "Categorías"];
-    private $id_categoria;
-    private $nombre;
-
-    private function setIdCategoria($id_categoria) {
-        if (self::validate_id($id_categoria) === false) {
-            throw new Exception('ID de categoría inválido');
-        } else {
-            $this->id_categoria = $id_categoria;
-        }
-    }
-    
-    private function setNombre($nombre) {
-        if (self::validate_names($nombre) === false) {
-            throw new Exception('Nombre de categoría inválido');
-        } else {
-            $this->nombre = $nombre;
-        }
-    }
-
-    private function getIdCategoria() {
-        return $this->id_categoria;
-    }
-
-    private function getNombre() { 
-        return $this->nombre;
-    }
+    protected $table = 'categoria';
+    protected $idField = 'id_categoria';
+    protected $fields = [
+        'nombre' => 'validate_names'
+    ];
+    protected $module_name = [
+        'singular' => 'Categoría',
+        'plural' => 'Categorías'
+    ];
 
     public function store($data)
     {
         try {
-            $this->setNombre($data['nombre']);
-            $sql = "INSERT INTO categoria (nombre) VALUES (:nombre)";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bindValue(1, $this->getNombre());
-
-            if ($stmt->execute()) {
-                // Respuesta Éxito
-                return self::success($code = 201, $message = 'Categoría almacenada exitosamente', $data = null);
-            } else {
-                throw new Exception('Error al guardar categoría');
+            $columns = [];
+            $placeholders = [];
+            $values = [];
+            
+            foreach ($this->fields as $field => $validation) {
+                if (isset($data[$field])) {
+                    if ($validation && !$this->$validation($data[$field])) {
+                        throw new Exception("Campo $field inválido");
+                    }
+                    $columns[] = $field;
+                    $placeholders[] = "?";
+                    $values[] = $data[$field];
+                }
             }
-
+            
+            $sql = "INSERT INTO {$this->table} (" . implode(', ', $columns) . ") 
+                    VALUES (" . implode(', ', $placeholders) . ")";
+                    
+            $stmt = $this->con->prepare($sql);
+            if ($stmt->execute($values)) {
+                return self::success(201, "{$this->module_name['singular']} creado exitosamente");
+            }
+            throw new Exception('Error al guardar');
+            
         } catch (\Exception $e) {
-            // Respuesta Error
-            return self::error($code = 500, $message = 'Ocurrió un problema al almacenar la categoría', $error = $e->getMessage());
+            return self::error(500, 'Error al almacenar', $e->getMessage());
         }
     }
 
     public function findAll()
     {
         try {
-            $stmt = $this->con->query("SELECT * FROM categoria");
+            $stmt = $this->con->query("SELECT * FROM {$this->table}");
             $result = $stmt->fetchAll();
-
-            if ($result) {
-                // Respuesta Éxito
-                return self::success($code = 200, $message = 'Categorías extraídas exitosamente', $data = $result);
-            } else {
-                throw new Exception('Error al extraer categorías');
-            }
-
-    } catch (\Exception $e) {
-            // Respuesta Error
-            return self::error($code = 500, $message = 'Ocurrió un problema al extraer las categorías', $error = $e->getMessage());
+            return self::success(200, "{$this->module_name['plural']} obtenidos", $result);
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al obtener', $e->getMessage());
         }
     }
 
-    public function find($id_categoria)
+    public function find($id)
     {
         try {
-            $this->setIdCategoria($id_categoria);
-
-            $stmt = $this->con->prepare("SELECT * FROM categoria WHERE id_categoria = :id_categoria");
-            $stmt->bindValue(1, $this->getIdCategoria());
-            $stmt->execute();
+            $stmt = $this->con->prepare("SELECT * FROM {$this->table} WHERE {$this->idField} = ?");
+            $stmt->execute([$id]);
             $result = $stmt->fetch();
+            return self::success(200, "{$this->module_name['singular']} obtenido", $result);
+        } catch (\Exception $e) {
+            return self::error(500, 'Error al obtener', $e->getMessage());
+        }
+    }
+
+    public function update($id, $data)
+    {
+        try {
+            $updates = [];
+            $values = [];
             
-            if ($result) {
-                // Respuesta Éxito
-                return self::success($code = 201, $message = 'Categoría extraída exitosamente', $data = $result);
-            } else {
-                throw new Exception('Error al extraer la categoría');
+            foreach ($this->fields as $field => $validation) {
+                if (isset($data[$field])) {
+                    if ($validation && !$this->$validation($data[$field])) {
+                        throw new Exception("Campo $field inválido");
+                    }
+                    $updates[] = "$field = ?";
+                    $values[] = $data[$field];
+                }
             }
-
-        } catch (\Exception $e) {
-            // Respuesta Error
-            return self::error($code = 500, $message = 'Ocurrió un problema al extraer la categoría', $error = $e->getMessage());
-        }
-    }
-
-    public function update($id_categoria, $data)
-    {
-        try {
-            $this->setIdCategoria($id_categoria);
-            $this->setNombre($data['nombre']);
-
-            $sql = "UPDATE categoria SET nombre = :nombre WHERE id_categoria = :id_categoria";
+            
+            $values[] = $id;
+            $sql = "UPDATE {$this->table} SET " . implode(', ', $updates) . " 
+                    WHERE {$this->idField} = ?";
+                    
             $stmt = $this->con->prepare($sql);
-
-            $stmt->bindValue(1, $this->getNombre());
-            $stmt->bindValue(2, $this->getIdCategoria());
-
-            $result = $stmt->execute();
-
-            if ($result) {
-                // Respuesta Éxito
-                return self::success($code = 200, $message = 'Categoría editada exitosamente', $data = null);
-            } else {
-                throw new Exception('Error al editar la categoría');
+            if ($stmt->execute($values)) {
+                return self::success(200, "{$this->module_name['singular']} actualizado");
             }
-
+            throw new Exception('Error al actualizar');
+            
         } catch (\Exception $e) {
-            // Respuesta Error
-            return self::error($code = 500, $message = 'Ocurrió un problema al actualizar la categoria', $error = $e->getMessage());
+            return self::error(500, 'Error al actualizar', $e->getMessage());
         }
     }
 
-    public function delete($id_categoria)
+    public function delete($id)
     {
         try {
-            $this->setIdCategoria($id_categoria);
-
-            $stmt = $this->con->prepare("DELETE FROM categoria WHERE id_categoria = :id_categoria");
-            $stmt->bindValue(1, $this->getIdCategoria());
-            $result = $stmt->execute();
-
-            if ($result) {
-                // Respuesta Éxito
-                return self::success($code = 200, $message = 'Categoría eliminada exitosamente', $data = null);
-            } else {
-                throw new Exception('Error al eliminar la categoría');
+            $stmt = $this->con->prepare("DELETE FROM {$this->table} WHERE {$this->idField} = ?");
+            if ($stmt->execute([$id])) {
+                return self::success(200, "{$this->module_name['singular']} eliminado");
             }
-
+            throw new Exception('Error al eliminar');
         } catch (\Exception $e) {
-            // Respuesta Error
-            return self::error($code = 500, $message = 'Ocurrió un problema al eliminar la categoria', $error = $e->getMessage());
+            return self::error(500, 'Error al eliminar', $e->getMessage());
         }
     }
 }

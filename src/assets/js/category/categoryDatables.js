@@ -1,37 +1,67 @@
 $(document).ready(function() {
-    const tblClient = $('#categoryTable').DataTable({
+    
+    // CONFIGURACIÓN DEL MÓDULO
+    const MODULE_CONFIG = {
+        tableId: '#categoryTable',                    // ID de la tabla HTML
+        entityName: 'categoría',                      // Nombre de la entidad (en minúsculas, singular)
+        entityNamePlural: 'categorías',               // Nombre de la entidad (en minúsculas, plural)
+        columns: [                                    // Columnas de la DataTable
+            {data: 'id_categoria', className: 'tabla'},    
+            {data: 'nombre', className: 'tabla'},
+            {
+                data: null, 
+                className: 'acciones',
+                render: function(data, type, row) {
+                    return `
+                        <button type="button" class="btn btn-sm btn-primary me-1 btn-ver" title="Ver ${MODULE_CONFIG.entityName}">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-secondary me-1 btn-editar" title="Editar ${MODULE_CONFIG.entityName}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar ${MODULE_CONFIG.entityName}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    `;
+                }
+            }
+        ],
+        fields: {                                     // Campos del formulario
+            primaryKey: 'id_categoria',               // Clave primaria
+            formFields: ['nombre']                    // Campos del formulario (sin la PK)
+        },
+        modalIds: {                                   // IDs de los modales
+            view: '#verCategoriaModal',
+            add: '#agregarCategoriaModal', 
+            edit: '#editarCategoriaModal'
+        },
+        formIds: {                                    // IDs de los formularios
+            add: '#formAgregarCategoria',
+            edit: '#formEditarCategoria'
+        },
+        fieldSelectors: {                             // Selectores de campos específicos
+            viewId: '#verCategoriaId',
+            viewField: '#verNombreCategoria',
+            editId: '#editarCategoriaId',
+            editField: '#editarNombreCategoria',
+            addField: '#nombreCategoria'
+        }
+    };
+    
+    // Datatable
+    const table = $(MODULE_CONFIG.tableId).DataTable({
         ajax: {
             url: '', // Misma URL del controlador
             method: 'POST',
             data: {
                 getAll: true
             },
-            dataSrc: 'data' // IMPORTANTE: Apunta a la propiedad 'data' del JSON
+            dataSrc: 'data'
         },
-        columns: [
-            {data: 'id_categoria'},    
-            {data: 'nombre'},
-            {
-                data: null, 
-                render: function(data, type, row) {
-                    const btnVer = `<button type="button" class="btn btn-sm btn-primary me-1 btn-ver" title="Ver categoría">
-                        <i class="bi bi-eye"></i>
-                    </button>`;
-                    const btnEditar = `<button type="button" class="btn btn-sm btn-secondary me-1 btn-editar" title="Editar categoría">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>`;
-                    const btnEliminar = `<button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar categoría">
-                        <i class="bi bi-trash"></i>
-                    </button>`;
-
-                    return `${btnVer} ${btnEditar} ${btnEliminar}`;
-                }
-            }
-        ],
+        columns: MODULE_CONFIG.columns,
         autoWidth: false,
         "columnDefs": [
-            {targets: [0, 1], className: 'tabla'},
-            { orderable: false, className: 'acciones', targets: [2] }
+            { orderable: false, targets: MODULE_CONFIG.columns.length - 1 }
         ],
         "language": {
             url: "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
@@ -46,22 +76,25 @@ $(document).ready(function() {
         }
     });
 
-    // Evento para Ver categoría
+    // Función genérica para obtener ID de la fila
+    function getRowId(button) {
+        return $(button).closest('tr').find('td:first').text();
+    }
+
+    // Evento para Ver
     $(document).on('click', '.btn-ver', function() {
-        const id = $(this).closest('tr').find('td:first').text();
+        const id = getRowId(this);
         
         $.ajax({
             url: '',
             method: 'POST',
             dataType: 'JSON',
-            data: {
-                show: id
-            },
+            data: { show: id },
             success: function(response) {
                 if (response.status === 'success') {
-                    $('#verCategoriaId').text(response.data.id_categoria);
-                    $('#verNombreCategoria').text(response.data.nombre);
-                    $('#verCategoriaModal').modal('show');
+                    $(MODULE_CONFIG.fieldSelectors.viewId).text(response.data[MODULE_CONFIG.fields.primaryKey]);
+                    $(MODULE_CONFIG.fieldSelectors.viewField).text(response.data[MODULE_CONFIG.fields.formFields[0]]);
+                    $(MODULE_CONFIG.modalIds.view).modal('show');
                 } else {
                     alert('Error al cargar los datos: ' + response.message);
                 }
@@ -72,22 +105,20 @@ $(document).ready(function() {
         });
     });
 
-    // Evento para Editar categoría
+    // Evento para Editar
     $(document).on('click', '.btn-editar', function() {
-        const id = $(this).closest('tr').find('td:first').text();
+        const id = getRowId(this);
         
         $.ajax({
             url: '',
             method: 'POST',
             dataType: 'JSON',
-            data: {
-                show: id
-            },
+            data: { show: id },
             success: function(response) {
                 if (response.status === 'success') {
-                    $('#editarCategoriaId').val(response.data.id_categoria);
-                    $('#editarNombreCategoria').val(response.data.nombre);
-                    $('#editarCategoriaModal').modal('show');
+                    $(MODULE_CONFIG.fieldSelectors.editId).val(response.data[MODULE_CONFIG.fields.primaryKey]);
+                    $(MODULE_CONFIG.fieldSelectors.editField).val(response.data[MODULE_CONFIG.fields.formFields[0]]);
+                    $(MODULE_CONFIG.modalIds.edit).modal('show');
                 } else {
                     alert('Error al cargar los datos: ' + response.message);
                 }
@@ -98,22 +129,20 @@ $(document).ready(function() {
         });
     });
 
-    // Evento para Eliminar categoría
+    // Evento para Eliminar
     $(document).on('click', '.btn-eliminar', function() {
-        const id = $(this).closest('tr').find('td:first').text();
+        const id = getRowId(this);
         
-        if (confirm('¿Está seguro de eliminar esta categoría?')) {
+        if (confirm(`¿Está seguro de eliminar esta ${MODULE_CONFIG.entityName}?`)) {
             $.ajax({
                 url: '',
                 method: 'POST',
                 dataType: 'JSON',
-                data: {
-                    delete: id
-                },
+                data: { delete: id },
                 success: function(response) {
                     if (response.status === 'success') {
-                        alert('Categoría eliminada correctamente');
-                        tblClient.ajax.reload();
+                        alert(`${MODULE_CONFIG.entityName.charAt(0).toUpperCase() + MODULE_CONFIG.entityName.slice(1)} eliminada correctamente`);
+                        table.ajax.reload();
                     } else {
                         alert('Error al eliminar: ' + response.message);
                     }
@@ -125,13 +154,13 @@ $(document).ready(function() {
         }
     });
 
-    // Formulario Agregar Categoría
-    $('#formAgregarCategoria').on('submit', function(e) {
+    // Formulario Agregar
+    $(MODULE_CONFIG.formIds.add).on('submit', function(e) {
         e.preventDefault();
         
         const formData = {
             store: true,
-            nombre: $('#nombreCategoria').val()
+            [MODULE_CONFIG.fields.formFields[0]]: $(MODULE_CONFIG.fieldSelectors.addField).val()
         };
 
         $.ajax({
@@ -141,10 +170,10 @@ $(document).ready(function() {
             data: formData,
             success: function(response) {
                 if (response.status === 'success') {
-                    alert('Categoría agregada correctamente');
-                    $('#agregarCategoriaModal').modal('hide');
-                    $('#formAgregarCategoria')[0].reset();
-                    tblClient.ajax.reload();
+                    alert(`${MODULE_CONFIG.entityName.charAt(0).toUpperCase() + MODULE_CONFIG.entityName.slice(1)} agregada correctamente`);
+                    $(MODULE_CONFIG.modalIds.add).modal('hide');
+                    $(MODULE_CONFIG.formIds.add)[0].reset();
+                    table.ajax.reload();
                 } else {
                     alert('Error al agregar: ' + response.message);
                 }
@@ -155,14 +184,14 @@ $(document).ready(function() {
         });
     });
 
-    // Formulario Editar Categoría
-    $('#formEditarCategoria').on('submit', function(e) {
+    // Formulario Editar
+    $(MODULE_CONFIG.formIds.edit).on('submit', function(e) {
         e.preventDefault();
         
         const formData = {
             update: true,
-            id_categoria: $('#editarCategoriaId').val(),
-            nombre: $('#editarNombreCategoria').val()
+            [MODULE_CONFIG.fields.primaryKey]: $(MODULE_CONFIG.fieldSelectors.editId).val(),
+            [MODULE_CONFIG.fields.formFields[0]]: $(MODULE_CONFIG.fieldSelectors.editField).val()
         };
 
         $.ajax({
@@ -172,9 +201,9 @@ $(document).ready(function() {
             data: formData,
             success: function(response) {
                 if (response.status === 'success') {
-                    alert('Categoría actualizada correctamente');
-                    $('#editarCategoriaModal').modal('hide');
-                    tblClient.ajax.reload();
+                    alert(`${MODULE_CONFIG.entityName.charAt(0).toUpperCase() + MODULE_CONFIG.entityName.slice(1)} actualizada correctamente`);
+                    $(MODULE_CONFIG.modalIds.edit).modal('hide');
+                    table.ajax.reload();
                 } else {
                     alert('Error al actualizar: ' + response.message);
                 }
@@ -186,7 +215,7 @@ $(document).ready(function() {
     });
 
     // Recargar tabla al cerrar modales
-    $('#agregarCategoriaModal, #editarCategoriaModal').on('hidden.bs.modal', function() {
-        tblClient.ajax.reload();
+    $(MODULE_CONFIG.modalIds.add + ', ' + MODULE_CONFIG.modalIds.edit).on('hidden.bs.modal', function() {
+        table.ajax.reload();
     });
 });
