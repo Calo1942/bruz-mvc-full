@@ -78,24 +78,45 @@ Aunque MySQL no impone reglas estrictas sobre cómo nombrar columnas y tablas, s
 
 Formato petición exitosa
 
-``` json
+```json
 // respuesta exitosa
 {
-    "status": "success",
-    "code": 200,
-    "message": "Dato creado exitosamente",
-    "data": ""
+  "status": "success",
+  "code": 200,
+  "message": "Dato creado exitosamente",
+  "data": ""
 }
 ```
 
 Formato error en la petición
 
-``` json
+```json
 // respuesta error
 {
-    "status": "error",
-    "code": 404,
-    "message": "Dato no encontrado",
-    "data": ""
+  "status": "error",
+  "code": 404,
+  "message": "Dato no encontrado",
+  "data": ""
 }
 ```
+
+Métodos y Validaciones
+
+### Validaciones Específicas por Campo
+
+| Campo         | Validación               | Descripción                        |
+| ------------- | ------------------------ | ---------------------------------- |
+| IDs           | `validate_id()`          | Números enteros positivos          |
+| Cédula        | `validate_cedula()`      | Hasta 10 dígitos                   |
+| Nombres       | `validate_names()`       | Letras, espacios, acentos (mín. 2) |
+| Textos cortos | `validate_text()`        | 2-15 caracteres alfanuméricos      |
+| Textos largos | `validate_text_long()`   | 2-100 caracteres                   |
+| Descripciones | `validate_description()` | Texto largo con puntuación         |
+| Email         | `validate_email()`       | Formato email válido               |
+| Teléfono      | `validate_telefono()`    | 11 dígitos exactos                 |
+| Precios       | `validate_precio()`      | Decimal positivo (2 decimales)     |
+| Stock         | `validate_stock()`       | Número entero no negativo          |
+| Cantidad      | `validate_cantidad()`    | Número entero positivo             |
+| Booleanos     | `validate_boolean()`     | true/false/1/0                     |
+| Fechas        | `validate_fecha()`       | YYYY-MM-DD                         |
+| DateTime      | `validate_datetime()`    | YYYY-MM-DD HH:MM:SS                |
