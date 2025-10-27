@@ -39,7 +39,9 @@
         echo $scripts_links;
         ?>
 
-        <script src="src/assets/js/category/categoryDatables.js"></script>
+        <script src="src\assets\js\category\categoryConfigDatable.js"></script>
+        
+        <script src="src\assets\js\commons\templateDatables.js"></script>
         
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>
