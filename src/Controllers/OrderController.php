@@ -2,16 +2,16 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel;
+use BruzDeporte\Models\OrderModel;
 
 // Configuración del Módulo
 $module_config = [
     'primary_key' => 'id_pedido',
     'fields' => ['cedula', 'tipo_venta', 'estado_venta', 'estado_envio'],
     'view_path' => 'order/order.php'
-],
+];
 
-$model = new CategoryModel();
+$model = new OrderModel();
 $action = null;
 
 // Determina la acción basándose en las solicitudes POST

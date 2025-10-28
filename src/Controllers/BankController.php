@@ -2,15 +2,16 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\ProductModel;
+use BruzDeporte\Models\BankModel;
 
+// Configuración del Módulo
 $module_config = [
-    'primary_key' => 'id_producto',
-    'fields' => ['nombre', 'descripcion', 'stock', 'precio_detal', 'precio_mayor', 'id_categoria'],
-    'view_path' => 'product/product.php'
+    'primary_key' => 'id_banco',
+    'fields' => ['nombre'],
+    'view_path' => 'bank/bank.php'
 ];
 
-$model = new ProductModel();
+$model = new BankModel();
 $action = null;
 
 // Determina la acción basándose en las solicitudes POST

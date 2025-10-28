@@ -2,16 +2,16 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel;
+use BruzDeporte\Models\ClientyModel;
 
 // Configuración del Módulo
 $module_config = [
     'primary_key' => 'cedula',
     'fields' => ['nombre', 'apellido', 'correo', 'telefono'],
     'view_path' => 'client/client.php'
-],
+];
 
-$model = new CategoryModel();
+$model = new ClientModel();
 $action = null;
 
 // Determina la acción basándose en las solicitudes POST

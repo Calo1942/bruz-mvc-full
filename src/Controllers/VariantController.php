@@ -2,16 +2,16 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel;
+use BruzDeporte\Models\VariantModel;
 
 // Configuración del Módulo
 $module_config = [
     'primary_key' => 'id_variante',
     'fields' => ['stock', 'id_producto', 'id_talla', 'color'],
     'view_path' => 'variant/variant.php'
-],
+];
 
-$model = new CategoryModel();
+$model = new VariantModel();
 $action = null;
 
 // Determina la acción basándose en las solicitudes POST

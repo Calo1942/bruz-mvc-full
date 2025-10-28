@@ -2,16 +2,16 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel;
+use BruzDeporte\Models\SizeModel;
 
 // Configuración del Módulo
 $module_config = [
     'primary_key' => 'id_talla',
     'fields' => ['nombre'],
     'view_path' => 'size/size.php'
-],
+];
 
-$model = new CategoryModel();
+$model = new SizeModel();
 $action = null;
 
 // Determina la acción basándose en las solicitudes POST
