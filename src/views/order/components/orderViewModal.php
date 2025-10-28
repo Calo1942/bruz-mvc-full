@@ -4,13 +4,15 @@
         <div class="modal-content">
             <!-- Encabezado del modal -->
             <div class="modal-header">
-                <h4 class="modal-title" id="verCategoriaModalLabel">Detalles de la Categoría</h4>
+                <h4 class="modal-title" id="verCategoriaModalLabel">Detalles del Pedido</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Cuerpo del modal con la información -->
             <div class="modal-body">
-                <p><strong>ID de Categoría:</strong> <span id="verCategoriaId"></span></p>
+                <p><strong>ID del Pedido:</strong> <span id="verCategoriaId"></span></p>
                 <p><strong>Nombre:</strong> <span id="verNombreCategoria"></span></p>
+                <p><strong>Tipo de Venta:</strong> <span id="verTipoVenta"></span></p>
+                <p><strong>Estado de Envío:</strong> <span id="verEstadoEnvio"></span></p>
             </div>
             <!-- Botón de cerrar -->
             <div class="modal-footer">
