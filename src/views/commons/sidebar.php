@@ -85,6 +85,27 @@ $isInventory = ($currentUrl == 'product' || $currentUrl == 'category' || $curren
                 Personalizados
             </a>
         </li>
+        <li>
+            <!-- Link a Personalizados, activo si es la página actual -->
+            <a href="?url=bank" class="nav-link text-white <?php if($currentUrl == 'bank') echo 'active'; ?>">
+                <i class="bi bi-bank"></i> <!-- Icono catálogo personalizado -->
+                Banco
+            </a>
+        </li>
+        <li>
+            <!-- Link a Personalizados, activo si es la página actual -->
+            <a href="?url=order" class="nav-link text-white <?php if($currentUrl == 'order') echo 'active'; ?>">
+                <i class="bi bi-clipboard-check"></i></i> <!-- Icono catálogo personalizado -->
+                Pedido
+            </a>
+        </li>
+        <li>
+            <!-- Link a Personalizados, activo si es la página actual -->
+            <a href="?url=orders" class="nav-link text-white <?php if($currentUrl == 'orders') echo 'active'; ?>">
+                <i class="bi bi-truck"></i></i> <!-- Icono catálogo personalizado -->
+                Ordenes
+            </a>
+        </li>
     </ul>
     <hr>
 </div>
