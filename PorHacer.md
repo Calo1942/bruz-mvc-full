@@ -99,4 +99,35 @@ perfeccionaste en los pasos anteriores (errores, validación, manejo de imágene
 
 # Por Hacer (24/10/2025)
 
-- Actualizar autores del Composer.json
+- Actualizar autores del Composer.json CHECK
+
+# Por Hacer (27/10/2025)
+
+### Notas de Desarrollo
+
+- Crear todas las vistas de los 11 CRUDs faltantes teniendo a Category como referencia.
+
+- Empezar por Cliente, Banco, Talla. (Categoría ya está lista)
+  Luego: producto, variante, pedido, comprobante_pago, pedido_item, orden_fabricacion, orden_fabricacionItem
+
+**NOTA:** La tabla Imagen no tiene CRUD
+
+Esto es el nombre que va a tener cada módulo en inglés y en minúsculas:
+
+```php
+$cliente => $client
+$categoria => $category
+$banco => $bank
+$talla => $size
+$prod_personalizacion => $custom
+$producto => $product
+$variante => $variant
+$pedido => $order
+$comprobante_pago => $paymentReceipt        // La primera letra en minúsculas la segunda palabra en Mayús
+$pedido_item => $orderItem      // La primera letra en minúsculas la segunda palabra en Mayús
+$orden_fabricacion => $manufacturingOrder       // La primera letra en minúsculas la segunda palabra en Mayús
+$orden_fabricacionItem => $manufacturingOrderItem       // La primera letra en minúsculas la segunda palabra en Mayús
+$imagen => $image
+```
+
+Dentro de la carpeta view crear un carpeta para cada módulo. Cada módulo constará de una archivo con el nombre del módulo y una carpeta components. Dentro de la carpeta componentes habrán 4 archivos uno de donde está el modal para crear un nuevo dato, otro donde estará la el datatable, otro para el modal de editar el dato, y otro para visualizar el dato.

@@ -120,3 +120,21 @@ Métodos y Validaciones
 | Booleanos     | `validate_boolean()`     | true/false/1/0                     |
 | Fechas        | `validate_fecha()`       | YYYY-MM-DD                         |
 | DateTime      | `validate_datetime()`    | YYYY-MM-DD HH:MM:SS                |
+
+### Esto es el nombre que va a tener cada módulo en inglés y en minúsculas:
+
+```php
+$cliente => $client
+$categoria => $category
+$banco => $bank
+$talla => $size
+$prod_personalizacion => $custom
+$producto => $product
+$variante => $variant
+$pedido => $order
+$comprobante_pago => $paymentReceipt        // La primera letra en minúsculas la segunda palabra en Mayús
+$pedido_item => $orderItem      // La primera letra en minúsculas la segunda palabra en Mayús
+$orden_fabricacion => $manufacturingOrder       // La primera letra en minúsculas la segunda palabra en Mayús
+$orden_fabricacionItem => $manufacturingOrderItem       // La primera letra en minúsculas la segunda palabra en Mayús
+$imagen => $image
+```
