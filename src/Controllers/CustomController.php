@@ -2,16 +2,16 @@
 
 namespace BruzDeporte\Controllers;
 
-use BruzDeporte\Models\CategoryModel;
+use BruzDeporte\Models\CustomModel;
 
 // Configuración del Módulo
 $module_config = [
     'primary_key' => 'id_personalizacion',
     'fields' => ['descripcion', 'id_categoria', 'imagen'],
     'view_path' => 'product_customization/product_customization.php'
-]
+];
 
-$model = new CategoryModel();
+$model = new CustomModel();
 $action = null;
 
 // Determina la acción basándose en las solicitudes POST
