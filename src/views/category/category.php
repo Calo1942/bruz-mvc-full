@@ -5,11 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Categorías</title>
-    <!-- Bootstrap CSS -->
     <?php
     // Incluye el archivo que contiene la variable con los links
     include 'src/views/commons/linksFront.php';
-    // Imprime la variable dentro de la etiqueta <head>
     echo $css_links;
     ?>
 </head>
@@ -30,24 +28,25 @@
         <!-- Contenido principal -->
         <main class="flex-grow-1 p-4 bg-light">
             <?php
-            // para cargar la tabla de categorías
+            // para cargar la tabla
             require_once 'components/categoryDataTable.php';
             ?>
         </main>
-
-        <?php include 'src/views/commons/linksFront.php';
-        echo $scripts_links;
-        ?>
-
-        <script src="src\assets\js\category\categoryConfigDatable.js"></script>
-        
-        <script src="src\assets\js\commons\templateDatables.js"></script>
         
         <!-- Modales -->
         <?php require_once 'components/categoryCreateModal.php'; ?>
         <?php require_once 'components/categoryEditModal.php'; ?>
         <?php require_once 'components/categoryViewModal.php'; ?>
 
+        <!-- Scripts -->
+        <?php include 'src/views/commons/linksFront.php';
+        echo $scripts_links;
+        ?>
+        <script src="src\assets\js\category\categoryConfigDatable.js"></script>
+        <script src="src\assets\js\commons\templateDatables.js"></script>
+
+    </div>
+        
 </body>
 
 </html>
